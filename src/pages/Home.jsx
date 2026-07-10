@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// 📂 Local Folder se Images
+// 📂 Local Folder se Images (Slide 4 aur 5 ki images bhi add karein apne folder mein)
 import slide1 from '../assets/images/slide1.jpeg';
 import slide2 from '../assets/images/slide2.jpeg';
 import slide3 from '../assets/images/slide3.jpeg';
+import slide4 from '../assets/images/slide4.jpeg'; // NEW
+import slide5 from '../assets/images/slide5.jpeg'; // NEW
 
 const Home = () => {
   const navigate = useNavigate();
-
-  // Slider State & Logic
-  const images = [slide1, slide2, slide3];
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // 🚀 SLIDER DATA (Yahan Text aur Buttons ki detail hai)
+  // 🚀 SLIDER DATA (Total 5 Slides)
   const heroSlides = [
     {
       id: 1,
@@ -53,6 +52,32 @@ const Home = () => {
       btn1Link: "/tournaments",
       btn2Text: "Tournaments ➔",
       btn2Link: "/tournaments"
+    },
+    {
+      id: 4,
+      bgImage: slide4,
+      title1: "UNLOCK PREMIUM",
+      titleHighlight: "JOBS & CAREERS",
+      title2: "OPPORTUNITIES",
+      subtitle: "PREPARE. APPLY. SUCCEED.",
+      desc: "Find exclusive job openings, connect with top recruiters, and land your dream job in leading tech companies.",
+      btn1Text: "Find Jobs ➔",
+      btn1Link: "/jobs",
+      btn2Text: "Prepare ➔",
+      btn2Link: "/resources"
+    },
+    {
+      id: 5,
+      bgImage: slide5,
+      title1: "ACCESS EXCLUSIVE",
+      titleHighlight: "TECH RESOURCES",
+      title2: "& STUDY MATERIALS",
+      subtitle: "READ. PRACTICE. MASTER.",
+      desc: "Get access to premium roadmaps, coding notes, and project ideas to accelerate your tech journey.",
+      btn1Text: "Get Resources ➔",
+      btn1Link: "/resources",
+      btn2Text: "Communities ➔",
+      btn2Link: "/communities"
     }
   ];
 
@@ -64,14 +89,32 @@ const Home = () => {
     return () => clearInterval(slideInterval);
   }, [heroSlides.length]);
 
+  // ✨ Helper Function: Ek-Ek word ko 3D animation dene ke liye
+  const renderAnimatedWords = (text, isActive, baseDelay = 0) => {
+    return text.split(" ").map((word, index) => (
+      <span
+        key={index}
+        className={`inline-block transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isActive 
+            ? "opacity-100 translate-y-0 scale-100 blur-none [transform:rotateX(0deg)]" 
+            : "opacity-0 translate-y-12 scale-75 blur-sm [transform:rotateX(80deg)]"
+        }`}
+        style={{ transitionDelay: `${baseDelay + index * 100}ms`, transformStyle: 'preserve-3d' }}
+      >
+        {word}&nbsp;
+      </span>
+    ));
+  };
+
   return (
-    <div className="w-full font-sans overflow-x-hidden">
+    <div className="w-full font-sans overflow-x-hidden perspective-[1000px]">
+      
       {/* ========================================================= */}
-      {/* SECTION 1: FULL BANNER HERO (With Smooth Text Slider)     */}
+      {/* SECTION 1: FULL BANNER HERO (With 3D Staggered Slider)    */}
       {/* ========================================================= */}
       <section className="relative w-full min-h-screen flex flex-col justify-center bg-[#0b0f19] pt-24 pb-12 overflow-hidden">
         
-        {/* 🌟 Background Slider */}
+        {/* 🌟 Background Slider (Smooth Fade & Zoom) */}
         {heroSlides.map((slide, index) => (
           <div
             key={slide.id}
@@ -86,76 +129,89 @@ const Home = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-[#0b0f19] via-[#0b0f19]/80 to-transparent z-0"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-transparent to-transparent z-0"></div>
 
-        {/* 📝 Main Hero Content (Animated Text & Buttons) */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full h-[350px] mt-10 md:mt-20">
-          {heroSlides.map((slide, index) => (
-            <div 
-              key={slide.id}
-              className={`absolute inset-0 flex flex-col items-start transition-all duration-1000 ease-in-out ${
-                index === currentSlide 
-                  ? "opacity-100 translate-y-0 z-10" 
-                  : "opacity-0 translate-y-12 -z-10 pointer-events-none"
-              }`}
-            >
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-[1.1] tracking-tight uppercase">
-                {slide.title1} <br />
-                <span className="text-[#a855f7] drop-shadow-lg">{slide.titleHighlight}</span> <br />
-                {slide.title2}
-              </h1>
-              
-              <p className="text-gray-300 text-sm font-bold tracking-widest mt-6 uppercase">
-                {slide.subtitle}
-              </p>
-              
-              <p className="text-gray-400 text-lg sm:text-xl max-w-2xl mt-3 leading-relaxed">
-                {slide.desc}
-              </p>
-              
-              {/* Buttons */}
-              <div className="flex flex-row flex-wrap gap-4 mt-8">
-                <button 
-                  onClick={() => navigate(slide.btn1Link)} 
-                  className="bg-gradient-to-r from-[#a855f7] to-[#7c3aed] hover:from-[#9333ea] hover:to-[#6d28d9] text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-lg shadow-purple-500/30 active:scale-95"
-                >
-                  {slide.btn1Text}
-                </button>
-                <button 
-                  onClick={() => navigate(slide.btn2Link)} 
-                  className="border-2 border-gray-600 hover:border-gray-400 bg-black/40 backdrop-blur-sm px-8 py-3.5 rounded-xl font-bold transition-all active:scale-95 text-white"
-                >
-                  {slide.btn2Text}
-                </button>
+        {/* 📝 Main Hero Content (3D Animated Text & Buttons) */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full h-[380px] sm:h-[350px] mt-10 md:mt-20">
+          {heroSlides.map((slide, index) => {
+            const isActive = index === currentSlide;
+            
+            return (
+              <div 
+                key={slide.id}
+                className={`absolute inset-0 flex flex-col items-start transition-opacity duration-1000 ${
+                  isActive ? "opacity-100 z-10" : "opacity-0 -z-10 pointer-events-none"
+                }`}
+              >
+                {/* 3D Word-by-Word Title */}
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-[1.1] tracking-tight uppercase [perspective:1000px]">
+                  <div>{renderAnimatedWords(slide.title1, isActive, 0)}</div>
+                  <div className="text-[#a855f7] drop-shadow-[0_0_15px_rgba(168,85,247,0.5)] mt-1">
+                    {renderAnimatedWords(slide.titleHighlight, isActive, 200)}
+                  </div>
+                  <div className="mt-1">{renderAnimatedWords(slide.title2, isActive, 400)}</div>
+                </h1>
+                
+                {/* Animated Subtitle */}
+                <p className={`text-gray-300 text-sm font-bold tracking-widest mt-6 uppercase transition-all duration-700 ease-out ${
+                  isActive ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+                }`} style={{ transitionDelay: '700ms' }}>
+                  {slide.subtitle}
+                </p>
+                
+                {/* Animated Description */}
+                <p className={`text-gray-400 text-lg sm:text-xl max-w-2xl mt-3 leading-relaxed transition-all duration-700 ease-out ${
+                  isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                }`} style={{ transitionDelay: '900ms' }}>
+                  {slide.desc}
+                </p>
+                
+                {/* Animated Buttons */}
+                <div className={`flex flex-row flex-wrap gap-4 mt-8 transition-all duration-700 ease-out ${
+                  isActive ? "opacity-100 scale-100" : "opacity-0 scale-90"
+                }`} style={{ transitionDelay: '1100ms' }}>
+                  <button 
+                    onClick={() => navigate(slide.btn1Link)} 
+                    className="bg-gradient-to-r from-[#a855f7] to-[#7c3aed] hover:from-[#9333ea] hover:to-[#6d28d9] text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-[0_0_20px_rgba(168,85,247,0.4)] active:scale-95"
+                  >
+                    {slide.btn1Text}
+                  </button>
+                  <button 
+                    onClick={() => navigate(slide.btn2Link)} 
+                    className="border-2 border-gray-600 hover:border-gray-400 bg-black/40 backdrop-blur-sm px-8 py-3.5 rounded-xl font-bold transition-all active:scale-95 text-white"
+                  >
+                    {slide.btn2Text}
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        {/* 📊 STATS ROW (Floating Glassy Box) */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full mt-20 md:mt-32">
+        {/* 📊 STATS ROW (Floating Glassy Box) - NOW HIDDEN ON MOBILE (hidden md:block) */}
+        <div className="hidden md:block relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full mt-24 md:mt-32">
           <div className="bg-[#121826]/80 backdrop-blur-xl border border-gray-800 rounded-2xl p-6 lg:p-8 flex flex-col md:flex-row justify-between items-center gap-8 md:gap-4 shadow-2xl">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-2xl">👥</div>
+            <div className="flex items-center gap-4 hover:scale-105 transition-transform">
+              <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-2xl shadow-[0_0_10px_rgba(168,85,247,0.2)]">👥</div>
               <div><h3 className="text-2xl font-bold text-white">10K+</h3><p className="text-gray-400 text-sm">Active Members</p></div>
             </div>
             <div className="hidden md:block w-px h-12 bg-gray-800"></div>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-2xl">📚</div>
+            <div className="flex items-center gap-4 hover:scale-105 transition-transform">
+              <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-2xl shadow-[0_0_10px_rgba(168,85,247,0.2)]">📚</div>
               <div><h3 className="text-2xl font-bold text-white">50+</h3><p className="text-gray-400 text-sm">Learning Resources</p></div>
             </div>
             <div className="hidden md:block w-px h-12 bg-gray-800"></div>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-2xl">🎟️</div>
+            <div className="flex items-center gap-4 hover:scale-105 transition-transform">
+              <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-2xl shadow-[0_0_10px_rgba(168,85,247,0.2)]">🎟️</div>
               <div><h3 className="text-2xl font-bold text-white">100+</h3><p className="text-gray-400 text-sm">Events Based</p></div>
             </div>
             <div className="hidden md:block w-px h-12 bg-gray-800"></div>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-2xl">🚀</div>
+            <div className="flex items-center gap-4 hover:scale-105 transition-transform">
+              <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-2xl shadow-[0_0_10px_rgba(168,85,247,0.2)]">🚀</div>
               <div><h3 className="text-2xl font-bold text-[#a855f7]">Northeast</h3><p className="text-gray-400 text-sm">Startup</p></div>
             </div>
           </div>
         </div>
       </section>
-
+    
       {/* ========================================================= */}
       {/* Yaha ke niche tumhara Section 2 (Communities), Section 3... aayega */}
       {/* ========================================================= */}

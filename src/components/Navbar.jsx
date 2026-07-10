@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 // 👇 Yahan aapka image import ho raha hai
-import logo from '../assets/images/logo2.jpeg'; 
+import logo from '../assets/images/logo3.jpeg'; 
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -36,7 +36,7 @@ const Navbar = () => {
               <img 
                 src={logo} 
                 alt="Let's Bharat Logo" 
-                className="h-12 w-auto object-contain transition-transform hover:scale-105" 
+                className="h-13 w-auto object-contain transition-transform hover:scale-110" 
               />
             </Link>
           </div>
