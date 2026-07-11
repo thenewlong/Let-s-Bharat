@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // 📂 Local Folder se Images (Slide 4 aur 5 ki images bhi add karein apne folder mein)
@@ -8,9 +8,124 @@ import slide3 from '../assets/images/slide3.jpeg';
 import slide4 from '../assets/images/slide4.jpeg'; // NEW
 import slide5 from '../assets/images/slide5.jpeg'; // NEW
 
+// 📂 Hub Images (Inhe apne assets/images folder mein zaroor rakhein)
+import startup1 from '../assets/images/startup1.jpeg';
+import startup2 from '../assets/images/startup2.jpeg';
+import startup3 from '../assets/images/startup3.jpeg';
+import startup4 from '../assets/images/startup4.jpeg';
+
+// 📂 Hackathon Images (File ke top par add karein)
+import hack1 from '../assets/images/hack1.jpeg'; // Apni images ke naam yahan set karein
+import hack2 from '../assets/images/hack2.jpeg';
+import hack3 from '../assets/images/hack3.jpeg';
+
+import intern1 from '../assets/images/intern1.jpeg'; // Apni images set karein
+import intern2 from '../assets/images/intern2.jpeg';
+import intern3 from '../assets/images/intern3.jpeg';
+
 const Home = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
+  
+
+
+// --- Yahan se Section 2 ka Logic Shuru ---
+  const [isSec2Visible, setIsSec2Visible] = useState(false);
+  const section2Ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsSec2Visible(true);
+      },
+      { threshold: 0.2 } // Jab 20% section dikhega tab animation chalega
+    );
+    if (section2Ref.current) observer.observe(section2Ref.current);
+    return () => {
+      if (section2Ref.current) observer.unobserve(section2Ref.current);
+    };
+  }, []);
+
+  // 3D Letter Animation ka function
+  const render3DLetters = (text, delayOffset = 0) => {
+    return text.split("").map((char, index) => (
+      <span
+        key={index}
+        className={`inline-block transition-all duration-[600ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+          isSec2Visible 
+            ? "opacity-100 translate-y-0 scale-100 blur-none [transform:rotateX(0deg)]" 
+            : "opacity-0 translate-y-8 scale-75 blur-sm [transform:rotateX(-90deg)]"
+        }`}
+        style={{ 
+          transitionDelay: `${delayOffset + index * 40}ms`,
+          transformOrigin: "bottom center",
+          transformStyle: "preserve-3d"
+        }}
+      >
+        {char === " " ? "\u00A0" : char}
+      </span>
+    ));
+  };
+
+  // Cards ka Data (Jisme images lagayi gayi hain)
+  const learningHubs = [
+    { name: "CodeZone", desc: "Programming & Core Engineering", image: startup1 },
+    { name: "BizBrain", desc: "Startups, Funding & Ideation", image: startup2 },
+    { name: "Creative Hub", desc: "UI/UX, Video Editing & Brands", image: startup3 },
+    { name: "Marketing Hub", desc: "Growth Hacking & Digital Outreach", image: startup4 }
+  ];
+  // --- Yahan Section 2 ka Logic Khatam ---
+
+ // ==========================================
+  // SECTION 3: HACKATHONS ANIMATION LOGIC
+  // ==========================================
+  const [isSec3Visible, setIsSec3Visible] = useState(false);
+  const section3Ref = useRef(null);
+
+  useEffect(() => {
+    const observer3 = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsSec3Visible(true);
+      },
+      { threshold: 0.2 }
+    );
+    if (section3Ref.current) observer3.observe(section3Ref.current);
+    return () => {
+      if (section3Ref.current) observer3.unobserve(section3Ref.current);
+    };
+  }, []);
+
+  // Section 3 ke liye 3D Text function
+  const render3DLettersSec3 = (text, delayOffset = 0) => {
+    return text.split("").map((char, index) => (
+      <span
+        key={index}
+        className={`inline-block transition-all duration-[600ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+          isSec3Visible 
+            ? "opacity-100 translate-y-0 scale-100 blur-none [transform:rotateX(0deg)]" 
+            : "opacity-0 translate-y-8 scale-75 blur-sm [transform:rotateX(-90deg)]"
+        }`}
+        style={{ 
+          transitionDelay: `${delayOffset + index * 40}ms`,
+          transformOrigin: "bottom center",
+          transformStyle: "preserve-3d"
+        }}
+      >
+        {char === " " ? "\u00A0" : char}
+      </span>
+    ));
+  }; 
+
+  // --- Section 4: Internships Animation ---
+  const [isSec4Visible, setIsSec4Visible] = useState(false);
+  const section4Ref = useRef(null);
+
+  useEffect(() => {
+    const observer4 = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setIsSec4Visible(true);
+    }, { threshold: 0.2 });
+    if (section4Ref.current) observer4.observe(section4Ref.current);
+  }, []);
 
   // 🚀 SLIDER DATA (Total 5 Slides)
   const heroSlides = [
@@ -211,100 +326,206 @@ const Home = () => {
           </div>
         </div>
       </section>
+      
     
+{/* ========================================================= */}
+      {/* SECTION 2: COMMUNITIES (Images & 3D Text Animation)       */}
       {/* ========================================================= */}
-      {/* Yaha ke niche tumhara Section 2 (Communities), Section 3... aayega */}
-      {/* ========================================================= */}
-
-      {/* ========================================================= */}
-      {/* SECTION 2: COMMUNITIES (Sky White Theme)                  */}
-      {/* ========================================================= */}
-      <section className="w-full bg-[#f8fafc] py-20 px-6 md:px-10 border-t border-gray-200">
+      <section 
+        ref={section2Ref} 
+        className="w-full bg-[#eef2f6] py-20 px-6 md:px-10 border-t border-gray-200 overflow-hidden [perspective:1000px]"
+      >
         <div className="max-w-7xl mx-auto">
+          
+          {/* Header & 3D Title */}
           <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
             <div>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">Our Main Learning Hubs</h2>
-              <p className="text-gray-600 mt-2 max-w-xl">Choose your domain, gather with peers, and scale your personal skills.</p>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight [perspective:1000px]">
+                <div>{render3DLetters("Our Main", 0)}</div>
+                <div className="text-[#a855f7] mt-1">{render3DLetters("Learning Hubs", 300)}</div>
+              </h2>
+              <p className={`text-gray-600 mt-4 max-w-xl transition-all duration-1000 delay-700 ${isSec2Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+                Choose your domain, gather with peers, and scale your personal skills.
+              </p>
             </div>
             <button 
-              onClick={() => navigate('/resources')}
-              className="text-[#8b5cf6] font-bold hover:underline whitespace-nowrap"
+              onClick={() => navigate('/communities')}
+              className={`text-[#8b5cf6] font-bold hover:underline whitespace-nowrap transition-all duration-1000 delay-1000 ${isSec2Visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"}`}
             >
-              View Free Resources →
+              View more Communities →
             </button>
           </div>
 
+          {/* Cards Grid with Images */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { name: "CodeZone", desc: "Programming & Core Engineering", icon: "💻", color: "text-blue-600 bg-blue-50" },
-              { name: "BizBrain", desc: "Startups, Funding & Ideation", icon: "💡", color: "text-yellow-600 bg-yellow-50" },
-              { name: "Creative Hub", desc: "UI/UX, Video Editing & Brands", icon: "🎨", color: "text-pink-600 bg-pink-50" },
-              { name: "Marketing Hub", desc: "Growth Hacking & Digital Outreach", icon: "📈", color: "text-green-600 bg-green-50" }
-            ].map((hub, idx) => (
+            {learningHubs.map((startup, idx) => (
               <div 
                 key={idx} 
                 onClick={() => navigate('/communities')}
-                className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group"
+                className={`bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-[800ms] cursor-pointer group ${isSec2Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
+                style={{ transitionDelay: `${800 + idx * 150}ms` }}
               >
-                <div className={`w-14 h-14 rounded-xl flex items-center justify-center text-2xl mb-4 ${hub.color}`}>
-                  {hub.icon}
+                
+                {/* Image Section (Card ke upar) */}
+                <div className="w-full h-40 bg-gray-200 overflow-hidden relative">
+                  <img 
+                    src={startup.image} 
+                    alt={startup.name} 
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#a855f7] transition-colors">{hub.name}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{hub.desc}</p>
+
+                {/* Text Section (Card ke neeche) */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#a855f7] transition-colors">{startup.name}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{startup.desc}</p>
+                </div>
+                
               </div>
             ))}
           </div>
+
         </div>
       </section>
+      
 
       {/* ========================================================= */}
-      {/* SECTION 3: HACKATHONS (Pure White Theme)                  */}
+      {/* SECTION 3: HACKATHONS (3D Animated with Images)           */}
       {/* ========================================================= */}
-      <section className="w-full py-20 px-6 md:px-10 bg-white">
+      <section 
+        ref={section3Ref}
+        className="w-full py-20 px-6 md:px-10 bg-[#eef2f6] overflow-hidden [perspective:1000px]"
+      >
         <div className="max-w-7xl mx-auto">
+          
+          {/* Header & 3D Title */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 gap-6">
             <div>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">Live & Upcoming Hackathons</h2>
-              <p className="text-gray-600 mt-2">Compete with the sharpest minds across the state & region.</p>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight [perspective:1000px]">
+                <div>{render3DLettersSec3("Live & Upcoming", 0)}</div>
+                <div className="text-[#a855f7] mt-1">{render3DLettersSec3("Hackathons", 300)}</div>
+              </h2>
+              <p className={`text-gray-600 mt-4 transition-all duration-1000 delay-700 ${isSec3Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+                Compete with the sharpest minds across the state & region.
+              </p>
             </div>
             <button 
               onClick={() => navigate('/hackathons')}
-              className="text-[#a855f7] font-bold flex items-center gap-1 hover:underline bg-purple-50 px-5 py-2.5 rounded-xl whitespace-nowrap"
+              className={`text-[#a855f7] font-bold flex items-center gap-1 hover:underline bg-purple-50 px-5 py-2.5 rounded-xl whitespace-nowrap transition-all duration-1000 delay-1000 ${isSec3Visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
             >
               See All Events →
             </button>
           </div>
 
+          {/* Cards Grid with Images & 3D Flip */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { title: "Northeast Innovators 2026", type: "Offline Grand", prize: "₹50,000", tag: "Featured", statusColor: "bg-purple-100 text-purple-700" },
-              { title: "Webify Dev Hackathon", type: "Online Challenge", prize: "₹25,000", tag: "Ongoing", statusColor: "bg-green-100 text-green-700" },
-              { title: "AI Impact Challenge", type: "Hybrid Event", prize: "₹75,000", tag: "Upcoming", statusColor: "bg-blue-100 text-blue-700" }
-            ].map((item, index) => (
-              <div key={index} className="bg-[#f8fafc] rounded-2xl border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-2xl transition-shadow duration-300">
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full ${item.statusColor}`}>
-                      {item.tag}
+              { title: "Northeast Innovators 2026", image: hack1, type: "Offline Grand", prize: "₹50,000", tag: "Featured", statusColor: "bg-purple-100 text-purple-700" },
+              { title: "Webify Dev Hackathon", image: hack2, type: "Online Challenge", prize: "₹25,000", tag: "Ongoing", statusColor: "bg-green-100 text-green-700" },
+              { title: "AI Impact Challenge", image: hack3, type: "Hybrid Event", prize: "₹75,000", tag: "Upcoming", statusColor: "bg-blue-100 text-blue-700" }
+            ].map((hack, index) => (
+              <div 
+                key={index} 
+                className={`bg-[#f8fafc] rounded-2xl border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-2xl transition-all duration-[800ms] cursor-pointer group ${isSec3Visible ? "opacity-100 translate-y-0 [transform:rotateX(0deg)]" : "opacity-0 translate-y-16 [transform:rotateX(15deg)]"}`}
+                style={{ transitionDelay: `${800 + index * 200}ms`, transformStyle: "preserve-3d" }}
+              >
+                
+                {/* 🖼️ Image Section (Naya add kiya gaya hai) */}
+                <div className="w-full h-48 overflow-hidden relative bg-gray-200">
+                  <img 
+                    src={hack.image} 
+                    alt={hack.title} 
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  {/* Status Tag over Image */}
+                  <div className="absolute top-4 left-4">
+                    <span className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-sm ${hack.statusColor}`}>
+                      {hack.tag}
                     </span>
-                    <span className="text-sm text-gray-500 font-medium">📅 Register Now</span>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{item.title}</h3>
+                </div>
+
+                {/* Text Content */}
+                <div className="p-6">
+                  <div className="flex items-center justify-end mb-3">
+                    <span className="text-sm text-gray-500 font-medium flex items-center gap-1">
+                      📅 Register Now
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#a855f7] transition-colors">{hack.title}</h3>
                   <p className="text-gray-600 text-sm mb-4">Collaborate with cross-functional teams to ideate, prototype and pitch scalable solutions.</p>
                 </div>
+
+                {/* Footer Section (Prize & Button) */}
                 <div className="p-6 pt-0 mt-auto">
                   <div className="pt-4 border-t border-gray-200 flex items-center justify-between">
                     <div>
                       <p className="text-xs text-gray-500 font-bold uppercase">Prize Pool</p>
-                      <p className="text-lg font-extrabold text-gray-900">{item.prize}</p>
+                      <p className="text-lg font-extrabold text-gray-900">{hack.prize}</p>
                     </div>
                     <button 
                       onClick={() => navigate('/hackathons')}
-                      className="text-sm font-bold text-white bg-[#a855f7] hover:bg-[#9333ea] px-5 py-2.5 rounded-xl transition-all shadow-md"
+                      className="text-sm font-bold text-white bg-[#a855f7] hover:bg-[#9333ea] px-5 py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-1"
                     >
                       Join Event
                     </button>
                   </div>
+                </div>
+
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+    {/* ========================================================= */}
+      {/* SECTION 4: LATEST INTERNSHIPS (3D Flip Animation)         */}
+      {/* ========================================================= */}
+      <section ref={section4Ref} className="py-20 bg-[#eef2f6] overflow-hidden [perspective:1500px]">
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          
+          {/* Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-extrabold text-gray-800 mb-4">Latest Internships</h2>
+            <p className="text-gray-500 text-lg">Kickstart your career with top remote and onsite opportunities.</p>
+          </div>
+
+          {/* Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { title: "Frontend Developer", image: intern1, tag: "Remote", status: "Hiring Now", stipend: "₹10,000 / mo" },
+              { title: "UI/UX Designer", image: intern2, tag: "Onsite", status: "Hiring Now", stipend: "₹12,000 / mo" },
+              { title: "Full Stack Intern", image: intern3, tag: "Hybrid", status: "Urgent", stipend: "₹15,000 / mo" }
+            ].map((intern, index) => (
+              <div 
+                key={index}
+                className={`bg-white rounded-3xl p-6 border border-gray-100 shadow-xl transition-all duration-1000 transform ${
+                  isSec4Visible 
+                    ? "opacity-100 [transform:rotateY(0deg)]" 
+                    : "opacity-0 [transform:rotateY(-45deg)]"
+                }`}
+                style={{ transitionDelay: `${index * 300}ms` }}
+              >
+                {/* Image Container with Hover Effect */}
+                <div className="w-full h-48 rounded-2xl overflow-hidden mb-6 relative">
+                  <img src={intern.image} className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" />
+                  <div className="absolute top-4 left-4 bg-black/50 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold">
+                    {intern.tag}
+                  </div>
+                </div>
+
+                <h3 className="text-xl font-extrabold text-gray-900 mb-2">{intern.title}</h3>
+                <p className="text-sm text-gray-500 mb-6">Gain real-world experience working with top-tier development teams.</p>
+                
+                <div className="flex justify-between items-center border-t pt-4">
+                  <p className="text-lg font-bold text-[#6366f1]">{intern.stipend}</p>
+                  <button onClick={() => navigate('/internships')} className="bg-gray-900 text-white px-5 py-2 rounded-xl font-bold text-sm hover:bg-gray-700 transition-colors">
+                    Apply Now
+                  </button>
                 </div>
               </div>
             ))}
@@ -312,121 +533,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ========================================================= */}
-      {/* SECTION 4: LATEST INTERNSHIPS (Hackathon Style UI)        */}
-      {/* ========================================================= */}
-      <section className="py-20 bg-[#eef2f6]">
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
-          
-          {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-            <div>
-              <h2 className="text-4xl font-extrabold text-gray-800 tracking-tight">Latest Internships</h2>
-              <p className="text-gray-500 text-lg mt-2">Kickstart your career with top remote and onsite opportunities.</p>
-            </div>
-            {/* Explore All Button -> Routes to /internships */}
-            <button 
-              onClick={() => navigate('/internships')} 
-              className="text-[#6366f1] font-bold hover:text-[#4f46e5] transition-colors flex items-center gap-2"
-            >
-              Explore All Internships <span>→</span>
-            </button>
-          </div>
-
-          {/* Internship Cards Grid (Matching Hackathon UI) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
-            {/* Card 1 */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-              <div className="flex justify-between items-center mb-6">
-                <span className="bg-indigo-100 text-indigo-700 text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-widest">
-                  Remote
-                </span>
-                <span className="text-xs text-gray-500 font-semibold flex items-center gap-1">
-                  📋 Hiring Now
-                </span>
-              </div>
-              <h3 className="text-xl font-extrabold text-gray-900 mb-2">Frontend Developer</h3>
-              <p className="text-sm text-gray-500 leading-relaxed mb-8">
-                TechNexus Solutions — Work on real-world projects using React, Tailwind CSS and modern web technologies.
-              </p>
-              <div className="flex justify-between items-end">
-                <div>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Stipend</p>
-                  <p className="text-lg font-extrabold text-gray-900">₹10,000 / mo</p>
-                </div>
-                {/* Apply Button -> Routes to /internships */}
-                <button 
-                  onClick={() => navigate('/internships')} 
-                  className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md shadow-purple-500/20 active:scale-95"
-                >
-                  Apply Now
-                </button>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-              <div className="flex justify-between items-center mb-6">
-                <span className="bg-emerald-100 text-emerald-700 text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-widest">
-                  Onsite
-                </span>
-                <span className="text-xs text-gray-500 font-semibold flex items-center gap-1">
-                  📋 Hiring Now
-                </span>
-              </div>
-              <h3 className="text-xl font-extrabold text-gray-900 mb-2">UI/UX Designer</h3>
-              <p className="text-sm text-gray-500 leading-relaxed mb-8">
-                Creative Minds Studio — Design user-centric interfaces for mobile and web apps. Collaborate directly with developers.
-              </p>
-              <div className="flex justify-between items-end">
-                <div>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Stipend</p>
-                  <p className="text-lg font-extrabold text-gray-900">₹12,000 / mo</p>
-                </div>
-                {/* Apply Button -> Routes to /internships */}
-                <button 
-                  onClick={() => navigate('/internships')} 
-                  className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md shadow-purple-500/20 active:scale-95"
-                >
-                  Apply Now
-                </button>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-              <div className="flex justify-between items-center mb-6">
-                <span className="bg-blue-100 text-blue-700 text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-widest">
-                  Hybrid
-                </span>
-                <span className="text-xs text-gray-500 font-semibold flex items-center gap-1">
-                  📋 Urgent
-                </span>
-              </div>
-              <h3 className="text-xl font-extrabold text-gray-900 mb-2">Full Stack Intern</h3>
-              <p className="text-sm text-gray-500 leading-relaxed mb-8">
-                InnoWave Labs — Get hands-on experience with Node.js, Express, MongoDB, and React. Build scalable systems.
-              </p>
-              <div className="flex justify-between items-end">
-                <div>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Stipend</p>
-                  <p className="text-lg font-extrabold text-gray-900">₹15,000 / mo</p>
-                </div>
-                {/* Apply Button -> Routes to /internships */}
-                <button 
-                  onClick={() => navigate('/internships')} 
-                  className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md shadow-purple-500/20 active:scale-95"
-                >
-                  Apply Now
-                </button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-      
       {/* ========================================================= */}
       {/* SECTION 5: ESPORTS TOURNAMENTS (Gaming Section)            */}
       {/* ========================================================= */}

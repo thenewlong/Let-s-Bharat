@@ -24,7 +24,7 @@ const Navbar = () => {
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <nav className="bg-white border-b border-gray-200 text-gray-800 relative z-50 shadow-sm">
+    <nav className="bg-[#eef2f6] border-b border-gray-200 text-gray-800 relative z-50 shadow-sm">
       {/* Navbar Background ab bg-white aur text dark hai */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
