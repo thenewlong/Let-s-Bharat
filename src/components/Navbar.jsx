@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 // 👇 Yahan aapka image import ho raha hai
-import logo from '../assets/images/logos1.jpeg'; 
+import logo from '../assets/images/logos2.jpeg'; 
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -44,12 +44,12 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <Link to="/" className="text-gray-600 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</Link>
-              <Link to="/hackathons" className="text-gray-600 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Hackathons</Link>
-              <Link to="/communities" className="text-gray-600 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Communities</Link>
-              <Link to="/internships" className="text-gray-600 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Internships</Link>
-              <Link to="/tournaments" className="text-gray-600 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Tournaments</Link>
-              <Link to="/resources" className="text-gray-600 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Resources</Link>
+              <Link to="/" className="text-gray-600 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">HOME</Link>
+              <Link to="/Startups" className="text-gray-600 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">AI STARTUPS</Link>
+              <Link to="/hackathons" className="text-gray-600 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">HACKATHONS</Link>
+              <Link to="/internships" className="text-gray-600 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">INTERNSHIPS</Link>
+              <Link to="/tournaments" className="text-gray-600 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">TOURNAMENTS</Link>
+              <Link to="/resources" className="text-gray-600 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">RESOURCES</Link>
             </div>
           </div>
 
@@ -64,7 +64,7 @@ const Navbar = () => {
               </Link>
             ) : (
               <Link to="/auth" className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                Join Community
+                Register
               </Link>
             )}
           </div>
@@ -109,12 +109,12 @@ const Navbar = () => {
 
         {/* Drawer Links */}
         <div className="flex flex-col px-4 pt-6 pb-4 space-y-2 flex-1 overflow-y-auto">
-          <Link to="/" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">Home</Link>
-          <Link to="/hackathons" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">Hackathons</Link>
-          <Link to="/communities" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">Communities</Link>
-          <Link to="/internships" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">Internships</Link>
-          <Link to="/tournaments" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">Tournaments</Link>
-          <Link to="/resources" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">Resources</Link>
+          <Link to="/" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">HOME</Link>
+          <Link to="/startups" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">AI STARTUPS</Link>
+          <Link to="/hackathons" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">HACKATHONS</Link>    
+          <Link to="/internships" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">INTERNSHIPS</Link>
+          <Link to="/tournaments" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">TOURNAMENTS</Link>
+          <Link to="/resources" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">RESOURCES</Link>
         </div>
 
         {/* Drawer Footer (Auth/Profile Mobile View) */}
@@ -143,7 +143,7 @@ const Navbar = () => {
               onClick={closeMenu}
               className="block w-full text-center bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-colors shadow-sm"
             >
-              Join Community
+              Register
             </Link>
           )}
         </div>
