@@ -23,6 +23,13 @@ import intern1 from '../assets/images/intern1.jpeg'; // Apni images set karein
 import intern2 from '../assets/images/intern2.jpeg';
 import intern3 from '../assets/images/intern3.jpeg';
 
+
+// Apni zaroorat ke hisaab se images import karein
+import tourna1 from '../assets/images/tourna1.jpeg'; 
+import tourna2 from '../assets/images/tourna2.jpeg';
+import tourna3 from '../assets/images/tourna3.jpeg';
+
+
 const Home = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -46,20 +53,18 @@ const Home = () => {
     };
   }, []);
 
-  // 3D Letter Animation ka function
-  const render3DLetters = (text, delayOffset = 0) => {
+  // ✍️ Naya Typing / Left-to-Right Letter Animation function
+  const renderTypingLetters = (text, delayOffset = 0) => {
     return text.split("").map((char, index) => (
       <span
         key={index}
-        className={`inline-block transition-all duration-[600ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+        className={`inline-block transition-all duration-[400ms] ease-out ${
           isSec2Visible 
-            ? "opacity-100 translate-y-0 scale-100 blur-none [transform:rotateX(0deg)]" 
-            : "opacity-0 translate-y-8 scale-75 blur-sm [transform:rotateX(-90deg)]"
+            ? "opacity-100 translate-x-0" // Apni asli jagah par aayega
+            : "opacity-0 -translate-x-6"  // Left side (-x) mein chhupa rahega
         }`}
         style={{ 
-          transitionDelay: `${delayOffset + index * 40}ms`,
-          transformOrigin: "bottom center",
-          transformStyle: "preserve-3d"
+          transitionDelay: `${delayOffset + index * 40}ms`, // Ek-ek letter delay ke sath
         }}
       >
         {char === " " ? "\u00A0" : char}
@@ -67,7 +72,7 @@ const Home = () => {
     ));
   };
 
-  // Cards ka Data (Jisme images lagayi gayi hain)
+  // Cards ka Data
   const learningHubs = [
     { name: "CodeZone", desc: "Programming & Core Engineering", image: startup1 },
     { name: "BizBrain", desc: "Startups, Funding & Ideation", image: startup2 },
@@ -76,7 +81,9 @@ const Home = () => {
   ];
   // --- Yahan Section 2 ka Logic Khatam ---
 
- // ==========================================
+
+  
+// ==========================================
   // SECTION 3: HACKATHONS ANIMATION LOGIC
   // ==========================================
   const [isSec3Visible, setIsSec3Visible] = useState(false);
@@ -95,28 +102,29 @@ const Home = () => {
     };
   }, []);
 
-  // Section 3 ke liye 3D Text function
-  const render3DLettersSec3 = (text, delayOffset = 0) => {
+  // ✍️ Naya Typing / Left-to-Right Letter Animation for Section 3
+  const renderTypingLettersSec3 = (text, delayOffset = 0) => {
     return text.split("").map((char, index) => (
       <span
         key={index}
-        className={`inline-block transition-all duration-[600ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+        className={`inline-block transition-all duration-[400ms] ease-out ${
           isSec3Visible 
-            ? "opacity-100 translate-y-0 scale-100 blur-none [transform:rotateX(0deg)]" 
-            : "opacity-0 translate-y-8 scale-75 blur-sm [transform:rotateX(-90deg)]"
+            ? "opacity-100 translate-x-0" 
+            : "opacity-0 -translate-x-6"
         }`}
         style={{ 
           transitionDelay: `${delayOffset + index * 40}ms`,
-          transformOrigin: "bottom center",
-          transformStyle: "preserve-3d"
         }}
       >
         {char === " " ? "\u00A0" : char}
       </span>
     ));
-  }; 
+  };
 
-  // --- Section 4: Internships Animation ---
+
+  // ==========================================
+  // SECTION 4: INTERNSHIPS ANIMATION LOGIC
+  // ==========================================
   const [isSec4Visible, setIsSec4Visible] = useState(false);
   const section4Ref = useRef(null);
 
@@ -124,8 +132,69 @@ const Home = () => {
     const observer4 = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) setIsSec4Visible(true);
     }, { threshold: 0.2 });
+    
     if (section4Ref.current) observer4.observe(section4Ref.current);
+    
+    return () => {
+      if (section4Ref.current) observer4.unobserve(section4Ref.current);
+    };
   }, []);
+
+  // ✍️ Naya Typing / Left-to-Right Letter Animation for Section 4
+  const renderTypingLettersSec4 = (text, delayOffset = 0) => {
+    return text.split("").map((char, index) => (
+      <span
+        key={index}
+        className={`inline-block transition-all duration-[400ms] ease-out ${
+          isSec4Visible 
+            ? "opacity-100 translate-x-0" 
+            : "opacity-0 -translate-x-6"
+        }`}
+        style={{ 
+          transitionDelay: `${delayOffset + index * 40}ms`,
+        }}
+      >
+        {char === " " ? "\u00A0" : char}
+      </span>
+    ));
+  };
+
+// ==========================================
+  // SECTION 5: TOURNAMENTS ANIMATION LOGIC
+  // ==========================================
+  const [isSec5Visible, setIsSec5Visible] = useState(false);
+  const section5Ref = useRef(null);
+
+  useEffect(() => {
+    const observer5 = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setIsSec5Visible(true);
+    }, { threshold: 0.2 });
+    
+    if (section5Ref.current) observer5.observe(section5Ref.current);
+    
+    return () => {
+      if (section5Ref.current) observer5.unobserve(section5Ref.current);
+    };
+  }, []);
+
+  // ✍️ Naya Typing / Left-to-Right Letter Animation for Section 5
+  const renderTypingLettersSec5 = (text, delayOffset = 0) => {
+    return text.split("").map((char, index) => (
+      <span
+        key={index}
+        className={`inline-block transition-all duration-[400ms] ease-out ${
+          isSec5Visible 
+            ? "opacity-100 translate-x-0" 
+            : "opacity-0 -translate-x-6"
+        }`}
+        style={{ 
+          transitionDelay: `${delayOffset + index * 40}ms`,
+        }}
+      >
+        {char === " " ? "\u00A0" : char}
+      </span>
+    ));
+  };
 
   // 🚀 SLIDER DATA (Total 5 Slides)
   const heroSlides = [
@@ -328,21 +397,22 @@ const Home = () => {
       </section>
       
     
-{/* ========================================================= */}
-      {/* SECTION 2: COMMUNITIES (Images & 3D Text Animation)       */}
+
+      {/* ========================================================= */}
+      {/* SECTION 2: COMMUNITIES (Images & Left-to-Right Text)      */}
       {/* ========================================================= */}
       <section 
         ref={section2Ref} 
-        className="w-full bg-[#eef2f6] py-20 px-6 md:px-10 border-t border-gray-200 overflow-hidden [perspective:1000px]"
+        className="w-full bg-[#eef2f6] py-20 px-6 md:px-10 border-t border-gray-200 overflow-hidden"
       >
         <div className="max-w-7xl mx-auto">
           
-          {/* Header & 3D Title */}
+          {/* Header & Typing Title */}
           <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
             <div>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight [perspective:1000px]">
-                <div>{render3DLetters("Our Main", 0)}</div>
-                <div className="text-[#a855f7] mt-1">{render3DLetters("Learning Hubs", 300)}</div>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
+                <div>{renderTypingLetters("Our Main", 0)}</div>
+                <div className="text-[#a855f7] mt-1">{renderTypingLetters("Learning Hubs", 300)}</div>
               </h2>
               <p className={`text-gray-600 mt-4 max-w-xl transition-all duration-1000 delay-700 ${isSec2Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
                 Choose your domain, gather with peers, and scale your personal skills.
@@ -388,23 +458,22 @@ const Home = () => {
 
         </div>
       </section>
-      
 
-      {/* ========================================================= */}
-      {/* SECTION 3: HACKATHONS (3D Animated with Images)           */}
+{/* ========================================================= */}
+      {/* SECTION 3: HACKATHONS (Typing & Left-to-Right Text)       */}
       {/* ========================================================= */}
       <section 
         ref={section3Ref}
-        className="w-full py-20 px-6 md:px-10 bg-[#eef2f6] overflow-hidden [perspective:1000px]"
+        className="w-full py-20 px-6 md:px-10 bg-[#eef2f6] overflow-hidden"
       >
         <div className="max-w-7xl mx-auto">
           
-          {/* Header & 3D Title */}
+          {/* Header & Typing Title */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 gap-6">
             <div>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight [perspective:1000px]">
-                <div>{render3DLettersSec3("Live & Upcoming", 0)}</div>
-                <div className="text-[#a855f7] mt-1">{render3DLettersSec3("Hackathons", 300)}</div>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
+                <div>{renderTypingLettersSec3("Live & Upcoming", 0)}</div>
+                <div className="text-[#a855f7] mt-1">{renderTypingLettersSec3("Hackathons", 300)}</div>
               </h2>
               <p className={`text-gray-600 mt-4 transition-all duration-1000 delay-700 ${isSec3Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
                 Compete with the sharpest minds across the state & region.
@@ -418,7 +487,7 @@ const Home = () => {
             </button>
           </div>
 
-          {/* Cards Grid with Images & 3D Flip */}
+          {/* Cards Grid with Images (Clean Slide Up) */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               { title: "Northeast Innovators 2026", image: hack1, type: "Offline Grand", prize: "₹50,000", tag: "Featured", statusColor: "bg-purple-100 text-purple-700" },
@@ -427,11 +496,11 @@ const Home = () => {
             ].map((hack, index) => (
               <div 
                 key={index} 
-                className={`bg-[#f8fafc] rounded-2xl border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-2xl transition-all duration-[800ms] cursor-pointer group ${isSec3Visible ? "opacity-100 translate-y-0 [transform:rotateX(0deg)]" : "opacity-0 translate-y-16 [transform:rotateX(15deg)]"}`}
-                style={{ transitionDelay: `${800 + index * 200}ms`, transformStyle: "preserve-3d" }}
+                className={`bg-[#f8fafc] rounded-2xl border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-2xl transition-all duration-[800ms] cursor-pointer group ${isSec3Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
+                style={{ transitionDelay: `${800 + index * 200}ms` }}
               >
                 
-                {/* 🖼️ Image Section (Naya add kiya gaya hai) */}
+                {/* 🖼️ Image Section */}
                 <div className="w-full h-48 overflow-hidden relative bg-gray-200">
                   <img 
                     src={hack.image} 
@@ -481,20 +550,35 @@ const Home = () => {
 
         </div>
       </section>
+      
 
     {/* ========================================================= */}
-      {/* SECTION 4: LATEST INTERNSHIPS (3D Flip Animation)         */}
+      {/* SECTION 4: LATEST INTERNSHIPS (Left-Aligned Header)       */}
       {/* ========================================================= */}
-      <section ref={section4Ref} className="py-20 bg-[#eef2f6] overflow-hidden [perspective:1500px]">
+      <section ref={section4Ref} className="py-20 bg-[#eef2f6] overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           
-          {/* Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-extrabold text-gray-800 mb-4">Latest Internships</h2>
-            <p className="text-gray-500 text-lg">Kickstart your career with top remote and onsite opportunities.</p>
+          {/* Header & Typing Title (Section 3 Style) */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 gap-6">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 tracking-tight">
+                {renderTypingLettersSec4("Latest Internships", 0)}
+              </h2>
+              <p className={`text-gray-500 mt-4 transition-all duration-1000 delay-500 ${isSec4Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+                Kickstart your career with top remote and onsite opportunities.
+              </p>
+            </div>
+            
+            {/* View More Button (Right Side) */}
+            <button 
+              onClick={() => navigate('/internships')}
+              className={`text-[#6366f1] font-bold flex items-center gap-1 hover:underline bg-indigo-50 px-5 py-2.5 rounded-xl whitespace-nowrap transition-all duration-1000 delay-1000 ${isSec4Visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
+            >
+              View more Internships →
+            </button>
           </div>
 
-          {/* Cards Grid */}
+          {/* Cards Grid (Clean Slide Up Animation) */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { title: "Frontend Developer", image: intern1, tag: "Remote", status: "Hiring Now", stipend: "₹10,000 / mo" },
@@ -503,149 +587,126 @@ const Home = () => {
             ].map((intern, index) => (
               <div 
                 key={index}
-                className={`bg-white rounded-3xl p-6 border border-gray-100 shadow-xl transition-all duration-1000 transform ${
+                className={`bg-white rounded-3xl p-6 border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-[800ms] cursor-pointer group ${
                   isSec4Visible 
-                    ? "opacity-100 [transform:rotateY(0deg)]" 
-                    : "opacity-0 [transform:rotateY(-45deg)]"
+                    ? "opacity-100 translate-y-0" 
+                    : "opacity-0 translate-y-12"
                 }`}
-                style={{ transitionDelay: `${index * 300}ms` }}
+                style={{ transitionDelay: `${800 + index * 200}ms` }}
               >
                 {/* Image Container with Hover Effect */}
-                <div className="w-full h-48 rounded-2xl overflow-hidden mb-6 relative">
-                  <img src={intern.image} className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" />
-                  <div className="absolute top-4 left-4 bg-black/50 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold">
+                <div className="w-full h-48 rounded-2xl overflow-hidden mb-6 relative bg-gray-200">
+                  <img src={intern.image} alt={intern.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <div className="absolute top-4 left-4 bg-black/50 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm">
                     {intern.tag}
                   </div>
                 </div>
 
-                <h3 className="text-xl font-extrabold text-gray-900 mb-2">{intern.title}</h3>
+                <h3 className="text-xl font-extrabold text-gray-900 mb-2 group-hover:text-[#6366f1] transition-colors">{intern.title}</h3>
                 <p className="text-sm text-gray-500 mb-6">Gain real-world experience working with top-tier development teams.</p>
                 
-                <div className="flex justify-between items-center border-t pt-4">
+                <div className="flex justify-between items-center border-t border-gray-100 pt-4">
                   <p className="text-lg font-bold text-[#6366f1]">{intern.stipend}</p>
-                  <button onClick={() => navigate('/internships')} className="bg-gray-900 text-white px-5 py-2 rounded-xl font-bold text-sm hover:bg-gray-700 transition-colors">
+                  <button onClick={() => navigate('/internships')} className="bg-gray-900 text-white px-5 py-2 rounded-xl font-bold text-sm hover:bg-gray-700 transition-all transform hover:-translate-y-1 shadow-md">
                     Apply Now
                   </button>
                 </div>
               </div>
             ))}
           </div>
+          
         </div>
       </section>
 
+
+     {/* ========================================================= */}
+      {/* SECTION 5: ESPORTS TOURNAMENTS (Images + Clean Slide Up)  */}
       {/* ========================================================= */}
-      {/* SECTION 5: ESPORTS TOURNAMENTS (Gaming Section)            */}
-      {/* ========================================================= */}
-      <section className="py-20 bg-white border-t border-gray-100">
+      <section ref={section5Ref} className="py-20 bg-[#eef2f6] border-t border-gray-100 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           
-          {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          {/* Header & Typing Title */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 gap-6">
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-2 h-2 rounded-full bg-purple-600 animate-ping"></span>
-                <span className="text-xs font-bold text-purple-600 tracking-widest uppercase">Live Arena</span>
+                <span className={`text-xs font-bold text-purple-600 tracking-widest uppercase transition-opacity duration-1000 ${isSec5Visible ? "opacity-100" : "opacity-0"}`}>Live Arena</span>
               </div>
-              <h2 className="text-4xl font-extrabold text-gray-900 tracking-tight">Esports Tournaments</h2>
-              <p className="text-gray-500 text-lg mt-2">Compete with top regional squads, win cash rewards, and dominate leaderboards.</p>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
+                {renderTypingLettersSec5("Esports Tournaments", 0)}
+              </h2>
+              <p className={`text-gray-500 mt-4 transition-all duration-1000 delay-500 ${isSec5Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+                Compete with top regional squads, win cash rewards, and dominate leaderboards.
+              </p>
             </div>
-            {/* Explore All -> Goes to /tournaments */}
+            
+            {/* View More Button (Right Side) */}
             <button 
-              onClick={() => navigate('/tournaments')} 
-              className="text-purple-600 font-bold hover:text-purple-800 transition-colors flex items-center gap-2 active:scale-95"
+              onClick={() => navigate('/tournaments')}
+              className={`text-[#6366f1] font-bold flex items-center gap-1 hover:underline bg-indigo-50 px-5 py-2.5 rounded-xl whitespace-nowrap transition-all duration-1000 delay-1000 ${isSec5Visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
             >
-              Explore All Tournaments <span>→</span>
+              Explore All Tournaments →
             </button>
           </div>
 
-          {/* Tournament Cards Layout (Matching Hackathon & Internship Style) */}
+          {/* Tournament Cards Layout */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
-            {/* Card 1: BGMI */}
-            <div className="bg-[#f8fafc] rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <div className="flex justify-between items-center mb-6">
-                <span className="bg-orange-100 text-orange-700 text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-widest">
-                  BGMI
-                </span>
-                <span className="text-xs text-gray-500 font-semibold flex items-center gap-1">
-                  🎮 Squad 4v4
-                </span>
-              </div>
-              <h3 className="text-xl font-extrabold text-gray-900 mb-2">Ultimate Showdown</h3>
-              <p className="text-sm text-gray-500 leading-relaxed mb-8">
-                Northeast India's biggest custom room tournament. Register your squad and claim your spot.
-              </p>
-              <div className="flex justify-between items-end pt-4 border-t border-gray-100">
-                <div>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Prize Pool</p>
-                  <p className="text-lg font-extrabold text-gray-900">₹50,000</p>
+            {[
+              { title: "Ultimate Showdown", image: tourna1, game: "BGMI", type: "🎮 Squad 4v4", prize: "₹50,000", color: "bg-orange-100 text-orange-700", desc: "Northeast India's biggest custom room tournament. Register your squad and claim your spot." },
+              { title: "Clash Championship", image: tourna2, game: "Free Fire", type: "🎮 Clash Squad", prize: "₹30,000", color: "bg-red-100 text-red-700", desc: "Fast-paced custom match tournament. Fast reflexes, absolute team synergy, big prize payout." },
+              { title: "Regional Masters", image: tourna3, game: "HoK", type: "🎮 5v5 Mode", prize: "₹40,000", color: "bg-blue-100 text-blue-700", desc: "Showcase your strategic depth and mechanical outplays in the Honor of Kings state battle." }
+            ].map((tourna, index) => (
+              <div 
+                key={index}
+                className={`bg-[#f8fafc] rounded-3xl p-6 border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-[800ms] cursor-pointer group flex flex-col justify-between ${
+                  isSec5Visible 
+                    ? "opacity-100 translate-y-0" 
+                    : "opacity-0 translate-y-12"
+                }`}
+                style={{ transitionDelay: `${800 + index * 200}ms` }}
+              >
+                
+                {/* 🖼️ Image Container with Hover Effect */}
+                <div className="w-full h-48 rounded-2xl overflow-hidden mb-6 relative bg-gray-200">
+                  <img src={tourna.image} alt={tourna.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  
+                  {/* Game Tag over Image */}
+                  <div className={`absolute top-4 left-4 ${tourna.color} text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-widest shadow-sm`}>
+                    {tourna.game}
+                  </div>
                 </div>
-                <button 
-                  onClick={() => navigate('/tournaments')} 
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md active:scale-95"
-                >
-                  Join Solo/Squad
-                </button>
-              </div>
-            </div>
 
-            {/* Card 2: Free Fire */}
-            <div className="bg-[#f8fafc] rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <div className="flex justify-between items-center mb-6">
-                <span className="bg-red-100 text-red-700 text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-widest">
-                  Free Fire
-                </span>
-                <span className="text-xs text-gray-500 font-semibold flex items-center gap-1">
-                  🎮 Clash Squad
-                </span>
-              </div>
-              <h3 className="text-xl font-extrabold text-gray-900 mb-2">Clash Championship</h3>
-              <p className="text-sm text-gray-500 leading-relaxed mb-8">
-                Fast-paced custom match tournament. Fast reflexes, absolute team synergy, big prize payout.
-              </p>
-              <div className="flex justify-between items-end pt-4 border-t border-gray-100">
+                {/* Text Content */}
                 <div>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Prize Pool</p>
-                  <p className="text-lg font-extrabold text-gray-900">₹30,000</p>
+                  <div className="flex justify-end mb-3">
+                    <span className="text-xs text-gray-500 font-semibold flex items-center gap-1">
+                      {tourna.type}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-extrabold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">{tourna.title}</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed mb-6">
+                    {tourna.desc}
+                  </p>
                 </div>
-                <button 
-                  onClick={() => navigate('/tournaments')} 
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md active:scale-95"
-                >
-                  Join Solo/Squad
-                </button>
-              </div>
-            </div>
-
-            {/* Card 3: Honor of Kings */}
-            <div className="bg-[#f8fafc] rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <div className="flex justify-between items-center mb-6">
-                <span className="bg-blue-100 text-blue-700 text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-widest">
-                  HoK
-                </span>
-                <span className="text-xs text-gray-500 font-semibold flex items-center gap-1">
-                  🎮 5v5 Mode
-                </span>
-              </div>
-              <h3 className="text-xl font-extrabold text-gray-900 mb-2">Regional Masters</h3>
-              <p className="text-sm text-gray-500 leading-relaxed mb-8">
-                Showcase your strategic depth and mechanical outplays in the Honor of Kings state battle.
-              </p>
-              <div className="flex justify-between items-end pt-4 border-t border-gray-100">
-                <div>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Prize Pool</p>
-                  <p className="text-lg font-extrabold text-gray-900">₹40,000</p>
+                
+                {/* Footer Section */}
+                <div className="flex justify-between items-center border-t border-gray-200 pt-4 mt-auto">
+                  <div>
+                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Prize Pool</p>
+                    <p className="text-lg font-extrabold text-gray-900">{tourna.prize}</p>
+                  </div>
+                  <button 
+                    onClick={() => navigate('/tournaments')} 
+                    className="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-xl font-bold text-sm transition-all shadow-md transform hover:-translate-y-1"
+                  >
+                    Join
+                  </button>
                 </div>
-                <button 
-                  onClick={() => navigate('/tournaments')} 
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md active:scale-95"
-                >
-                  Join Solo/Squad
-                </button>
-              </div>
-            </div>
 
+              </div>
+            ))}
           </div>
+
         </div>
       </section>
 

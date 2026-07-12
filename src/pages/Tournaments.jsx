@@ -40,7 +40,7 @@ const Tournaments = () => {
       teamSize: "5v5 Mode",
       slots: "Full",
       status: "SLOTS FULL",
-      link: "#"
+      link: "https://play.toornament.com/en_US/tournaments/2502353128245862399/"
     },
     {
       id: 4,

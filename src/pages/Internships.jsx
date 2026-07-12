@@ -59,7 +59,7 @@ const Internship = () => {
       tabCategory: "Tech",
       isOpen: true,
       image: intern1,
-      link: "https://forms.gle/your-google-form-link-1" // 👈 YAHA APNA LINK DALO
+      link: "https://easyshiksha.com/online_courses/full-stack-web-development-with-the-mern-stack" // 👈 YAHA APNA LINK DALO
     },
     {
       id: 2,
