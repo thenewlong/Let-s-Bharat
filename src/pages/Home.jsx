@@ -25,6 +25,9 @@ import startup8 from '../assets/images/startup8.jpeg';
 import startup9 from '../assets/images/startup9.jpeg';
 import startup10 from '../assets/images/startup10.jpeg';
 
+// 🧑‍💻 AAPKI KHUD KI IMAGE YAHAN IMPORT KAREIN:
+import myProfileImage from '../assets/images/avater.jpeg';
+
 // 📂 Hackathon Images (File ke top par add karein)
 import hack1 from '../assets/images/hack1.jpeg'; // Apni images ke naam yahan set karein
 import hack2 from '../assets/images/hack2.jpeg';
@@ -40,11 +43,11 @@ import tourna1 from '../assets/images/tourna1.jpeg';
 import tourna2 from '../assets/images/tourna2.jpeg';
 import tourna3 from '../assets/images/tourna3.jpeg';
 
-// 📂 DYNAMIC SLIDES DATA (Yahan se future mein text/videos change kar sakte hain)
+// 📂 DYNAMIC SLIDES DATA
 const heroSlides = [
   {
     id: 1,
-    videoSrc: video1,
+    videoSrc: video1, // Yahan video variable imported hona chahiye
     title1: "NORTHEAST INDIA'S",
     titleHighlight: "YOUTH TECH & START-UP",
     title2: "COMMUNITY HUB",
@@ -88,6 +91,19 @@ const heroSlides = [
   }
 ];
 
+
+// 🗂️ GLOBAL SEARCH DATA (Future API/Database Integration ke liye)
+// Aap is array ko future mein apne backend cards data se replace kar sakte hain
+const globalSearchData = [
+  { id: 1, title: "React Native App Development Hackathon", category: "Hackathon", link: "/hackathons/react-native" },
+  { id: 2, title: "Nomeo AI 2.0 API Integration", category: "Startup", link: "/startups/nomeo" },
+  { id: 3, title: "BGMI Northeast Pro League", category: "Tournament", link: "/tournaments/bgmi" },
+  { id: 4, title: "Tipra Social Platform Showcase", category: "Startup", link: "/startups/tipra" },
+  { id: 5, title: "Frontend Developer Internship", category: "Internship", link: "/internships/frontend" },
+  { id: 6, title: "Free Fire Max Weekly Scrims", category: "Tournament", link: "/tournaments/freefire" },
+];
+
+
 const Home = () => {
   const navigate = useNavigate();
   
@@ -95,44 +111,64 @@ const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
+  // 🔍 Search Bar States
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const searchRef = useRef(null);
+
   // Jab slide change ho, toh text animation wapas re-trigger ho
   useEffect(() => {
     setIsAnimating(true);
   }, [currentIndex]);
 
-  // 🔄 Jab bhi koi video khatam hogi, ye function automatic next slide load karega
+  // 🔄 Video slider automatic loop function
   const handleVideoEnd = () => {
-    setIsAnimating(false); // Text animate out hoga
+    setIsAnimating(false); 
     setTimeout(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % heroSlides.length);
-    }, 100); // Halki si delay ke baad next slide
+    }, 150); 
   };
 
-  // ✨ 3D Word Animation Helper
+  // 🔎 Search Filter Logic
+  const filteredResults = globalSearchData.filter((item) =>
+    item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.category.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // 🖱️ Click outside logic to close dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setIsSearchFocused(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // ✨ PREMIUM FLAT ANIMATION
   const renderAnimatedWords = (text, isActive, baseDelay = 0) => {
+    if (!text) return null; 
     return text.split(" ").map((word, index) => (
       <span
         key={index}
-        className={`inline-block transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`inline-block transition-all duration-[1000ms] ease-[cubic-bezier(0.25,1,0.5,1)] ${
           isActive 
-            ? "opacity-100 translate-y-0 scale-100 blur-none [transform:rotateX(0deg)]" 
-            : "opacity-0 translate-y-12 scale-75 blur-sm [transform:rotateX(80deg)]"
+            ? "opacity-100 translate-y-0 blur-none tracking-normal" 
+            : "opacity-0 translate-y-6 blur-[3px] tracking-wide"
         }`}
-        style={{ transitionDelay: `${baseDelay + index * 100}ms`, transformStyle: 'preserve-3d' }}
+        style={{ transitionDelay: `${baseDelay + index * 80}ms` }}
       >
         {word}&nbsp;
       </span>
     ));
   };
 
-
-
 // ==========================================
-  // SECTION 2: AI STARTUPS (Premium Constellation UI)
+  // SECTION 2: AI STARTUPS (Solar System Orbit Logic)
   // ==========================================
   const [isSec2Visible, setIsSec2Visible] = useState(false);
   const section2Ref = useRef(null);
- // Navigation ke liye
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -147,26 +183,31 @@ const Home = () => {
     };
   }, []);
 
-  // 🌍 AI Startups Data - Exact positions mapped from the image
-  const aiStartups = [
-    { img: startup1, pos: "top-[10%] left-[8%] md:left-[15%]", size: "w-14 h-14 md:w-[72px] md:h-[72px]", delay: "0.1s" }, // Top Left
-    { img: startup2, pos: "top-[25%] left-[2%] md:left-[5%]", size: "w-12 h-12 md:w-16 md:h-16", delay: "0.3s" }, // Mid Left Outer
-    { img: startup3, pos: "top-[42%] left-[12%] md:left-[22%]", size: "w-12 h-12 md:w-[60px] md:h-[60px]", delay: "0.5s" }, // Mid Left Inner
-    { img: startup4, pos: "bottom-[28%] left-[5%] md:left-[10%]", size: "w-14 h-14 md:w-[68px] md:h-[68px]", delay: "0.7s" }, // Bottom Left Outer
-    { img: startup5, pos: "bottom-[18%] left-[18%] md:left-[24%]", size: "w-10 h-10 md:w-14 md:h-14", delay: "0.2s" }, // Bottom Left Inner
-    { img: startup6, pos: "bottom-[8%] left-[50%] -translate-x-1/2", size: "w-16 h-16 md:w-[80px] md:h-[80px]", delay: "0.4s" }, // Bottom Center (Meta position)
-    { img: startup7, pos: "bottom-[22%] right-[18%] md:right-[26%]", size: "w-10 h-10 md:w-14 md:h-14", delay: "0.6s" }, // Bottom Right Inner
-    { img: startup8, pos: "bottom-[35%] right-[5%] md:right-[12%]", size: "w-12 h-12 md:w-16 md:h-16", delay: "0.8s" }, // Bottom Right Outer
-    { img: startup9, pos: "top-[45%] right-[15%] md:right-[20%]", size: "w-14 h-14 md:w-[64px] md:h-[64px]", delay: "0.9s" }, // Mid Right Inner
-    { img: startup10, pos: "top-[12%] right-[10%] md:right-[18%]", size: "w-16 h-16 md:w-[76px] md:h-[76px]", delay: "1.1s" }, // Top Right
-  ];
+  // ✍️ Left-to-Right Typing Animation Helper
+  const renderTypingLetters = (text, delayOffset = 0) => {
+    if (!text) return null;
+    return text.split("").map((char, index) => (
+      <span
+        key={index}
+        className={`inline-block transition-all duration-500 ease-out ${
+          isSec2Visible 
+            ? "opacity-100 translate-x-0" 
+            : "opacity-0 -translate-x-4"
+        }`}
+        style={{ transitionDelay: `${delayOffset + index * 30}ms` }}
+      >
+        {char === " " ? "\u00A0" : char}
+      </span>
+    ));
+  };
 
   const statsData = [
     { icon: "🚀", num: "1000+", title: "AI Startup Listing", desc: "Curated collection of global AI innovators" },
     { icon: "🌐", num: "50+", title: "Countries", desc: "Startups from around the world" },
     { icon: "🔠", num: "20+", title: "Categories", desc: "From AI tools to infrastructure and beyond" },
-    { icon: "📈", num: "10K+", title: "Innovators", desc: "Builders, creators & visionaries trusting our platform" }
+    { icon: "👥", num: "10K+", title: "Innovators", desc: "Builders, creators & visionaries trusting our platform" }
   ];
+
 
 // ==========================================
   // SECTION 3: HACKATHONS ANIMATION LOGIC
@@ -281,93 +322,152 @@ const Home = () => {
     ));
   };
 
-  
-
-const currentSlide = heroSlides[currentIndex];
+  const currentSlide = heroSlides[currentIndex];
 
   return (
-    <div className="w-full font-sans overflow-x-hidden perspective-[1000px]">
+    <div className="w-full font-sans overflow-x-hidden">
       
       {/* ========================================================= */}
       {/* SECTION 1: DYNAMIC VIDEO PLAYLIST HERO SECTION            */}
       {/* ========================================================= */}
-      {/* Laptop & Mobile Device Fixes: min-h-[100dvh] ensures it perfectly fits screen on mobile */}
-      <section className="relative w-full min-h-[100dvh] flex flex-col justify-center bg-[#0b0f19] pt-24 pb-12 overflow-hidden">
+      <section className="relative w-full min-h-[100dvh] flex flex-col justify-center bg-[#070b14] pt-28 pb-12 overflow-hidden">
         
         {/* 🎥 DYNAMIC BACKGROUND VIDEO */}
-        {/* key={currentSlide.id} lagane se video smooth change hogi bina kaske */}
         <video 
-          key={currentSlide.id}
+          key={currentSlide?.id}
           autoPlay 
           muted 
           playsInline
-          onEnded={handleVideoEnd} // <--- Ye trigger karega agla video
+          onEnded={handleVideoEnd}
           className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 transition-opacity duration-1000"
         >
-          <source src={currentSlide.videoSrc} type="video/mp4" />
+          <source src={currentSlide?.videoSrc} type="video/mp4" />
         </video>
 
-        {/* 🌑 Black Gradient Overlay - Text readable banane ke liye */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0b0f19] via-[#0b0f19]/80 to-transparent z-0"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-[#0b0f19]/40 to-transparent z-0 md:bg-none"></div>
+        {/* 🌑 Deep Clean Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#070b14]/90 via-[#070b14]/50 to-transparent z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#070b14] via-transparent to-transparent z-0"></div>
 
-        {/* 📝 MAIN HERO CONTENT (Animated Text Syncs with Video) */}
-        {/* Mobile ke liye margin aur padding adjust kiya hai */}
-        <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-10 w-full flex-grow flex flex-col justify-center mt-4 md:mt-10">
+        {/* 📝 MAIN HERO CONTENT */}
+        <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-10 w-full flex-grow flex flex-col justify-center mt-2 md:mt-10">
           <div className="flex flex-col items-start w-full">
+
+            {/* ======================================================= */}
+            {/* 🔍 PREMIUM SEARCH BAR (Perfect for Mobile & Laptop)     */}
+            {/* ======================================================= */}
+            <div ref={searchRef} className="w-full max-w-2xl mb-8 sm:mb-10 relative z-50">
+              <div className={`relative flex items-center w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+                isSearchFocused ? 'scale-[1.02] sm:scale-105' : 'scale-100'
+              }`}>
+                {/* Search Icon */}
+                <svg className={`absolute left-4 sm:left-5 w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-300 ${isSearchFocused ? 'text-[#f5a623]' : 'text-neutral-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+
+                {/* Input Field */}
+                <input
+                  type="text"
+                  placeholder="Search Hackathons, Internships, Startups..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={() => setIsSearchFocused(true)}
+                  className={`w-full bg-white/5 backdrop-blur-xl border ${
+                    isSearchFocused ? 'border-[#f5a623] shadow-[0_0_25px_rgba(245,166,35,0.15)] bg-white/10' : 'border-white/10 hover:border-white/30'
+                  } text-white pl-10 pr-10 sm:pl-12 sm:pr-12 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl outline-none font-medium text-sm sm:text-base transition-all duration-300 placeholder:text-neutral-500`}
+                />
+
+                {/* Clear (Cross) Icon */}
+                {searchQuery && (
+                  <button onClick={() => setSearchQuery('')} className="absolute right-4 sm:right-5 text-neutral-400 hover:text-white transition-colors">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                  </button>
+                )}
+              </div>
+
+              {/* 🖱️ LIVE SEARCH DROPDOWN (Glassmorphism UI) */}
+              <div className={`absolute top-full mt-3 w-full bg-[#0a0f1c]/95 backdrop-blur-2xl border border-white/10 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] transform origin-top ${
+                isSearchFocused && searchQuery ? 'opacity-100 scale-y-100 translate-y-0' : 'opacity-0 scale-y-95 -translate-y-2 pointer-events-none'
+              }`}>
+                {filteredResults.length > 0 ? (
+                  <ul className="max-h-64 sm:max-h-72 overflow-y-auto p-2 custom-scrollbar">
+                    {filteredResults.map((item) => (
+                      <li key={item.id}>
+                        <button
+                          onClick={() => {
+                            navigate(item.link);
+                            setIsSearchFocused(false); // Link open hone pe dropdown band ho jayega
+                          }}
+                          className="w-full flex items-center justify-between text-left px-3 sm:px-4 py-3 hover:bg-white/10 rounded-lg sm:rounded-xl transition-all group"
+                        >
+                          <span className="text-white font-medium text-xs sm:text-sm group-hover:text-[#f5a623] transition-colors line-clamp-1 mr-2">{item.title}</span>
+                          <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-neutral-400 bg-white/5 px-2.5 py-1 rounded-md whitespace-nowrap group-hover:bg-[#f5a623]/20 group-hover:text-[#f5a623] transition-colors">{item.category}</span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <div className="px-6 py-8 text-center text-neutral-500 text-xs sm:text-sm font-medium">
+                    No results found for "{searchQuery}"
+                  </div>
+                )}
+              </div>
+            </div>
+            {/* ======================================================= */}
             
-            {/* 3D Word-by-Word Title (WHITE + YELLOW THEME) */}
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white leading-[1.1] tracking-tight uppercase [perspective:1000px]">
-              <div className="text-white">
-                {renderAnimatedWords(currentSlide.title1, isAnimating, 0)}
+            {/* Subtitle */}
+            <div className="overflow-hidden mb-4 sm:mb-5">
+              <p className={`text-[#f5a623] text-[10px] sm:text-xs md:text-sm font-black tracking-[0.2em] sm:tracking-[0.3em] uppercase transition-all duration-[1200ms] ease-out ${
+                isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}>
+                {currentSlide?.subtitle}
+              </p>
+            </div>
+
+            {/* Main Title */}
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.15] sm:leading-[1.1] tracking-tight uppercase select-none relative z-10">
+              <div className="block overflow-hidden py-0.5 sm:py-1">
+                {renderAnimatedWords(currentSlide?.title1 || "", isAnimating, 0)}
               </div>
-              <div className="text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.5)] mt-1 lg:mt-2">
-                {renderAnimatedWords(currentSlide.titleHighlight, isAnimating, 200)}
+              <div className="block overflow-hidden py-0.5 sm:py-1 text-[#f5a623]">
+                {renderAnimatedWords(currentSlide?.titleHighlight || "", isAnimating, 200)}
               </div>
-              <div className="text-white mt-1 lg:mt-2">
-                {renderAnimatedWords(currentSlide.title2, isAnimating, 400)}
+              <div className="block overflow-hidden py-0.5 sm:py-1">
+                {renderAnimatedWords(currentSlide?.title2 || "", isAnimating, 400)}
               </div>
             </h1>
             
-            {/* Animated Subtitle (Yellow Accent) */}
-            <p className={`text-yellow-400 text-xs sm:text-sm font-bold tracking-widest mt-6 uppercase transition-all duration-700 ease-out ${
-              isAnimating ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
-            }`} style={{ transitionDelay: '700ms' }}>
-              {currentSlide.subtitle}
-            </p>
-            
-            {/* Animated Description (White/Gray) */}
-            <p className={`text-gray-300 text-base sm:text-lg lg:text-xl max-w-2xl mt-4 leading-relaxed transition-all duration-700 ease-out ${
+            {/* Description Text */}
+            <p className={`text-neutral-300 text-sm sm:text-base lg:text-xl max-w-2xl mt-4 sm:mt-6 font-medium leading-relaxed transition-all duration-[1200ms] ease-out relative z-10 ${
               isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`} style={{ transitionDelay: '900ms' }}>
-              {currentSlide.desc}
+            }`} style={{ transitionDelay: '600ms' }}>
+              {currentSlide?.desc}
             </p>
             
-            {/* Animated Buttons (Yellow Premium Look) */}
-            <div className={`flex flex-col sm:flex-row w-full sm:w-auto gap-4 mt-8 transition-all duration-700 ease-out ${
-              isAnimating ? "opacity-100 scale-100" : "opacity-0 scale-90"
-            }`} style={{ transitionDelay: '1100ms' }}>
+            {/* Buttons */}
+            <div className={`flex flex-col sm:flex-row w-full sm:w-auto gap-3 sm:gap-4 mt-8 sm:mt-10 transition-all duration-[1200ms] ease-out relative z-10 ${
+              isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`} style={{ transitionDelay: '800ms' }}>
               <button 
-                onClick={() => navigate(currentSlide.btn1Link)} 
-                className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-black px-8 py-3.5 rounded-xl font-bold transition-all shadow-[0_0_20px_rgba(250,204,21,0.4)] active:scale-95"
+                onClick={() => navigate(currentSlide?.btn1Link)} 
+                className="w-full sm:w-auto bg-[#f5a623] hover:bg-[#e0961c] text-black px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-black tracking-wide transition-colors active:scale-95 uppercase text-xs sm:text-sm"
               >
-                {currentSlide.btn1Text}
+                {currentSlide?.btn1Text}
               </button>
               <button 
-                onClick={() => navigate(currentSlide.btn2Link)} 
-                className="w-full sm:w-auto border-2 border-gray-500 hover:border-yellow-400 bg-black/40 backdrop-blur-sm px-8 py-3.5 rounded-xl font-bold transition-all hover:text-yellow-400 active:scale-95 text-white"
+                onClick={() => navigate(currentSlide?.btn2Link)} 
+                className="w-full sm:w-auto border-2 border-white/80 hover:border-white bg-transparent hover:bg-white/10 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-bold tracking-wide transition-colors active:scale-95 text-white uppercase text-xs sm:text-sm"
               >
-                {currentSlide.btn2Text}
+                {currentSlide?.btn2Text}
               </button>
             </div>
 
             {/* Video Progress Indicators (Dots) */}
-            <div className="flex gap-2 mt-12 mb-4">
+            <div className="flex gap-1.5 sm:gap-2 mt-12 sm:mt-16 mb-4 relative z-10">
               {heroSlides.map((_, index) => (
                 <div 
                   key={index} 
-                  className={`h-1.5 rounded-full transition-all duration-500 ${
-                    index === currentIndex ? "w-8 bg-yellow-400 shadow-[0_0_8px_rgba(250,204,21,0.8)]" : "w-3 bg-gray-600"
+                  className={`h-1 sm:h-1.5 rounded-full transition-all duration-500 ${
+                    index === currentIndex ? "w-6 sm:w-8 bg-[#f5a623]" : "w-1.5 sm:w-2 bg-white/30"
                   }`}
                 />
               ))}
@@ -375,184 +475,174 @@ const currentSlide = heroSlides[currentIndex];
 
           </div>
         </div>
-
-        {/* 📊 STATS ROW (White + Yellow Theme | Phone/Laptop Fix) */}
-        {/* Ab yeh Mobile par ek Grid ban jayega aur PC par Row mein rahega */}
-        <div className={`relative z-10 max-w-7xl mx-auto px-5 md:px-10 w-full mt-auto mb-4 md:mb-0 transition-all duration-1000 ease-out ${
-          isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-        }`} style={{ transitionDelay: '1300ms' }}>
-          
-          <div className="bg-[#121826]/80 backdrop-blur-xl border border-gray-800 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-2xl">
-            {/* Grid for Mobile (2x2), Flex for Laptop */}
-            <div className="grid grid-cols-2 md:flex md:flex-row justify-between items-center gap-6 md:gap-4">
-              
-              <div className="flex flex-col md:flex-row items-start md:items-center gap-3 hover:scale-105 transition-transform">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-yellow-500/10 flex items-center justify-center text-xl shadow-[0_0_10px_rgba(250,204,21,0.2)] text-yellow-400">👥</div>
-                <div><h3 className="text-xl md:text-2xl font-bold text-white">10K+</h3><p className="text-gray-400 text-xs md:text-sm">Active Members</p></div>
-              </div>
-              
-              <div className="hidden md:block w-px h-12 bg-gray-800"></div>
-              
-              <div className="flex flex-col md:flex-row items-start md:items-center gap-3 hover:scale-105 transition-transform">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-yellow-500/10 flex items-center justify-center text-xl shadow-[0_0_10px_rgba(250,204,21,0.2)] text-yellow-400">📚</div>
-                <div><h3 className="text-xl md:text-2xl font-bold text-white">50+</h3><p className="text-gray-400 text-xs md:text-sm">Learning Resources</p></div>
-              </div>
-              
-              <div className="hidden md:block w-px h-12 bg-gray-800"></div>
-              
-              <div className="flex flex-col md:flex-row items-start md:items-center gap-3 hover:scale-105 transition-transform">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-yellow-500/10 flex items-center justify-center text-xl shadow-[0_0_10px_rgba(250,204,21,0.2)] text-yellow-400">🎟️</div>
-                <div><h3 className="text-xl md:text-2xl font-bold text-white">100+</h3><p className="text-gray-400 text-xs md:text-sm">Events Based</p></div>
-              </div>
-              
-              <div className="hidden md:block w-px h-12 bg-gray-800"></div>
-              
-              <div className="flex flex-col md:flex-row items-start md:items-center gap-3 hover:scale-105 transition-transform">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-yellow-500/10 flex items-center justify-center text-xl shadow-[0_0_10px_rgba(250,204,21,0.2)] text-yellow-400">🚀</div>
-                <div><h3 className="text-xl md:text-2xl font-bold text-yellow-400">Northeast</h3><p className="text-gray-400 text-xs md:text-sm">Startup</p></div>
-              </div>
-              
-            </div>
-          </div>
-        </div>
-
       </section>
-  
-    
-      {/* ========================================================= */}
-      {/* SECTION 2: AI STARTUPS (Premium Constellation UI)         */}
+
+
+
+    {/* ========================================================= */}
+      {/* SECTION 2: AI STARTUPS (Planetary Orbit UI - White Theme) */}
       {/* ========================================================= */}
       <section 
         ref={section2Ref} 
-        className="relative w-full bg-[#eef2f6] pt-28 pb-16 overflow-hidden border-t border-gray-100 flex flex-col items-center"
+        className="relative w-full bg-white pt-24 pb-20 overflow-hidden border-t border-gray-100"
       >
-        {/* CapCut Style Fluid Animations */}
+        {/* CSS Keyframes for Solar System Orbits */}
         <style>
           {`
-            @keyframes orbitFloat {
-              0%, 100% { transform: translateY(0px) rotate(0deg); }
-              50% { transform: translateY(-12px) rotate(1.5deg); }
+            @keyframes orbit {
+              100% { transform: rotate(360deg); }
             }
-            .orbit-float { animation: orbitFloat 6s ease-in-out infinite; }
-            .orbit-float-reverse { animation: orbitFloat 7s ease-in-out infinite reverse; }
-            
-            .pop-in {
-              transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            @keyframes orbitReverse {
+              100% { transform: rotate(-360deg); }
             }
+            .orbit-spin-slow { animation: orbit 30s linear infinite; }
+            .orbit-spin-medium { animation: orbit 22s linear infinite; }
+            .orbit-spin-fast { animation: orbit 15s linear infinite; }
+            /* Reverse spin to keep logos upright while orbiting */
+            .anti-spin-slow { animation: orbitReverse 30s linear infinite; }
+            .anti-spin-medium { animation: orbitReverse 22s linear infinite; }
+            .anti-spin-fast { animation: orbitReverse 15s linear infinite; }
           `}
         </style>
 
-        {/* --- BACKGROUND ORBIT LINES --- */}
-        <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden opacity-40">
-          {/* Main Diagonal Ellipse */}
-          <div className={`absolute w-[180%] md:w-[130%] h-[500px] md:h-[800px] border-[1.5px] border-[#e2e8f0] rounded-[100%] transition-all duration-1500 ${isSec2Visible ? 'opacity-100 scale-100' : 'opacity-0 scale-75'} rotate-[-12deg]`}></div>
-          {/* Secondary Intersecting Ellipse */}
-          <div className={`absolute w-[160%] md:w-[110%] h-[400px] md:h-[600px] border-[1.5px] border-[#e9d5ff] rounded-[100%] transition-all duration-1500 delay-300 ${isSec2Visible ? 'opacity-100 scale-100' : 'opacity-0 scale-75'} rotate-[8deg]`}></div>
-          {/* Tiny connection dots on lines */}
-          <div className="absolute top-[20%] left-[25%] w-1.5 h-1.5 rounded-full bg-[#a855f7]"></div>
-          <div className="absolute bottom-[25%] right-[35%] w-1.5 h-1.5 rounded-full bg-[#3b82f6]"></div>
-          <div className="absolute top-[35%] right-[15%] w-1 h-1 rounded-full bg-[#ec4899]"></div>
-        </div>
-
-        {/* --- CENTRAL HERO TEXT --- */}
-        <div className="relative z-10 w-full max-w-4xl mx-auto px-6 text-center mt-12 md:mt-24">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
           
-          {/* Top Badge */}
-          <div className={`inline-block mb-8 pop-in ${isSec2Visible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-90'}`}>
-            <span className="text-[10px] md:text-[11px] font-bold text-[#8b5cf6] bg-white border border-[#e9d5ff] shadow-sm px-5 py-2 rounded-full uppercase tracking-[0.25em]">
-              Discover. Explore. Innovate.
-            </span>
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
+            
+            {/* ---------------- LEFT SIDE: TEXT CONTENT ---------------- */}
+            <div className="flex flex-col items-start text-left z-10 order-2 lg:order-1">
+              
+              {/* Yellow Badge */}
+              <div className={`inline-flex items-center gap-2 mb-6 border border-yellow-400 bg-yellow-50 px-4 py-1.5 rounded-full transition-all duration-700 ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+                <span className="text-yellow-500 text-sm">★</span>
+                <span className="text-xs font-bold text-yellow-600 tracking-widest uppercase">
+                  Discover. Explore. Innovate.
+                </span>
+              </div>
 
-          {/* Main Title */}
-          <h2 className={`text-4xl md:text-6xl lg:text-7xl font-black text-[#1e293b] tracking-tight leading-[1.15] mb-6 pop-in ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '150ms' }}>
-            EXPLORE THE WORLD'S <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]">
-              TOP AI STARTUPS
-            </span>
-          </h2>
+              {/* Main Title (Typing Effect) */}
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 tracking-tight leading-[1.1] mb-6">
+                <div>{renderTypingLetters("EXPLORE THE WORLD'S", 0)}</div>
+                <div className="text-yellow-400 drop-shadow-sm mt-1">
+                  {renderTypingLetters("TOP AI STARTUPS", 400)}
+                </div>
+              </h2>
 
-          {/* Subtitle */}
-          <p className={`text-[#64748b] max-w-xl mx-auto text-base md:text-lg font-medium pop-in ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '250ms' }}>
-            Your gateway to the most innovative AI startups shaping the future of technology and humanity.
-          </p>
+              <p className={`text-gray-500 text-lg sm:text-xl font-medium max-w-lg mb-10 transition-all duration-700 delay-700 ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+                Your gateway to the most innovative AI startups shaping the future of technology and humanity.
+              </p>
 
-          {/* Trusted By Avatars */}
-          <div className={`flex items-center justify-center gap-4 mt-10 pop-in ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '350ms' }}>
-            <div className="flex -space-x-2.5">
-              <img src="https://i.pravatar.cc/100?img=11" alt="user" className="w-9 h-9 rounded-full border-[2.5px] border-white shadow-sm" />
-              <img src="https://i.pravatar.cc/100?img=12" alt="user" className="w-9 h-9 rounded-full border-[2.5px] border-white shadow-sm" />
-              <img src="https://i.pravatar.cc/100?img=33" alt="user" className="w-9 h-9 rounded-full border-[2.5px] border-white shadow-sm" />
-              <div className="w-9 h-9 rounded-full border-[2.5px] border-white bg-gray-900 flex items-center justify-center shadow-sm">
-                <span className="text-[10px] text-white font-bold tracking-wider">AI</span>
+              {/* Trusted Avatars & User's Own Image */}
+              <div className={`flex items-center gap-4 transition-all duration-700 delay-1000 ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+                <div className="flex -space-x-3">
+                  <img src="https://i.pravatar.cc/100?img=1" alt="user" className="w-10 h-10 rounded-full border-2 border-white shadow-sm" />
+                  <img src="https://i.pravatar.cc/100?img=2" alt="user" className="w-10 h-10 rounded-full border-2 border-white shadow-sm" />
+                  {/* 👇 AAPKI KHUD KI IMAGE YAHAN HAI 👇 */}
+                  <img src={myProfileImage} alt="My Profile" className="w-10 h-10 rounded-full border-2 border-white shadow-md z-10 object-cover" />
+                  
+                  <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-900 flex items-center justify-center shadow-sm z-20">
+                    <span className="text-[10px] text-white font-bold tracking-widest">+1K</span>
+                  </div>
+                </div>
+                <div className="text-sm text-gray-500 font-semibold">
+                  Trusted by innovators worldwide
+                </div>
               </div>
             </div>
-            <div className="flex items-center gap-2 text-sm text-[#64748b] font-semibold">
-              <span className="w-2 h-2 rounded-full bg-[#8b5cf6] animate-pulse"></span>
-              Trusted by innovators worldwide
+
+            {/* ---------------- RIGHT SIDE: PLANETARY ORBITS ---------------- */}
+            <div className={`relative w-full aspect-square max-w-[500px] mx-auto z-0 order-1 lg:order-2 transition-all duration-1000 ${isSec2Visible ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}>
+              
+              {/* CENTER HUB (The "Sun") */}
+              <div className="absolute inset-0 m-auto w-24 h-24 sm:w-28 sm:h-28 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-full shadow-[0_0_40px_rgba(250,204,21,0.5)] flex items-center justify-center z-50">
+                <span className="text-3xl font-black text-white drop-shadow-md">AI</span>
+              </div>
+
+              {/* INNER ORBIT (Fast) */}
+              <div className="absolute inset-0 m-auto w-[55%] h-[55%] border border-dashed border-gray-300 rounded-full orbit-spin-fast z-40">
+                {/* Planet 1 */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full p-2 shadow-lg border border-gray-100 anti-spin-fast">
+                  <img src={startup1} className="w-full h-full object-contain" alt="AI 1" />
+                </div>
+                {/* Planet 2 */}
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-10 h-10 bg-white rounded-full p-1.5 shadow-lg border border-gray-100 anti-spin-fast">
+                  <img src={startup2} className="w-full h-full object-contain" alt="AI 2" />
+                </div>
+              </div>
+
+              {/* MIDDLE ORBIT (Medium) */}
+              <div className="absolute inset-0 m-auto w-[75%] h-[75%] border border-dashed border-gray-200 rounded-full orbit-spin-medium z-30">
+                {/* Planet 3 */}
+                <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-white rounded-full p-2 shadow-lg border border-gray-100 anti-spin-medium">
+                  <img src={startup3} className="w-full h-full object-contain" alt="AI 3" />
+                </div>
+                {/* Planet 4 */}
+                <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full p-2 shadow-lg border border-gray-100 anti-spin-medium">
+                  <img src={startup4} className="w-full h-full object-contain" alt="AI 4" />
+                </div>
+                {/* Planet 5 */}
+                <div className="absolute bottom-[10%] left-[10%] -translate-x-1/2 translate-y-1/2 w-10 h-10 bg-white rounded-full p-1.5 shadow-lg border border-gray-100 anti-spin-medium">
+                  <img src={startup5} className="w-full h-full object-contain" alt="AI 5" />
+                </div>
+              </div>
+
+              {/* OUTER ORBIT (Slow) */}
+              <div className="absolute inset-0 m-auto w-[100%] h-[100%] border border-dashed border-gray-100 rounded-full orbit-spin-slow z-20">
+                {/* Planet 6 */}
+                <div className="absolute top-[10%] left-[15%] -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white rounded-full p-3 shadow-xl border border-gray-100 anti-spin-slow hover:scale-110 transition-transform">
+                  <img src={startup6} className="w-full h-full object-contain" alt="AI 6" />
+                </div>
+                {/* Planet 7 */}
+                <div className="absolute top-[5%] right-[20%] translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-white rounded-full p-2.5 shadow-xl border border-gray-100 anti-spin-slow">
+                  <img src={startup7} className="w-full h-full object-contain" alt="AI 7" />
+                </div>
+                {/* Planet 8 */}
+                <div className="absolute bottom-[15%] right-[5%] translate-x-1/2 translate-y-1/2 w-16 h-16 bg-white rounded-full p-3 shadow-xl border border-gray-100 anti-spin-slow">
+                  <img src={startup8} className="w-full h-full object-contain" alt="AI 8" />
+                </div>
+                {/* Planet 9 */}
+                <div className="absolute bottom-[5%] left-[30%] -translate-x-1/2 translate-y-1/2 w-12 h-12 bg-white rounded-full p-2 shadow-lg border border-gray-100 anti-spin-slow">
+                  <img src={startup9} className="w-full h-full object-contain" alt="AI 9" />
+                </div>
+              </div>
+
             </div>
           </div>
-        </div>
 
-        {/* --- FLOATING 3D LOGOS --- */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          {aiStartups.map((startup, idx) => (
-            <div 
-              key={idx}
-              className={`absolute ${startup.pos} pointer-events-auto pop-in ${isSec2Visible ? "opacity-100 scale-100" : "opacity-0 scale-50"}`}
-              style={{ transitionDelay: startup.delay }}
+          {/* ---------------- BOTTOM SECTION: STATS & CTA BUTTON ---------------- */}
+          <div className={`mt-20 border border-gray-200 rounded-[2rem] bg-gray-50/50 p-6 sm:p-8 lg:p-10 flex flex-col xl:flex-row justify-between items-center gap-10 shadow-sm transition-all duration-1000 delay-500 ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+            
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full xl:w-auto flex-grow">
+              {statsData.map((stat, idx) => (
+                <div key={idx} className="flex items-center gap-4 group cursor-pointer">
+                  <div className="w-12 h-12 rounded-xl border border-yellow-200 bg-yellow-50 flex items-center justify-center text-xl group-hover:bg-yellow-400 group-hover:scale-110 transition-all duration-300">
+                    {stat.icon}
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-black text-gray-900 group-hover:text-yellow-600 transition-colors">{stat.num}</h4>
+                    <p className="text-xs font-bold text-gray-500">{stat.title}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Yellow Button */}
+            <button 
+              onClick={() => navigate('/startups')}
+              className="w-full xl:w-auto whitespace-nowrap bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-black font-extrabold px-10 py-4 rounded-xl flex items-center justify-center gap-3 shadow-[0_8px_20px_rgba(250,204,21,0.3)] transition-all transform hover:-translate-y-1 hover:shadow-[0_12px_25px_rgba(250,204,21,0.4)] active:scale-95"
             >
-              <div className={idx % 2 === 0 ? "orbit-float" : "orbit-float-reverse"}>
-                <div className={`
-                  ${startup.size} 
-                  bg-white rounded-full p-2.5 md:p-4
-                  shadow-[0_8px_24px_rgba(149,157,165,0.2)] 
-                  hover:shadow-[0_20px_40px_rgba(139,92,246,0.25)] 
-                  hover:scale-125 hover:-translate-y-3
-                  transition-all duration-300 cursor-pointer border border-[#f1f5f9] flex items-center justify-center
-                `}>
-                  <img src={startup.img} alt={`Startup ${idx}`} className="max-w-full max-h-full object-contain" />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* --- BOTTOM STATS BAR & CTA BUTTON --- */}
-        <div className={`relative z-10 w-full max-w-7xl mx-auto px-6 mt-40 md:mt-56 flex flex-col items-center pop-in ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`} style={{ transitionDelay: '500ms' }}>
-          
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 w-full mb-16">
-            {statsData.map((stat, idx) => (
-              <div key={idx} className="flex gap-5 items-start group">
-                <div className="w-14 h-14 rounded-2xl bg-[#f5f3ff] flex items-center justify-center text-2xl group-hover:scale-110 group-hover:bg-[#ede9fe] transition-all duration-300 shrink-0 shadow-sm border border-[#ede9fe]">
-                  {stat.icon}
-                </div>
-                <div>
-                  <h4 className="text-xl md:text-2xl font-black text-[#7c3aed]">{stat.num}</h4>
-                  <p className="text-sm font-bold text-[#1e293b] mt-1">{stat.title}</p>
-                  <p className="text-xs text-[#64748b] mt-1.5 leading-relaxed">{stat.desc}</p>
-                </div>
-              </div>
-            ))}
+              View More Startups <span className="text-xl">➔</span>
+            </button>
+            
           </div>
-          
-          {/* View More Button (Naya Add Kiya Gaya) */}
-          <button 
-            onClick={() => navigate('/startups')}
-            className="group relative inline-flex items-center justify-center px-8 py-3.5 text-base font-bold text-white transition-all duration-300 bg-gray-900 rounded-full hover:bg-[#7c3aed] shadow-lg hover:shadow-[#7c3aed]/40 hover:-translate-y-1 active:scale-95"
-          >
-            <span className="mr-2">View more Startups</span>
-            <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-            </svg>
-          </button>
 
-          {/* Bottom Footer Line */}
-          <div className="w-full mt-12 pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-center items-center gap-4 text-[10px] md:text-xs font-bold text-gray-400 tracking-widest uppercase">
+          {/* Bottom Lightning Bar */}
+          <div className="mt-8 flex justify-center items-center gap-3 text-[10px] sm:text-xs font-bold text-gray-400 tracking-[0.2em] uppercase">
+            <span className="w-6 h-6 rounded-full bg-yellow-100 text-yellow-500 flex items-center justify-center text-xs">⚡</span>
             <span>1000+ AI STARTUP LISTING</span>
-            <span className="hidden sm:block w-1.5 h-1.5 bg-gray-300 rounded-full"></span>
-            <span>EXPLORE. CONNECT. GROW.</span>
+            <span className="w-1 h-1 bg-gray-300 rounded-full mx-2 hidden sm:block"></span>
+            <span className="hidden sm:block">EXPLORE. CONNECT. GROW.</span>
           </div>
 
         </div>
