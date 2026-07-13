@@ -3,10 +3,16 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-// 📁 APNI VIDEO YAHAN IMPORT KAREIN (Path change kar lena)
-import heroVideo from '../assets/videos/video1.mp4'; 
+// 🎥 Apni saari videos yahan import karein (path check kar lena)
+import video1 from '../assets/videos/video1.mp4';
+import video2 from '../assets/videos/video2.mp4';
+import video3 from '../assets/videos/video3.mp4';
+import video4 from '../assets/videos/video4.mp4';
+
+ 
 
 
+      
 // 📂 Hub Images (Inhe apne assets/images folder mein zaroor rakhein)
 import startup1 from '../assets/images/startup1.jpeg';
 import startup2 from '../assets/images/startup2.jpeg';
@@ -34,19 +40,75 @@ import tourna1 from '../assets/images/tourna1.jpeg';
 import tourna2 from '../assets/images/tourna2.jpeg';
 import tourna3 from '../assets/images/tourna3.jpeg';
 
+// 📂 DYNAMIC SLIDES DATA (Yahan se future mein text/videos change kar sakte hain)
+const heroSlides = [
+  {
+    id: 1,
+    videoSrc: video1,
+    title1: "NORTHEAST INDIA'S",
+    titleHighlight: "YOUTH TECH & START-UP",
+    title2: "COMMUNITY HUB",
+    subtitle: "CONNECT. COLLABORATE. CREATE IMPACT.",
+    desc: "Join thousands of students, developers and innovators building the future of Northeast India.",
+    btn1Text: "Explore Startups ➔", btn1Link: "/startups",
+    btn2Text: "Hackathons ➔", btn2Link: "/hackathons"
+  },
+  {
+    id: 2,
+    videoSrc: video2,
+    title1: "KICKSTART YOUR CAREER WITH",
+    titleHighlight: "TOP INTERNSHIPS",
+    title2: "& OPEN ROLES",
+    subtitle: "LEARN. BUILD. GROW.",
+    desc: "Get real-world experience. Apply for remote and onsite internships at top tech companies.",
+    btn1Text: "Apply Now ➔", btn1Link: "/internships",
+    btn2Text: "View All ➔", btn2Link: "/internships"
+  },
+  {
+    id: 3,
+    videoSrc: video3,
+    title1: "BUILD INNOVATIVE SOLUTIONS AT",
+    titleHighlight: "MEGA HACKATHONS",
+    title2: "AROUND THE REGION",
+    subtitle: "CODE. CREATE. CONQUER.",
+    desc: "Participate in intense coding battles. Solve real-world problems and win massive prizes.",
+    btn1Text: "Register Now ➔", btn1Link: "/hackathons",
+    btn2Text: "Past Events ➔", btn2Link: "/events"
+  },
+  {
+    id: 4,
+    videoSrc: video4,
+    title1: "COMPETE IN THE ULTIMATE",
+    titleHighlight: "ESPORTS TOURNAMENTS",
+    title2: "& GAMING ARENA",
+    subtitle: "PLAY. COMPETE. WIN.",
+    desc: "Join BGMI, Free Fire, and MLBB tournaments. Compete with the best squads.",
+    btn1Text: "Join Squad ➔", btn1Link: "/tournaments",
+    btn2Text: "Leaderboard ➔", btn2Link: "/tournaments"
+  }
+];
 
 const Home = () => {
   const navigate = useNavigate();
-  const [currentSlide, setCurrentSlide] = useState(0);
   
-  const [isLoaded, setIsLoaded] = useState(false);
+  // ⏱️ State for Slide Index and Animation
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
+  // Jab slide change ho, toh text animation wapas re-trigger ho
   useEffect(() => {
-    // Component mount hone ke turant baad animation start karega
-    setIsLoaded(true);
-  }, []);
+    setIsAnimating(true);
+  }, [currentIndex]);
 
-  // ✨ Helper Function: Ek-Ek word ko 3D animation dene ke liye
+  // 🔄 Jab bhi koi video khatam hogi, ye function automatic next slide load karega
+  const handleVideoEnd = () => {
+    setIsAnimating(false); // Text animate out hoga
+    setTimeout(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % heroSlides.length);
+    }, 100); // Halki si delay ke baad next slide
+  };
+
+  // ✨ 3D Word Animation Helper
   const renderAnimatedWords = (text, isActive, baseDelay = 0) => {
     return text.split(" ").map((word, index) => (
       <span
@@ -62,6 +124,7 @@ const Home = () => {
       </span>
     ));
   };
+
 
 
 // ==========================================
@@ -218,110 +281,145 @@ const Home = () => {
     ));
   };
 
-  // 🚀 SLIDER DATA (Total 5 Slides)
- return (
+  
+
+const currentSlide = heroSlides[currentIndex];
+
+  return (
     <div className="w-full font-sans overflow-x-hidden perspective-[1000px]">
       
       {/* ========================================================= */}
-      {/* SECTION 1: FULL BANNER HERO WITH BACKGROUND VIDEO         */}
+      {/* SECTION 1: DYNAMIC VIDEO PLAYLIST HERO SECTION            */}
       {/* ========================================================= */}
-      <section className="relative w-full min-h-screen flex flex-col justify-center bg-[#0b0f19] pt-24 pb-12 overflow-hidden">
+      {/* Laptop & Mobile Device Fixes: min-h-[100dvh] ensures it perfectly fits screen on mobile */}
+      <section className="relative w-full min-h-[100dvh] flex flex-col justify-center bg-[#0b0f19] pt-24 pb-12 overflow-hidden">
         
-        {/* 🎥 BACKGROUND VIDEO (Replaced Slider) */}
+        {/* 🎥 DYNAMIC BACKGROUND VIDEO */}
+        {/* key={currentSlide.id} lagane se video smooth change hogi bina kaske */}
         <video 
+          key={currentSlide.id}
           autoPlay 
-          loop 
           muted 
           playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-50"
+          onEnded={handleVideoEnd} // <--- Ye trigger karega agla video
+          className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 transition-opacity duration-1000"
         >
-          <source src={heroVideo} type="video/mp4" />
+          <source src={currentSlide.videoSrc} type="video/mp4" />
         </video>
 
-        {/* 🌑 Gradient Overlays (Taki Text clear padha jaye) */}
+        {/* 🌑 Black Gradient Overlay - Text readable banane ke liye */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#0b0f19] via-[#0b0f19]/80 to-transparent z-0"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-transparent to-transparent z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-[#0b0f19]/40 to-transparent z-0 md:bg-none"></div>
 
-        {/* 📝 Main Hero Content (3D Animated Text & Buttons) */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full mt-10 md:mt-20">
-          <div className="flex flex-col items-start">
+        {/* 📝 MAIN HERO CONTENT (Animated Text Syncs with Video) */}
+        {/* Mobile ke liye margin aur padding adjust kiya hai */}
+        <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-10 w-full flex-grow flex flex-col justify-center mt-4 md:mt-10">
+          <div className="flex flex-col items-start w-full">
             
-            {/* 3D Word-by-Word Title */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-[1.1] tracking-tight uppercase [perspective:1000px]">
-              <div>{renderAnimatedWords("NORTHEAST INDIA'S", isLoaded, 0)}</div>
-              <div className="text-[yellow] drop-shadow-[0_0_5px_rgba(168,85,247,0.5)] mt-1">
-                {renderAnimatedWords("YOUTH TECH & START-UP", isLoaded, 200)}
+            {/* 3D Word-by-Word Title (WHITE + YELLOW THEME) */}
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white leading-[1.1] tracking-tight uppercase [perspective:1000px]">
+              <div className="text-white">
+                {renderAnimatedWords(currentSlide.title1, isAnimating, 0)}
               </div>
-              <div className="mt-1">{renderAnimatedWords("COMMUNITY HUB", isLoaded, 400)}</div>
+              <div className="text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.5)] mt-1 lg:mt-2">
+                {renderAnimatedWords(currentSlide.titleHighlight, isAnimating, 200)}
+              </div>
+              <div className="text-white mt-1 lg:mt-2">
+                {renderAnimatedWords(currentSlide.title2, isAnimating, 400)}
+              </div>
             </h1>
             
-            {/* Animated Subtitle */}
-            <p className={`text-gray-300 text-sm font-bold tracking-widest mt-6 uppercase transition-all duration-700 ease-out ${
-              isLoaded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+            {/* Animated Subtitle (Yellow Accent) */}
+            <p className={`text-yellow-400 text-xs sm:text-sm font-bold tracking-widest mt-6 uppercase transition-all duration-700 ease-out ${
+              isAnimating ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
             }`} style={{ transitionDelay: '700ms' }}>
-              CONNECT. COLLABORATE. CREATE IMPACT.
+              {currentSlide.subtitle}
             </p>
             
-            {/* Animated Description */}
-            <p className={`text-gray-400 text-lg sm:text-xl max-w-2xl mt-3 leading-relaxed transition-all duration-700 ease-out ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            {/* Animated Description (White/Gray) */}
+            <p className={`text-gray-300 text-base sm:text-lg lg:text-xl max-w-2xl mt-4 leading-relaxed transition-all duration-700 ease-out ${
+              isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`} style={{ transitionDelay: '900ms' }}>
-              Join thousands of students, developers and innovators building the future of Northeast India.
+              {currentSlide.desc}
             </p>
             
-            {/* Animated Buttons */}
-            <div className={`flex flex-row flex-wrap gap-4 mt-8 transition-all duration-700 ease-out ${
-              isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-90"
+            {/* Animated Buttons (Yellow Premium Look) */}
+            <div className={`flex flex-col sm:flex-row w-full sm:w-auto gap-4 mt-8 transition-all duration-700 ease-out ${
+              isAnimating ? "opacity-100 scale-100" : "opacity-0 scale-90"
             }`} style={{ transitionDelay: '1100ms' }}>
               <button 
-                onClick={() => navigate("/communities")} 
-                className="bg-gradient-to-r from-[#a855f7] to-[#7c3aed] hover:from-[#9333ea] hover:to-[#6d28d9] text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-[0_0_20px_rgba(168,85,247,0.4)] active:scale-95"
+                onClick={() => navigate(currentSlide.btn1Link)} 
+                className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-black px-8 py-3.5 rounded-xl font-bold transition-all shadow-[0_0_20px_rgba(250,204,21,0.4)] active:scale-95"
               >
-                Explore ➔
+                {currentSlide.btn1Text}
               </button>
               <button 
-                onClick={() => navigate("/hackathons")} 
-                className="border-2 border-gray-600 hover:border-gray-400 bg-black/40 backdrop-blur-sm px-8 py-3.5 rounded-xl font-bold transition-all active:scale-95 text-white"
+                onClick={() => navigate(currentSlide.btn2Link)} 
+                className="w-full sm:w-auto border-2 border-gray-500 hover:border-yellow-400 bg-black/40 backdrop-blur-sm px-8 py-3.5 rounded-xl font-bold transition-all hover:text-yellow-400 active:scale-95 text-white"
               >
-                Hackathons ➔
+                {currentSlide.btn2Text}
               </button>
+            </div>
+
+            {/* Video Progress Indicators (Dots) */}
+            <div className="flex gap-2 mt-12 mb-4">
+              {heroSlides.map((_, index) => (
+                <div 
+                  key={index} 
+                  className={`h-1.5 rounded-full transition-all duration-500 ${
+                    index === currentIndex ? "w-8 bg-yellow-400 shadow-[0_0_8px_rgba(250,204,21,0.8)]" : "w-3 bg-gray-600"
+                  }`}
+                />
+              ))}
             </div>
 
           </div>
         </div>
 
-        {/* 📊 STATS ROW (Floating Glassy Box) */}
-        <div className={`hidden md:block relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full mt-24 md:mt-32 transition-all duration-1000 ease-out ${
-          isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+        {/* 📊 STATS ROW (White + Yellow Theme | Phone/Laptop Fix) */}
+        {/* Ab yeh Mobile par ek Grid ban jayega aur PC par Row mein rahega */}
+        <div className={`relative z-10 max-w-7xl mx-auto px-5 md:px-10 w-full mt-auto mb-4 md:mb-0 transition-all duration-1000 ease-out ${
+          isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
         }`} style={{ transitionDelay: '1300ms' }}>
-          <div className="bg-[#121826]/80 backdrop-blur-xl border border-gray-800 rounded-2xl p-6 lg:p-8 flex flex-col md:flex-row justify-between items-center gap-8 md:gap-4 shadow-2xl">
-            <div className="flex items-center gap-4 hover:scale-105 transition-transform">
-              <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-2xl shadow-[0_0_10px_rgba(168,85,247,0.2)]">👥</div>
-              <div><h3 className="text-2xl font-bold text-white">10K+</h3><p className="text-gray-400 text-sm">Active Members</p></div>
-            </div>
-            <div className="hidden md:block w-px h-12 bg-gray-800"></div>
-            <div className="flex items-center gap-4 hover:scale-105 transition-transform">
-              <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-2xl shadow-[0_0_10px_rgba(168,85,247,0.2)]">📚</div>
-              <div><h3 className="text-2xl font-bold text-white">50+</h3><p className="text-gray-400 text-sm">Learning Resources</p></div>
-            </div>
-            <div className="hidden md:block w-px h-12 bg-gray-800"></div>
-            <div className="flex items-center gap-4 hover:scale-105 transition-transform">
-              <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-2xl shadow-[0_0_10px_rgba(168,85,247,0.2)]">🎟️</div>
-              <div><h3 className="text-2xl font-bold text-white">100+</h3><p className="text-gray-400 text-sm">Events Based</p></div>
-            </div>
-            <div className="hidden md:block w-px h-12 bg-gray-800"></div>
-            <div className="flex items-center gap-4 hover:scale-105 transition-transform">
-              <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-2xl shadow-[0_0_10px_rgba(168,85,247,0.2)]">🚀</div>
-              <div><h3 className="text-2xl font-bold text-[#a855f7]">Northeast</h3><p className="text-gray-400 text-sm">Startup</p></div>
+          
+          <div className="bg-[#121826]/80 backdrop-blur-xl border border-gray-800 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-2xl">
+            {/* Grid for Mobile (2x2), Flex for Laptop */}
+            <div className="grid grid-cols-2 md:flex md:flex-row justify-between items-center gap-6 md:gap-4">
+              
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-3 hover:scale-105 transition-transform">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-yellow-500/10 flex items-center justify-center text-xl shadow-[0_0_10px_rgba(250,204,21,0.2)] text-yellow-400">👥</div>
+                <div><h3 className="text-xl md:text-2xl font-bold text-white">10K+</h3><p className="text-gray-400 text-xs md:text-sm">Active Members</p></div>
+              </div>
+              
+              <div className="hidden md:block w-px h-12 bg-gray-800"></div>
+              
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-3 hover:scale-105 transition-transform">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-yellow-500/10 flex items-center justify-center text-xl shadow-[0_0_10px_rgba(250,204,21,0.2)] text-yellow-400">📚</div>
+                <div><h3 className="text-xl md:text-2xl font-bold text-white">50+</h3><p className="text-gray-400 text-xs md:text-sm">Learning Resources</p></div>
+              </div>
+              
+              <div className="hidden md:block w-px h-12 bg-gray-800"></div>
+              
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-3 hover:scale-105 transition-transform">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-yellow-500/10 flex items-center justify-center text-xl shadow-[0_0_10px_rgba(250,204,21,0.2)] text-yellow-400">🎟️</div>
+                <div><h3 className="text-xl md:text-2xl font-bold text-white">100+</h3><p className="text-gray-400 text-xs md:text-sm">Events Based</p></div>
+              </div>
+              
+              <div className="hidden md:block w-px h-12 bg-gray-800"></div>
+              
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-3 hover:scale-105 transition-transform">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-yellow-500/10 flex items-center justify-center text-xl shadow-[0_0_10px_rgba(250,204,21,0.2)] text-yellow-400">🚀</div>
+                <div><h3 className="text-xl md:text-2xl font-bold text-yellow-400">Northeast</h3><p className="text-gray-400 text-xs md:text-sm">Startup</p></div>
+              </div>
+              
             </div>
           </div>
         </div>
 
       </section>
-
   
     
-{/* ========================================================= */}
+      {/* ========================================================= */}
       {/* SECTION 2: AI STARTUPS (Premium Constellation UI)         */}
       {/* ========================================================= */}
       <section 
