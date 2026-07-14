@@ -31,6 +31,10 @@ import tourna1 from '../assets/images/tourna1.jpeg';
 import tourna2 from '../assets/images/tourna2.jpeg';
 import tourna3 from '../assets/images/tourna3.jpeg';
 
+// Inko file ke sabse upar import karna (apne actual folder path ke hisaab se adjust kar lena)
+import letsBharatLogo from '../assets/images/logos2.jpeg'; 
+import founderProfile from '../assets/images/profile.jpeg';
+
 // 📂 DYNAMIC SLIDES DATA
 const heroSlides = [
   {
@@ -228,8 +232,9 @@ const Home = () => {
     { name: 'Scale AI', img: 'https://scale.com/favicon.ico', angle: 330 },
   ];
 
+
 // ==========================================
-  // SECTION 3: HACKATHONS ANIMATION LOGIC
+  // SECTION 3: HACKATHONS ANIMATION LOGIC (Premium)
   // ==========================================
   const [isSec3Visible, setIsSec3Visible] = useState(false);
   const section3Ref = useRef(null);
@@ -239,7 +244,7 @@ const Home = () => {
       ([entry]) => {
         if (entry.isIntersecting) setIsSec3Visible(true);
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
     if (section3Ref.current) observer3.observe(section3Ref.current);
     return () => {
@@ -247,19 +252,16 @@ const Home = () => {
     };
   }, []);
 
-  // ✍️ Naya Typing / Left-to-Right Letter Animation for Section 3
   const renderTypingLettersSec3 = (text, delayOffset = 0) => {
-    return text.split("").map((char, index) => (
+    return text.toUpperCase().split("").map((char, index) => (
       <span
         key={index}
-        className={`inline-block transition-all duration-[400ms] ease-out ${
+        className={`inline-block transition-all duration-[600ms] ease-out ${
           isSec3Visible 
-            ? "opacity-100 translate-x-0" 
-            : "opacity-0 -translate-x-6"
+            ? "opacity-100 translate-y-0 filter blur-0" 
+            : "opacity-0 translate-y-4 filter blur-[2px]"
         }`}
-        style={{ 
-          transitionDelay: `${delayOffset + index * 40}ms`,
-        }}
+        style={{ transitionDelay: `${delayOffset + index * 20}ms` }}
       >
         {char === " " ? "\u00A0" : char}
       </span>
@@ -276,7 +278,7 @@ const Home = () => {
   useEffect(() => {
     const observer4 = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) setIsSec4Visible(true);
-    }, { threshold: 0.2 });
+    }, { threshold: 0.1 });
     
     if (section4Ref.current) observer4.observe(section4Ref.current);
     
@@ -285,27 +287,23 @@ const Home = () => {
     };
   }, []);
 
-  // ✍️ Naya Typing / Left-to-Right Letter Animation for Section 4
   const renderTypingLettersSec4 = (text, delayOffset = 0) => {
-    return text.split("").map((char, index) => (
+    return text.toUpperCase().split("").map((char, index) => (
       <span
         key={index}
-        className={`inline-block transition-all duration-[400ms] ease-out ${
+        className={`inline-block transition-all duration-[600ms] ease-out ${
           isSec4Visible 
-            ? "opacity-100 translate-x-0" 
-            : "opacity-0 -translate-x-6"
+            ? "opacity-100 translate-y-0 filter blur-0" 
+            : "opacity-0 translate-y-4 filter blur-[2px]"
         }`}
-        style={{ 
-          transitionDelay: `${delayOffset + index * 40}ms`,
-        }}
+        style={{ transitionDelay: `${delayOffset + index * 20}ms` }}
       >
         {char === " " ? "\u00A0" : char}
       </span>
     ));
   };
-
-// ==========================================
-  // SECTION 5: TOURNAMENTS ANIMATION LOGIC
+  // ==========================================
+  // SECTION 5: TOURNAMENTS ANIMATION LOGIC (Premium)
   // ==========================================
   const [isSec5Visible, setIsSec5Visible] = useState(false);
   const section5Ref = useRef(null);
@@ -313,7 +311,7 @@ const Home = () => {
   useEffect(() => {
     const observer5 = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) setIsSec5Visible(true);
-    }, { threshold: 0.2 });
+    }, { threshold: 0.1 });
     
     if (section5Ref.current) observer5.observe(section5Ref.current);
     
@@ -322,19 +320,19 @@ const Home = () => {
     };
   }, []);
 
-  // ✍️ Naya Typing / Left-to-Right Letter Animation for Section 5
-  const renderTypingLettersSec5 = (text, delayOffset = 0) => {
-    return text.split("").map((char, index) => (
+  // 🚨 CRASH-PROOF FIX: Agar text kisi wajah se missing hoga, toh page blank nahi hoga
+  const renderTypingLettersSec5 = (text = "", delayOffset = 0) => {
+    if (!text) return null; // Failsafe
+
+    return String(text).toUpperCase().split("").map((char, index) => (
       <span
         key={index}
-        className={`inline-block transition-all duration-[400ms] ease-out ${
+        className={`inline-block transition-all duration-[600ms] ease-out ${
           isSec5Visible 
-            ? "opacity-100 translate-x-0" 
-            : "opacity-0 -translate-x-6"
+            ? "opacity-100 translate-y-0 filter blur-0" 
+            : "opacity-0 translate-y-4 filter blur-[2px]"
         }`}
-        style={{ 
-          transitionDelay: `${delayOffset + index * 40}ms`,
-        }}
+        style={{ transitionDelay: `${delayOffset + index * 20}ms` }}
       >
         {char === " " ? "\u00A0" : char}
       </span>
@@ -639,88 +637,87 @@ const Home = () => {
         </div>
       </section>
 
+
+
 {/* ========================================================= */}
-      {/* SECTION 3: HACKATHONS (Typing & Left-to-Right Text)       */}
+      {/* SECTION 3: HACKATHONS (Premium Black & Yellow Theme)      */}
       {/* ========================================================= */}
       <section 
+        id="hackathons"
         ref={section3Ref}
-        className="w-full py-20 px-6 md:px-10 bg-[#eef2f6] overflow-hidden"
+        className="w-full py-20 px-4 md:px-8 bg-[#eef2f6] overflow-hidden border-t border-gray-100"
       >
         <div className="max-w-7xl mx-auto">
           
-          {/* Header & Typing Title */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 gap-6">
+          {/* Header Area */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 gap-6">
             <div>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
-                <div>{renderTypingLettersSec3("Live & Upcoming", 0)}</div>
-                <div className="text-[#a855f7] mt-1">{renderTypingLettersSec3("Hackathons", 300)}</div>
+              <span className={`text-[10px] font-bold tracking-[0.2em] text-[#ff6600] uppercase block mb-3 transition-all duration-700 ${isSec3Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+                EXPLORE. CODE. IMPACT.
+              </span>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 uppercase font-sans">
+                <div className="leading-tight">{renderTypingLettersSec3("Live & Upcoming ", 0)}</div>
+                <div className="text-[#ff6600] leading-tight mt-1">{renderTypingLettersSec3("Hackathons", 300)}</div>
               </h2>
-              <p className={`text-gray-600 mt-4 transition-all duration-1000 delay-700 ${isSec3Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
-                Compete with the sharpest minds across the state & region.
-              </p>
             </div>
+            
             <button 
               onClick={() => navigate('/hackathons')}
-              className={`text-[#a855f7] font-bold flex items-center gap-1 hover:underline bg-purple-50 px-5 py-2.5 rounded-xl whitespace-nowrap transition-all duration-1000 delay-1000 ${isSec3Visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
+               className={`text-[black] font-bold flex items-center gap-1 hover:underline bg-indigo-50 px-5 py-2.5 rounded-xl whitespace-nowrap transition-all duration-1000 delay-1000 ${isSec4Visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
             >
-              See All Events →
+              View All Events →
             </button>
           </div>
 
-          {/* Cards Grid with Images (Clean Slide Up) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Cards Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-5">
             {[
-              { title: "Northeast Innovators 2026", image: hack1, type: "Offline Grand", prize: "₹50,000", tag: "Featured", statusColor: "bg-purple-100 text-purple-700" },
-              { title: "Webify Dev Hackathon", image: hack2, type: "Online Challenge", prize: "₹25,000", tag: "Ongoing", statusColor: "bg-green-100 text-green-700" },
-              { title: "AI Impact Challenge", image: hack3, type: "Hybrid Event", prize: "₹75,000", tag: "Upcoming", statusColor: "bg-blue-100 text-blue-700" }
+              { title: "AI Innovation Hackathon", image: hack1, tag: "REMOTE", date: "24 MAY 2025", prize: "₹10,000" },
+              { title: "Web3 Builders Hackathon", image: hack2, tag: "ONSITE", date: "07 JUN 2025", prize: "₹15,000" },
+              { title: "Sustainability Hackathon", image: hack3, tag: "HYBRID", date: "21 JUN 2025", prize: "₹20,000" },
+              { title: "Cyber Security Sprint", image: hack1, tag: "REMOTE", date: "12 JUL 2025", prize: "₹12,000" },
+              { title: "Northeast Dev Clash", image: hack2, tag: "ONSITE", date: "02 AUG 2025", prize: "₹25,000" }
             ].map((hack, index) => (
               <div 
                 key={index} 
-                className={`bg-[#f8fafc] rounded-2xl border border-gray-200 overflow-hidden flex flex-col justify-between hover:shadow-2xl transition-all duration-[800ms] cursor-pointer group ${isSec3Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
-                style={{ transitionDelay: `${800 + index * 200}ms` }}
+                onClick={() => navigate('/hackathons')}
+                className={`bg-white rounded-3xl border border-gray-100 overflow-hidden flex flex-col aspect-square shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.1)] hover:border-[#ff6600]/20 transition-all duration-700 cursor-pointer group ${
+                  isSec3Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                }`}
+                style={{ transitionDelay: `${400 + index * 150}ms` }}
               >
                 
-                {/* 🖼️ Image Section */}
-                <div className="w-full h-48 overflow-hidden relative bg-gray-200">
+                {/* Image Section */}
+                <div className="w-full h-[55%] overflow-hidden relative bg-gray-100">
                   <img 
                     src={hack.image} 
                     alt={hack.title} 
                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  {/* Status Tag over Image */}
-                  <div className="absolute top-4 left-4">
-                    <span className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-sm ${hack.statusColor}`}>
+                  {/* Premium Dark Tag */}
+                  <div className="absolute top-3 left-3">
+                    <span className="text-[9px] font-black tracking-widest text-white bg-gray-900/90 backdrop-blur-sm px-2.5 py-1 rounded-md">
                       {hack.tag}
                     </span>
                   </div>
                 </div>
 
-                {/* Text Content */}
-                <div className="p-6">
-                  <div className="flex items-center justify-end mb-3">
-                    <span className="text-sm text-gray-500 font-medium flex items-center gap-1">
-                      📅 Register Now
-                    </span>
+                {/* Content Section */}
+                <div className="p-4 flex flex-col justify-between flex-grow">
+                  <div>
+                    <h3 className="text-xs font-bold text-gray-900 group-hover:text-[#ff6600] transition-colors leading-tight mb-1.5 uppercase tracking-wide">
+                      {hack.title}
+                    </h3>
+                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                      {hack.date}
+                    </p>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#a855f7] transition-colors">{hack.title}</h3>
-                  <p className="text-gray-600 text-sm mb-4">Collaborate with cross-functional teams to ideate, prototype and pitch scalable solutions.</p>
-                </div>
 
-                {/* Footer Section (Prize & Button) */}
-                <div className="p-6 pt-0 mt-auto">
-                  <div className="pt-4 border-t border-gray-200 flex items-center justify-between">
-                    <div>
-                      <p className="text-xs text-gray-500 font-bold uppercase">Prize Pool</p>
-                      <p className="text-lg font-extrabold text-gray-900">{hack.prize}</p>
-                    </div>
-                    <button 
-                      onClick={() => navigate('/hackathons')}
-                      className="text-sm font-bold text-white bg-[#a855f7] hover:bg-[#9333ea] px-5 py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-1"
-                    >
-                      Join Event
-                    </button>
+                  <div className="pt-2 border-t border-gray-50 flex items-center justify-between mt-2">
+                    <span className="text-xs font-black text-gray-900">{hack.prize}</span>
+                    <span className="text-[10px] font-bold text-[#ff6600] group-hover:translate-x-1 transition-transform">
+                      JOIN →
+                    </span>
                   </div>
                 </div>
 
@@ -730,66 +727,79 @@ const Home = () => {
 
         </div>
       </section>
-      
 
-    {/* ========================================================= */}
-      {/* SECTION 4: LATEST INTERNSHIPS (Left-Aligned Header)       */}
+{/* ========================================================= */}
+      {/* SECTION 4: LATEST INTERNSHIPS (Premium Black & Yellow)    */}
       {/* ========================================================= */}
-      <section ref={section4Ref} className="py-20 bg-[#eef2f6] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
+      <section 
+        id="internships" 
+        ref={section4Ref} 
+        className="w-full py-20 px-4 md:px-8 bg-[#eeeeee] overflow-hidden border-t border-gray-100"
+      >
+        <div className="max-w-7xl mx-auto">
           
-          {/* Header & Typing Title (Section 3 Style) */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 gap-6">
+          {/* Header Area */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 gap-6">
             <div>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 tracking-tight">
-                {renderTypingLettersSec4("Latest Internships", 0)}
+              <span className={`text-[10px] font-bold tracking-[0.2em] text-[#ff6600] uppercase block mb-3 transition-all duration-700 ${isSec4Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+                LEARN. BUILD. GROW.
+              </span>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 uppercase font-sans">
+                <div className="leading-tight">{renderTypingLettersSec4("Latest ", 0)}</div>
+                <div className="text-[#ff6600] leading-tight mt-1">{renderTypingLettersSec4("Internships", 300)}</div>
               </h2>
-              <p className={`text-gray-500 mt-4 transition-all duration-1000 delay-500 ${isSec4Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
-                Kickstart your career with top remote and onsite opportunities.
-              </p>
             </div>
             
-            {/* View More Button (Right Side) */}
             <button 
               onClick={() => navigate('/internships')}
-              className={`text-[#6366f1] font-bold flex items-center gap-1 hover:underline bg-indigo-50 px-5 py-2.5 rounded-xl whitespace-nowrap transition-all duration-1000 delay-1000 ${isSec4Visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
+              className={`text-[black] font-bold flex items-center gap-1 hover:underline bg-indigo-50 px-5 py-2.5 rounded-xl whitespace-nowrap transition-all duration-1000 delay-1000 ${isSec4Visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
             >
-              View more Internships →
+              View All Internships →
             </button>
           </div>
 
-          {/* Cards Grid (Clean Slide Up Animation) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Cards Grid: Mobile 2, Desktop 4-5 */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-5">
             {[
-              { title: "Frontend Developer", image: intern1, tag: "Remote", status: "Hiring Now", stipend: "₹10,000 / mo" },
-              { title: "UI/UX Designer", image: intern2, tag: "Onsite", status: "Hiring Now", stipend: "₹12,000 / mo" },
-              { title: "Full Stack Intern", image: intern3, tag: "Hybrid", status: "Urgent", stipend: "₹15,000 / mo" }
+              { title: "Frontend Developer", image: intern1, tag: "REMOTE", stipend: "₹10,000 / MO" },
+              { title: "UI/UX Designer", image: intern2, tag: "ONSITE", stipend: "₹12,000 / MO" },
+              { title: "Full Stack Intern", image: intern3, tag: "HYBRID", stipend: "₹15,000 / MO" },
+              { title: "Backend Engineer", image: intern1, tag: "REMOTE", stipend: "₹18,000 / MO" },
+              { title: "Product Manager", image: intern2, tag: "ONSITE", stipend: "₹20,000 / MO" }
             ].map((intern, index) => (
               <div 
                 key={index}
-                className={`bg-white rounded-3xl p-6 border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-[800ms] cursor-pointer group ${
-                  isSec4Visible 
-                    ? "opacity-100 translate-y-0" 
-                    : "opacity-0 translate-y-12"
+                onClick={() => navigate('/internships')}
+                className={`bg-white rounded-3xl border border-gray-100 overflow-hidden flex flex-col aspect-square shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.1)] hover:border-[#ff6600]/20 transition-all duration-700 cursor-pointer group ${
+                  isSec4Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 }`}
-                style={{ transitionDelay: `${800 + index * 200}ms` }}
+                style={{ transitionDelay: `${400 + index * 150}ms` }}
               >
-                {/* Image Container with Hover Effect */}
-                <div className="w-full h-48 rounded-2xl overflow-hidden mb-6 relative bg-gray-200">
-                  <img src={intern.image} alt={intern.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute top-4 left-4 bg-black/50 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm">
-                    {intern.tag}
+                {/* Image Section */}
+                <div className="w-full h-[55%] overflow-hidden relative bg-gray-100">
+                  <img src={intern.image} alt={intern.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                  {/* Tag */}
+                  <div className="absolute top-3 left-3">
+                    <span className="text-[9px] font-black tracking-widest text-white bg-gray-900/90 backdrop-blur-sm px-2.5 py-1 rounded-md">
+                      {intern.tag}
+                    </span>
                   </div>
                 </div>
 
-                <h3 className="text-xl font-extrabold text-gray-900 mb-2 group-hover:text-[#6366f1] transition-colors">{intern.title}</h3>
-                <p className="text-sm text-gray-500 mb-6">Gain real-world experience working with top-tier development teams.</p>
-                
-                <div className="flex justify-between items-center border-t border-gray-100 pt-4">
-                  <p className="text-lg font-bold text-[#6366f1]">{intern.stipend}</p>
-                  <button onClick={() => navigate('/internships')} className="bg-gray-900 text-white px-5 py-2 rounded-xl font-bold text-sm hover:bg-gray-700 transition-all transform hover:-translate-y-1 shadow-md">
-                    Apply Now
-                  </button>
+                {/* Content Section */}
+                <div className="p-4 flex flex-col justify-between flex-grow">
+                  <div>
+                    <h3 className="text-xs font-bold text-gray-900 group-hover:text-[#ff6600] transition-colors leading-tight mb-1.5 uppercase tracking-wide">
+                      {intern.title}
+                    </h3>
+                  </div>
+
+                  <div className="pt-2 border-t border-gray-50 flex items-center justify-between mt-2">
+                    <span className="text-xs font-black text-gray-900">{intern.stipend}</span>
+                    <span className="text-[10px] font-bold text-[#ff6600] group-hover:translate-x-1 transition-transform">
+                      APPLY →
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
@@ -800,87 +810,87 @@ const Home = () => {
 
 
      {/* ========================================================= */}
-      {/* SECTION 5: ESPORTS TOURNAMENTS (Images + Clean Slide Up)  */}
+      {/* SECTION 5: ESPORTS TOURNAMENTS (Premium Black & Yellow)   */}
       {/* ========================================================= */}
-      <section ref={section5Ref} className="py-20 bg-[#eef2f6] border-t border-gray-100 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
+      <section 
+        id="tournaments" 
+        ref={section5Ref} 
+        className="w-full py-20 px-4 md:px-8 bg-[#eef2f6] overflow-hidden border-t border-gray-100"
+      >
+        <div className="max-w-7xl mx-auto">
           
-          {/* Header & Typing Title */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 gap-6">
+          {/* Header Area */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 gap-6">
             <div>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="w-2 h-2 rounded-full bg-purple-600 animate-ping"></span>
-                <span className={`text-xs font-bold text-purple-600 tracking-widest uppercase transition-opacity duration-1000 ${isSec5Visible ? "opacity-100" : "opacity-0"}`}>Live Arena</span>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#ff6600] animate-ping"></span>
+                <span className={`text-[10px] font-bold tracking-[0.2em] text-[#ff6600] uppercase transition-all duration-700 ${isSec5Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+                  LIVE ARENA
+                </span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
-                {renderTypingLettersSec5("Esports Tournaments", 0)}
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 uppercase font-sans">
+                <div className="leading-tight">{renderTypingLettersSec5("Esports ", 0)}</div>
+                <div className="text-[#ff6600] leading-tight mt-1">{renderTypingLettersSec5("Tournaments", 300)}</div>
               </h2>
-              <p className={`text-gray-500 mt-4 transition-all duration-1000 delay-500 ${isSec5Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
-                Compete with top regional squads, win cash rewards, and dominate leaderboards.
-              </p>
             </div>
             
-            {/* View More Button (Right Side) */}
+            {/* View More Button */}
             <button 
               onClick={() => navigate('/tournaments')}
-              className={`text-[#6366f1] font-bold flex items-center gap-1 hover:underline bg-indigo-50 px-5 py-2.5 rounded-xl whitespace-nowrap transition-all duration-1000 delay-1000 ${isSec5Visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
+             className={`text-[black] font-bold flex items-center gap-1 hover:underline bg-indigo-50 px-5 py-2.5 rounded-xl whitespace-nowrap transition-all duration-1000 delay-1000 ${isSec4Visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
             >
-              Explore All Tournaments →
+              View All Tournaments →
             </button>
           </div>
 
-          {/* Tournament Cards Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Cards Grid: Mobile 2, Desktop 4-5 */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-5">
             {[
-              { title: "Ultimate Showdown", image: tourna1, game: "BGMI", type: "🎮 Squad 4v4", prize: "₹50,000", color: "bg-orange-100 text-orange-700", desc: "Northeast India's biggest custom room tournament. Register your squad and claim your spot." },
-              { title: "Clash Championship", image: tourna2, game: "Free Fire", type: "🎮 Clash Squad", prize: "₹30,000", color: "bg-red-100 text-red-700", desc: "Fast-paced custom match tournament. Fast reflexes, absolute team synergy, big prize payout." },
-              { title: "Regional Masters", image: tourna3, game: "HoK", type: "🎮 5v5 Mode", prize: "₹40,000", color: "bg-blue-100 text-blue-700", desc: "Showcase your strategic depth and mechanical outplays in the Honor of Kings state battle." }
+              { title: "Ultimate Showdown", image: tourna1, game: "BGMI", type: "SQUAD 4V4", prize: "₹50,000" },
+              { title: "Clash Championship", image: tourna2, game: "FREE FIRE", type: "CLASH SQUAD", prize: "₹30,000" },
+              { title: "Regional Masters", image: tourna3, game: "HOK", type: "5V5 MODE", prize: "₹40,000" },
+              { title: "Valorant Cup", image: tourna1, game: "VALORANT", type: "5V5 DEFUSE", prize: "₹60,000" },
+              { title: "Apex Legends Solo", image: tourna2, game: "APEX", type: "SOLO BATTLE", prize: "₹25,000" }
             ].map((tourna, index) => (
               <div 
                 key={index}
-                className={`bg-[#f8fafc] rounded-3xl p-6 border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-[800ms] cursor-pointer group flex flex-col justify-between ${
-                  isSec5Visible 
-                    ? "opacity-100 translate-y-0" 
-                    : "opacity-0 translate-y-12"
+                onClick={() => navigate('/tournaments')}
+                className={`bg-white rounded-3xl border border-gray-100 overflow-hidden flex flex-col aspect-square shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.1)] hover:border-[#ff6600]/20 transition-all duration-700 cursor-pointer group ${
+                  isSec5Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 }`}
-                style={{ transitionDelay: `${800 + index * 200}ms` }}
+                style={{ transitionDelay: `${400 + index * 150}ms` }}
               >
                 
-                {/* 🖼️ Image Container with Hover Effect */}
-                <div className="w-full h-48 rounded-2xl overflow-hidden mb-6 relative bg-gray-200">
-                  <img src={tourna.image} alt={tourna.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                {/* Image Section */}
+                <div className="w-full h-[55%] overflow-hidden relative bg-gray-100">
+                  <img src={tourna.image} alt={tourna.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
                   
-                  {/* Game Tag over Image */}
-                  <div className={`absolute top-4 left-4 ${tourna.color} text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-widest shadow-sm`}>
-                    {tourna.game}
+                  {/* Game Tag */}
+                  <div className="absolute top-3 left-3">
+                    <span className="text-[9px] font-black tracking-widest text-white bg-gray-900/90 backdrop-blur-sm px-2.5 py-1 rounded-md">
+                      {tourna.game}
+                    </span>
                   </div>
                 </div>
 
-                {/* Text Content */}
-                <div>
-                  <div className="flex justify-end mb-3">
-                    <span className="text-xs text-gray-500 font-semibold flex items-center gap-1">
-                      {tourna.type}
+                {/* Content Section */}
+                <div className="p-4 flex flex-col justify-between flex-grow">
+                  <div>
+                    <h3 className="text-xs font-bold text-gray-900 group-hover:text-[#ff6600] transition-colors leading-tight mb-1.5 uppercase tracking-wide">
+                      {tourna.title}
+                    </h3>
+                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                      🎮 {tourna.type}
+                    </p>
+                  </div>
+                  
+                  {/* Footer Section */}
+                  <div className="pt-2 border-t border-gray-50 flex items-center justify-between mt-2">
+                    <span className="text-xs font-black text-gray-900">{tourna.prize}</span>
+                    <span className="text-[10px] font-bold text-[#ff6600] group-hover:translate-x-1 transition-transform">
+                      JOIN →
                     </span>
                   </div>
-                  <h3 className="text-xl font-extrabold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">{tourna.title}</h3>
-                  <p className="text-sm text-gray-500 leading-relaxed mb-6">
-                    {tourna.desc}
-                  </p>
-                </div>
-                
-                {/* Footer Section */}
-                <div className="flex justify-between items-center border-t border-gray-200 pt-4 mt-auto">
-                  <div>
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Prize Pool</p>
-                    <p className="text-lg font-extrabold text-gray-900">{tourna.prize}</p>
-                  </div>
-                  <button 
-                    onClick={() => navigate('/tournaments')} 
-                    className="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-xl font-bold text-sm transition-all shadow-md transform hover:-translate-y-1"
-                  >
-                    Join
-                  </button>
                 </div>
 
               </div>
@@ -890,94 +900,169 @@ const Home = () => {
         </div>
       </section>
 
+{/* ========================================================= */}
+      {/* SECTION 6: FOOTER (Dark Theme, Let's Bharat Layout)       */}
       {/* ========================================================= */}
-      {/* SECTION 6: FOOTER (Dark Theme with Connect & Socials)     */}
-      {/* ========================================================= */}
-      <footer className="w-full bg-[#0b0f19] pt-16 pb-8 px-6 border-t border-gray-800 text-white">
+      <footer className="w-full bg-[#0a0f1c] pt-16 pb-6 px-6 border-t border-gray-800 text-white font-sans">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+          
+          {/* Main 4-Column Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
             
-            {/* Column 1: Newsletter & Brand */}
-            <div className="space-y-4">
-              <h2 className="text-3xl font-extrabold tracking-tight">
-                Let's <span className="text-[#a855f7]">Sister</span>
-              </h2>
-              <p className="text-gray-400 text-sm max-w-sm leading-relaxed">
-                Subscribe to our newsletter for the latest tech updates, event announcements, and learning resources.
+            {/* COLUMN 1: Brand & Newsletter */}
+            <div className="space-y-6">
+              {/* Website Logo Implemented via Import Logic */}
+              <img 
+                src={letsBharatLogo} 
+                alt="Let's Bharat Logo" 
+                className="h-10 object-contain"
+              />
+              <p className="text-gray-400 text-xs leading-relaxed uppercase tracking-wide">
+                Your gateway to hackathons, internships, startup communities and resources. Let's build the <span className="text-[#ffcc00]">future</span> together.
               </p>
-              <div className="flex gap-2 pt-2">
-                <input 
-                  type="email" 
-                  placeholder="Enter your email" 
-                  className="w-full bg-[#121826] border border-gray-700 text-white px-4 py-3 rounded-xl outline-none focus:border-[#a855f7] focus:ring-1 focus:ring-[#a855f7] transition-all text-sm"
-                />
-                <button className="bg-[#a855f7] hover:bg-[#9333ea] px-6 py-3 rounded-xl font-bold transition-all text-sm whitespace-nowrap">
-                  Subscribe
-                </button>
+              
+              <div className="pt-4">
+                <h4 className="text-white text-xs font-bold uppercase tracking-wider mb-3">
+                  Subscribe to our newsletter
+                </h4>
+                <p className="text-gray-500 text-xs mb-3">Get the latest updates and opportunities.</p>
+                <div className="flex">
+                  <div className="relative flex-grow">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">✉</span>
+                    <input 
+                      type="email" 
+                      placeholder="ENTER YOUR EMAIL" 
+                      className="w-full bg-transparent border border-gray-700 text-white pl-8 pr-3 py-2.5 rounded-l-md outline-none focus:border-[#ffcc00] transition-colors text-xs placeholder-gray-600"
+                    />
+                  </div>
+                  <button className="bg-[#ffcc00] hover:bg-yellow-500 text-black px-4 py-2.5 rounded-r-md font-bold transition-colors text-xs whitespace-nowrap">
+                    SUBSCRIBE
+                  </button>
+                </div>
               </div>
             </div>
 
-            {/* Column 2: Quick Links */}
+            {/* COLUMN 2: About & Founder */}
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-white text-sm font-bold tracking-widest uppercase mb-4 flex flex-col">
+                  About Let's <span className="text-[#ffcc00]">Bharat</span>
+                  <span className="w-8 h-0.5 bg-[#ffcc00] mt-1"></span>
+                </h3>
+                <p className="text-gray-400 text-xs leading-relaxed uppercase">
+                  Let's Bharat is a platform dedicated to empowering students and innovators by connecting them with opportunities, communities and resources.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-white text-sm font-bold tracking-widest uppercase mb-4 flex flex-col">
+                  Founder of Let's <span className="text-[#ffcc00]">Bharat</span>
+                  <span className="w-8 h-0.5 bg-[#ffcc00] mt-1"></span>
+                </h3>
+                <div className="flex items-center gap-4">
+                  {/* Founder Profile Implemented via Import Logic */}
+                  <img 
+                    src={founderProfile} 
+                    alt="Newlong Debbarma" 
+                    className="w-16 h-16 rounded-full object-cover border-2 border-[#ffcc00]"
+                  />
+                  <div>
+                    <h4 className="text-white text-xs font-bold uppercase tracking-wider">NEWLONG DEBBARMA</h4>
+                    <p className="text-[#ffcc00] text-[10px] font-bold tracking-widest uppercase mt-0.5">Founder & Creator</p>
+                    <p className="text-gray-400 text-[10px] mt-1.5 leading-tight pr-4">
+                      Passionate about technology, communities and creating impact through innovation.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* COLUMN 3: Quick Links */}
             <div>
-              <h3 className="text-lg font-bold mb-5 text-white">Quick Links</h3>
-              <ul className="space-y-3 text-gray-400 text-sm font-medium">
-                <li><button onClick={() => navigate('/')} className="hover:text-[#a855f7] transition-colors">Home</button></li>
-                <li><button onClick={() => navigate('/about')} className="hover:text-[#a855f7] transition-colors">About Us</button></li>
-                <li><button onClick={() => navigate('/communities')} className="hover:text-[#a855f7] transition-colors">Communities</button></li>
-                <li><button onClick={() => navigate('/hackathons')} className="hover:text-[#a855f7] transition-colors">Hackathons</button></li>
-                <li><button onClick={() => navigate('/resources')} className="hover:text-[#a855f7] transition-colors">Free Resources</button></li>
+              <h3 className="text-white text-sm font-bold tracking-widest uppercase mb-4 flex flex-col">
+                Quick Links
+                <span className="w-8 h-0.5 bg-[#ffcc00] mt-1"></span>
+              </h3>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-y-3 text-gray-400 text-xs font-medium uppercase tracking-wider">
+                <li><button onClick={() => navigate('/')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">⌂ Home</button></li>
+                <li><button onClick={() => navigate('/about')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">👤 About Us</button></li>
+                <li><button onClick={() => navigate('/communities')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">👥 Communities</button></li>
+                <li><button onClick={() => navigate('/hackathons')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">🏆 Hackathons</button></li>
+                <li><button onClick={() => navigate('/internships')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">💼 Internships</button></li>
+                <li><button onClick={() => navigate('/tournaments')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">🎮 Tournaments</button></li>
+                <li><button onClick={() => navigate('/resources')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">📚 Free Resources</button></li>
+                <li><button onClick={() => navigate('/blogs')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">📢 Blogs & News</button></li>
+                <li><button onClick={() => navigate('/contact')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">✉ Contact Us</button></li>
+                <li><button onClick={() => navigate('/privacy')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">🛡 Privacy Policy</button></li>
               </ul>
             </div>
 
-            {/* Column 3: Contact Us & Socials */}
+            {/* COLUMN 4: Contact Us & Socials */}
             <div>
-              <h3 className="text-lg font-bold mb-5 text-white">Contact Us</h3>
-              <p className="text-gray-400 text-sm mb-5">
-                Connect with us on our social platforms to stay updated.
+              <h3 className="text-white text-sm font-bold tracking-widest uppercase mb-4 flex flex-col">
+                Contact Us
+                <span className="w-8 h-0.5 bg-[#ffcc00] mt-1"></span>
+              </h3>
+              <p className="text-gray-400 text-xs uppercase mb-5 tracking-wide">
+                Connect with us on our platforms or reach out directly.
               </p>
-              <div className="flex gap-4">
-                
-                {/* Instagram Icon */}
-                <a href="#" className="w-10 h-10 rounded-full bg-[#121826] border border-gray-700 flex items-center justify-center hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-500 hover:border-transparent transition-all group">
-                  <svg className="w-5 h-5 fill-gray-400 group-hover:fill-white transition-colors" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                  </svg>
+              
+              {/* Clickable Social Icons (No Text) */}
+              <div className="grid grid-cols-4 gap-3 mb-6 max-w-[200px]">
+                {/* Instagram */}
+                <a href="YOUR_INSTAGRAM_LINK" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-500 hover:border-transparent transition-all group">
+                  <svg className="w-4 h-4 fill-gray-400 group-hover:fill-white transition-colors" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                 </a>
-                
-                {/* Facebook Icon */}
-                <a href="#" className="w-10 h-10 rounded-full bg-[#121826] border border-gray-700 flex items-center justify-center hover:bg-[#1877f2] hover:border-[#1877f2] transition-all group">
-                  <svg className="w-5 h-5 fill-gray-400 group-hover:fill-white transition-colors" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                  </svg>
+                {/* LinkedIn */}
+                <a href="YOUR_LINKEDIN_LINK" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-[#0a66c2] hover:border-[#0a66c2] transition-all group">
+                  <svg className="w-4 h-4 fill-gray-400 group-hover:fill-white transition-colors" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                 </a>
+                {/* Twitter / X */}
+                <a href="YOUR_TWITTER_LINK" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:border-white transition-all group">
+                  <svg className="w-4 h-4 fill-gray-400 group-hover:fill-black transition-colors" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+                {/* YouTube */}
+                <a href="YOUR_YOUTUBE_LINK" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-[#FF0000] hover:border-[#FF0000] transition-all group">
+                  <svg className="w-4 h-4 fill-gray-400 group-hover:fill-white transition-colors" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+                {/* WhatsApp */}
+                <a href="YOUR_WHATSAPP_LINK" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-[#25D366] hover:border-[#25D366] transition-all group">
+                  <svg className="w-4 h-4 fill-gray-400 group-hover:fill-white transition-colors" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 .003 5.378.003 12.023c0 2.124.553 4.195 1.603 6.02L.05 24l6.096-1.597c1.761.961 3.743 1.468 5.882 1.468 6.643 0 12.025-5.38 12.025-12.026C24.053 5.381 18.675 0 12.031 0zm7.151 17.15c-.297.839-1.733 1.547-2.424 1.644-.551.077-1.258.12-3.52-.816-3.415-1.411-5.632-4.908-5.803-5.135-.17-.227-1.385-1.844-1.385-3.518 0-1.673.87-2.496 1.184-2.813.243-.243.684-.36 1.1-.36.137 0 .262.006.376.012.336.015.503.036.726.57.28.67 1.01 2.457 1.101 2.64.09.183.151.396.037.623-.113.228-.172.365-.34.562-.17.198-.359.428-.516.593-.17.18-.355.378-.146.738.208.36 1.01 1.666 2.19 2.716 1.521 1.353 2.8 1.77 3.16 1.954.36.183.574.153.79-.092.217-.244.927-1.073 1.176-1.442.25-.368.5-.306.83-.183.33.122 2.091.986 2.451 1.168.361.183.603.275.69.428.087.153.087.886-.21 1.725z"/></svg>
+                </a>
+                {/* Facebook */}
+                <a href="YOUR_FACEBOOK_LINK" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-[#1877f2] hover:border-[#1877f2] transition-all group">
+                  <svg className="w-4 h-4 fill-gray-400 group-hover:fill-white transition-colors" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+              </div>
 
-                {/* Twitter (X) Icon */}
-                <a href="#" className="w-10 h-10 rounded-full bg-[#121826] border border-gray-700 flex items-center justify-center hover:bg-white hover:border-white transition-all group">
-                  <svg className="w-4 h-4 fill-gray-400 group-hover:fill-black transition-colors" viewBox="0 0 24 24">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                  </svg>
+              {/* Direct Contact Details */}
+              <div className="space-y-3 bg-[#121826] p-4 rounded-xl border border-gray-800">
+                <a href="mailto:HELLO@LETSBHARAT.COM" className="flex items-center gap-3 text-gray-400 hover:text-[#ffcc00] transition-colors text-xs font-medium tracking-wide">
+                  <span>✉</span> HELLO@LETSBHARAT.COM
                 </a>
-
-                {/* LinkedIn Icon */}
-                <a href="#" className="w-10 h-10 rounded-full bg-[#121826] border border-gray-700 flex items-center justify-center hover:bg-[#0a66c2] hover:border-[#0a66c2] transition-all group">
-                  <svg className="w-4 h-4 fill-gray-400 group-hover:fill-white transition-colors" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
+                <a href="tel:+919876543210" className="flex items-center gap-3 text-gray-400 hover:text-[#ffcc00] transition-colors text-xs font-medium tracking-wide">
+                  <span>📞</span> +91 98765 43210
                 </a>
-
+                <div className="flex items-center gap-3 text-gray-400 text-xs font-medium tracking-wide uppercase">
+                  <span>📍</span> Agartala, Tripura, India
+                </div>
               </div>
             </div>
 
           </div>
 
           {/* Bottom Copyright Section */}
-          <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500 font-medium">
-            <p>© 2026 Let's Sister. All rights reserved.</p>
+          <div className="pt-6 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 font-medium tracking-wide uppercase">
+            <p>© 2026 LET'S BHARAT. ALL RIGHTS RESERVED.</p>
+            <p className="flex items-center gap-1">
+              <span className="text-[#ffcc00] text-sm">💛</span> MADE WITH PASSION FOR INNOVATORS
+            </p>
             <div className="flex gap-6">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-white transition-colors">PRIVACY POLICY</a>
+              <a href="#" className="hover:text-white transition-colors">TERMS OF SERVICE</a>
             </div>
           </div>
+          
         </div>
       </footer>
 
