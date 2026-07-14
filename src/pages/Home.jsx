@@ -11,22 +11,10 @@ import video4 from '../assets/videos/video4.mp4';
 
  
 
+// 👇 YAHAN APNI 2 IMAGES IMPORT KAREIN 👇
+import myProfileImage from '../assets/images/avater.jpeg'; // Trusted Avatar me aapki photo
+import centerAiImage from '../assets/images/center.jpeg';   // Clock ke center me yellow text ki jagah wali image
 
-      
-// 📂 Hub Images (Inhe apne assets/images folder mein zaroor rakhein)
-import startup1 from '../assets/images/startup1.jpeg';
-import startup2 from '../assets/images/startup2.jpeg';
-import startup3 from '../assets/images/startup3.jpeg';
-import startup4 from '../assets/images/startup4.jpeg';
-import startup5 from '../assets/images/startup5.jpeg';
-import startup6 from '../assets/images/startup6.jpeg';
-import startup7 from '../assets/images/startup7.jpeg';
-import startup8 from '../assets/images/startup8.jpeg';
-import startup9 from '../assets/images/startup9.jpeg';
-import startup10 from '../assets/images/startup10.jpeg';
-
-// 🧑‍💻 AAPKI KHUD KI IMAGE YAHAN IMPORT KAREIN:
-import myProfileImage from '../assets/images/avater.jpeg';
 
 // 📂 Hackathon Images (File ke top par add karein)
 import hack1 from '../assets/images/hack1.jpeg'; // Apni images ke naam yahan set karein
@@ -164,28 +152,51 @@ const Home = () => {
     ));
   };
 
-// ==========================================
-  // SECTION 2: AI STARTUPS (Solar System Orbit Logic)
+ // ==========================================
+  // SECTION 2: AI STARTUPS (Realtime Clock Logic)
   // ==========================================
   const [isSec2Visible, setIsSec2Visible] = useState(false);
   const section2Ref = useRef(null);
+  
+  // ⏱️ Realtime Clock State (For Analog Hands)
+  const [time, setTime] = useState(new Date());
 
   useEffect(() => {
+    // Scroll Animation Observer
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) setIsSec2Visible(true);
       },
-      { threshold: 0.1 } 
+      { threshold: 0.2 } 
     );
     if (section2Ref.current) observer.observe(section2Ref.current);
+
+    // Live Clock Interval
+    const timerId = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
     return () => {
       if (section2Ref.current) observer.unobserve(section2Ref.current);
+      clearInterval(timerId); // Cleanup timer
     };
   }, []);
 
-  // ✍️ Left-to-Right Typing Animation Helper
+  // Realtime Time Values for Analog Hands
+  const hours = time.getHours();
+  const minutes = time.getMinutes();
+  const seconds = time.getSeconds();
+
+  // Analog Clock Hands Rotation Calculation
+  const secDeg = seconds * 6;
+  const minDeg = minutes * 6 + seconds * 0.1;
+  const hourDeg = (hours % 12) * 30 + minutes * 0.5;
+
+  // ✍️ Left-to-Right Typing Animation Helper (Fixed 'split' undefined error)
   const renderTypingLetters = (text, delayOffset = 0) => {
-    if (!text) return null;
+    // 🛡️ STRICT ERROR FIX: Agar text string nahi hai, toh kuch return mat karo
+    if (typeof text !== 'string' || !text) return null; 
+    
     return text.split("").map((char, index) => (
       <span
         key={index}
@@ -201,13 +212,21 @@ const Home = () => {
     ));
   };
 
-  const statsData = [
-    { icon: "🚀", num: "1000+", title: "AI Startup Listing", desc: "Curated collection of global AI innovators" },
-    { icon: "🌐", num: "50+", title: "Countries", desc: "Startups from around the world" },
-    { icon: "🔠", num: "20+", title: "Categories", desc: "From AI tools to infrastructure and beyond" },
-    { icon: "👥", num: "10K+", title: "Innovators", desc: "Builders, creators & visionaries trusting our platform" }
+  // 🌐 12 AI Startups Clock Data
+  const aiLogos = [
+    { name: 'OpenAI', img: 'https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg', angle: 0 },
+    { name: 'Anthropic', img: 'https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg', angle: 30 },
+    { name: 'Gemini', img: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg', angle: 60 },
+    { name: 'Mistral AI', img: 'https://mistral.ai/images/logo.svg', angle: 90 },
+    { name: 'Hugging Face', img: 'https://huggingface.co/front/assets/huggingface_logo-noborder.svg', angle: 120 },
+    { name: 'Perplexity', img: 'https://www.perplexity.ai/favicon.ico', angle: 150 },
+    { name: 'Cohere', img: 'https://cohere.com/favicon.ico', angle: 180 },
+    { name: 'Runway', img: 'https://runwayml.com/favicon.ico', angle: 210 },
+    { name: 'Stability AI', img: 'https://stability.ai/favicon.ico', angle: 240 },
+    { name: 'Meta AI', img: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Meta-Logo.png', angle: 270 },
+    { name: 'Character.AI', img: 'https://character.ai/favicon.ico', angle: 300 },
+    { name: 'Scale AI', img: 'https://scale.com/favicon.ico', angle: 330 },
   ];
-
 
 // ==========================================
   // SECTION 3: HACKATHONS ANIMATION LOGIC
@@ -478,176 +497,148 @@ const Home = () => {
       </section>
 
 
-
-    {/* ========================================================= */}
-      {/* SECTION 2: AI STARTUPS (Planetary Orbit UI - White Theme) */}
+      {/* ========================================================= */}
+      {/* SECTION 2: AI STARTUPS (Clock Face UI - Premium Theme)  */}
       {/* ========================================================= */}
       <section 
         ref={section2Ref} 
-        className="relative w-full bg-white pt-24 pb-20 overflow-hidden border-t border-gray-100"
+        className="relative w-full bg-[#eef2f6] pt-24 pb-20 overflow-hidden border-t border-gray-100"
       >
-        {/* CSS Keyframes for Solar System Orbits */}
-        <style>
-          {`
-            @keyframes orbit {
-              100% { transform: rotate(360deg); }
-            }
-            @keyframes orbitReverse {
-              100% { transform: rotate(-360deg); }
-            }
-            .orbit-spin-slow { animation: orbit 30s linear infinite; }
-            .orbit-spin-medium { animation: orbit 22s linear infinite; }
-            .orbit-spin-fast { animation: orbit 15s linear infinite; }
-            /* Reverse spin to keep logos upright while orbiting */
-            .anti-spin-slow { animation: orbitReverse 30s linear infinite; }
-            .anti-spin-medium { animation: orbitReverse 22s linear infinite; }
-            .anti-spin-fast { animation: orbitReverse 15s linear infinite; }
-          `}
-        </style>
-
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-9 items-center">
             
             {/* ---------------- LEFT SIDE: TEXT CONTENT ---------------- */}
-            <div className="flex flex-col items-start text-left z-10 order-2 lg:order-1">
+            <div className="flex flex-col items-start text-left z-10">
               
-              {/* Yellow Badge */}
-              <div className={`inline-flex items-center gap-2 mb-6 border border-yellow-400 bg-yellow-50 px-4 py-1.5 rounded-full transition-all duration-700 ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-                <span className="text-yellow-500 text-sm">★</span>
-                <span className="text-xs font-bold text-yellow-600 tracking-widest uppercase">
-                  Discover. Explore. Innovate.
+              {/* Premium Outline Badge */}
+              <div className={`inline-flex items-center gap-2 mb-6 border border-[#ff6600]/30 bg-[#ff6600]/5 px-4 py-1.5 rounded-full transition-all duration-700 ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+                <span className="text-[#ff6600] text-sm">☆</span>
+                <span className="text-xs font-bold text-[#ff6600] tracking-[0.15em] uppercase">
+                  Discover. Connect. Empower.
                 </span>
               </div>
 
-              {/* Main Title (Typing Effect) */}
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 tracking-tight leading-[1.1] mb-6">
-                <div>{renderTypingLetters("EXPLORE THE WORLD'S", 0)}</div>
-                <div className="text-yellow-400 drop-shadow-sm mt-1">
-                  {renderTypingLetters("TOP AI STARTUPS", 400)}
+              {/* Main Title (Typing Effect matching Image design) */}
+              <h2 className="text-3xl sm:text-5xl lg:text-5xl font-black text-gray-900 tracking-tight leading-[1.2] mb-7">
+                <div className="block whitespace-nowrap overflow-hidden">
+                  {renderTypingLetters("EXPLORE THE WORLD'S", 500)}
+                </div>
+                <div className="flex flex-wrap items-center gap-x-4 mt-1 overflow-hidden">
+                  {renderTypingLetters("TOP", 400)}
+                  <span className="text-[#ff6600] drop-shadow-sm font-extrabold tracking-tighter">
+                    {renderTypingLetters("AI", 300)}
+                  </span>
+                  {renderTypingLetters("STARTUPS", 200)}
                 </div>
               </h2>
 
-              <p className={`text-gray-500 text-lg sm:text-xl font-medium max-w-lg mb-10 transition-all duration-700 delay-700 ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+              <p className={`text-gray-500 text-base sm:text-lg lg:text-xl font-medium max-w-lg mb-10 transition-all duration-700 delay-[800ms] ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
                 Your gateway to the most innovative AI startups shaping the future of technology and humanity.
               </p>
 
-              {/* Trusted Avatars & User's Own Image */}
-              <div className={`flex items-center gap-4 transition-all duration-700 delay-1000 ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+              {/* Trusted Avatars */}
+              <div className={`flex items-center gap-4 transition-all duration-700 delay-[1000ms] ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
                 <div className="flex -space-x-3">
-                  <img src="https://i.pravatar.cc/100?img=1" alt="user" className="w-10 h-10 rounded-full border-2 border-white shadow-sm" />
-                  <img src="https://i.pravatar.cc/100?img=2" alt="user" className="w-10 h-10 rounded-full border-2 border-white shadow-sm" />
-                  {/* 👇 AAPKI KHUD KI IMAGE YAHAN HAI 👇 */}
-                  <img src={myProfileImage} alt="My Profile" className="w-10 h-10 rounded-full border-2 border-white shadow-md z-10 object-cover" />
+                  <img src="https://i.pravatar.cc/100?img=11" alt="user" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-[3px] border-white shadow-sm object-cover" />
+                  <img src="https://i.pravatar.cc/100?img=47" alt="user" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-[3px] border-white shadow-sm object-cover" />
+                  <img src="https://i.pravatar.cc/100?img=12" alt="user" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-[3px] border-white shadow-sm object-cover" />
                   
-                  <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-900 flex items-center justify-center shadow-sm z-20">
-                    <span className="text-[10px] text-white font-bold tracking-widest">+1K</span>
+                  {/* 👇 AAPKI KHUD KI IMAGE 👇 */}
+                  <img src={myProfileImage} alt="My Profile" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-[3px] border-white shadow-md z-10 object-cover" />
+                  
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-[3px] border-white bg-gray-900 flex items-center justify-center shadow-sm z-20">
+                    <span className="text-[10px] sm:text-xs text-white font-bold tracking-wider">1K+</span>
                   </div>
                 </div>
-                <div className="text-sm text-gray-500 font-semibold">
+                <div className="text-xs sm:text-sm text-gray-600 font-bold uppercase tracking-wider">
                   Trusted by innovators worldwide
                 </div>
               </div>
             </div>
 
-            {/* ---------------- RIGHT SIDE: PLANETARY ORBITS ---------------- */}
-            <div className={`relative w-full aspect-square max-w-[500px] mx-auto z-0 order-1 lg:order-2 transition-all duration-1000 ${isSec2Visible ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}>
+            {/* ---------------- RIGHT SIDE: REALTIME AI CLOCK ---------------- */}
+            <div className="w-full flex flex-col items-center justify-center mt-12 lg:mt-0 relative">
               
-              {/* CENTER HUB (The "Sun") */}
-              <div className="absolute inset-0 m-auto w-24 h-24 sm:w-28 sm:h-28 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-full shadow-[0_0_40px_rgba(250,204,21,0.5)] flex items-center justify-center z-50">
-                <span className="text-3xl font-black text-white drop-shadow-md">AI</span>
+              {/* Circular Clock Face */}
+              <div 
+                className="relative w-full aspect-square max-w-[320px] sm:max-w-[420px] mx-auto z-10 
+                           [--radius:-140px] sm:[--radius:-190px]" 
+              >
+                
+                {/* Clock Center AI Image & Hands */}
+                <div className="absolute inset-0 m-auto w-24 h-24 flex items-center justify-center z-20">
+                  
+                  <img 
+                    src={centerAiImage} 
+                    alt="Center AI Logo" 
+                    className={`w-14 h-14 sm:w-20 sm:h-20 object-contain transition-opacity duration-1000 ${isSec2Visible ? 'opacity-100' : 'opacity-0'}`} 
+                  />
+                  
+                  {/* Center Dot Pivot */}
+                  <div className="absolute w-3 h-3 bg-gray-900 rounded-full z-30 shadow-md"></div>
+                  
+                  {/* Analog Hands */}
+                  <div 
+                    className="absolute w-1.5 h-16 sm:h-20 bg-gray-900 rounded-full origin-bottom bottom-1/2 z-20 transition-transform duration-300 ease-out" 
+                    style={{ transform: `rotate(${hourDeg}deg)` }}
+                  ></div>
+                  <div 
+                    className="absolute w-1 h-20 sm:h-28 bg-gray-700 rounded-full origin-bottom bottom-1/2 z-20 transition-transform duration-300 ease-out" 
+                    style={{ transform: `rotate(${minDeg}deg)` }}
+                  ></div>
+                  <div 
+                    className="absolute w-0.5 h-24 sm:h-32 bg-[#ff6600] rounded-full origin-bottom bottom-1/2 z-20" 
+                    style={{ transform: `rotate(${secDeg}deg)` }} 
+                  ></div>
+                </div>
+
+                {/* 12 AI Startups Orbiting */}
+                {aiLogos.map((logo, idx) => (
+                  <div 
+                    key={idx}
+                    className={`absolute top-1/2 left-1/2 w-12 h-12 sm:w-16 sm:h-16 -ml-6 -mt-6 sm:-ml-8 sm:-mt-8 flex flex-col items-center justify-center bg-white rounded-full shadow-[0_4px_15px_rgba(0,0,0,0.08)] border border-gray-100 transition-all duration-[1200ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] group cursor-pointer hover:shadow-xl hover:scale-110 z-30 overflow-hidden p-2`}
+                    style={{
+                      transform: isSec2Visible 
+                        ? `rotate(${logo.angle}deg) translate(0, var(--radius)) rotate(-${logo.angle}deg)` 
+                        : `translate(0,0) scale(0)`,
+                      transitionDelay: `${idx * 50}ms`
+                    }}
+                  >
+                    <img 
+                      src={logo.img} 
+                      alt={logo.name} 
+                      className="w-full h-full object-contain" 
+                      // 🛡️ FIX FOR INVISIBLE LOGOS: Agar image fail hoti hai toh ye mast colored Letter avatar dikhayega
+                      onError={(e) => { 
+                        e.target.onerror = null; 
+                        e.target.src = `https://ui-avatars.com/api/?name=${logo.name}&background=random&color=fff&bold=true`; 
+                      }} 
+                    />
+                    
+                    {/* Tooltip/Name */}
+                    <span className="absolute top-[115%] text-[10px] sm:text-xs font-bold text-gray-800 bg-white px-2 py-0.5 rounded shadow-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity translate-y-1 group-hover:translate-y-0">
+                      {logo.name}
+                    </span>
+                  </div>
+                ))}
               </div>
 
-              {/* INNER ORBIT (Fast) */}
-              <div className="absolute inset-0 m-auto w-[55%] h-[55%] border border-dashed border-gray-300 rounded-full orbit-spin-fast z-40">
-                {/* Planet 1 */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full p-2 shadow-lg border border-gray-100 anti-spin-fast">
-                  <img src={startup1} className="w-full h-full object-contain" alt="AI 1" />
-                </div>
-                {/* Planet 2 */}
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-10 h-10 bg-white rounded-full p-1.5 shadow-lg border border-gray-100 anti-spin-fast">
-                  <img src={startup2} className="w-full h-full object-contain" alt="AI 2" />
-                </div>
-              </div>
-
-              {/* MIDDLE ORBIT (Medium) */}
-              <div className="absolute inset-0 m-auto w-[75%] h-[75%] border border-dashed border-gray-200 rounded-full orbit-spin-medium z-30">
-                {/* Planet 3 */}
-                <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-white rounded-full p-2 shadow-lg border border-gray-100 anti-spin-medium">
-                  <img src={startup3} className="w-full h-full object-contain" alt="AI 3" />
-                </div>
-                {/* Planet 4 */}
-                <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full p-2 shadow-lg border border-gray-100 anti-spin-medium">
-                  <img src={startup4} className="w-full h-full object-contain" alt="AI 4" />
-                </div>
-                {/* Planet 5 */}
-                <div className="absolute bottom-[10%] left-[10%] -translate-x-1/2 translate-y-1/2 w-10 h-10 bg-white rounded-full p-1.5 shadow-lg border border-gray-100 anti-spin-medium">
-                  <img src={startup5} className="w-full h-full object-contain" alt="AI 5" />
-                </div>
-              </div>
-
-              {/* OUTER ORBIT (Slow) */}
-              <div className="absolute inset-0 m-auto w-[100%] h-[100%] border border-dashed border-gray-100 rounded-full orbit-spin-slow z-20">
-                {/* Planet 6 */}
-                <div className="absolute top-[10%] left-[15%] -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white rounded-full p-3 shadow-xl border border-gray-100 anti-spin-slow hover:scale-110 transition-transform">
-                  <img src={startup6} className="w-full h-full object-contain" alt="AI 6" />
-                </div>
-                {/* Planet 7 */}
-                <div className="absolute top-[5%] right-[20%] translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-white rounded-full p-2.5 shadow-xl border border-gray-100 anti-spin-slow">
-                  <img src={startup7} className="w-full h-full object-contain" alt="AI 7" />
-                </div>
-                {/* Planet 8 */}
-                <div className="absolute bottom-[15%] right-[5%] translate-x-1/2 translate-y-1/2 w-16 h-16 bg-white rounded-full p-3 shadow-xl border border-gray-100 anti-spin-slow">
-                  <img src={startup8} className="w-full h-full object-contain" alt="AI 8" />
-                </div>
-                {/* Planet 9 */}
-                <div className="absolute bottom-[5%] left-[30%] -translate-x-1/2 translate-y-1/2 w-12 h-12 bg-white rounded-full p-2 shadow-lg border border-gray-100 anti-spin-slow">
-                  <img src={startup9} className="w-full h-full object-contain" alt="AI 9" />
-                </div>
+              {/* ---------------- NEW BUTTON (Navigates to AI Startups Navbar Section) ---------------- */}
+              <div className={`mt-12 sm:mt-16 flex items-center justify-center transition-all duration-1000 delay-[600ms] ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                <button 
+                  onClick={() => navigate('/startups')} // 👈 Yahan route check kar lena
+                  className="bg-[#ff6600] hover:bg-[#e65c00] text-white px-8 py-3.5 sm:px-10 sm:py-4 rounded-full font-bold text-sm sm:text-base transition-all duration-300 shadow-[0_4px_20px_rgba(255,102,0,0.25)] hover:shadow-[0_6px_25px_rgba(255,102,0,0.35)] hover:-translate-y-1 flex items-center gap-2 group"
+                >
+                  View All AI Startups
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                </button>
               </div>
 
             </div>
           </div>
-
-          {/* ---------------- BOTTOM SECTION: STATS & CTA BUTTON ---------------- */}
-          <div className={`mt-20 border border-gray-200 rounded-[2rem] bg-gray-50/50 p-6 sm:p-8 lg:p-10 flex flex-col xl:flex-row justify-between items-center gap-10 shadow-sm transition-all duration-1000 delay-500 ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
-            
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full xl:w-auto flex-grow">
-              {statsData.map((stat, idx) => (
-                <div key={idx} className="flex items-center gap-4 group cursor-pointer">
-                  <div className="w-12 h-12 rounded-xl border border-yellow-200 bg-yellow-50 flex items-center justify-center text-xl group-hover:bg-yellow-400 group-hover:scale-110 transition-all duration-300">
-                    {stat.icon}
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-black text-gray-900 group-hover:text-yellow-600 transition-colors">{stat.num}</h4>
-                    <p className="text-xs font-bold text-gray-500">{stat.title}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA Yellow Button */}
-            <button 
-              onClick={() => navigate('/startups')}
-              className="w-full xl:w-auto whitespace-nowrap bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-black font-extrabold px-10 py-4 rounded-xl flex items-center justify-center gap-3 shadow-[0_8px_20px_rgba(250,204,21,0.3)] transition-all transform hover:-translate-y-1 hover:shadow-[0_12px_25px_rgba(250,204,21,0.4)] active:scale-95"
-            >
-              View More Startups <span className="text-xl">➔</span>
-            </button>
-            
-          </div>
-
-          {/* Bottom Lightning Bar */}
-          <div className="mt-8 flex justify-center items-center gap-3 text-[10px] sm:text-xs font-bold text-gray-400 tracking-[0.2em] uppercase">
-            <span className="w-6 h-6 rounded-full bg-yellow-100 text-yellow-500 flex items-center justify-center text-xs">⚡</span>
-            <span>1000+ AI STARTUP LISTING</span>
-            <span className="w-1 h-1 bg-gray-300 rounded-full mx-2 hidden sm:block"></span>
-            <span className="hidden sm:block">EXPLORE. CONNECT. GROW.</span>
-          </div>
-
         </div>
       </section>
-  
 
 {/* ========================================================= */}
       {/* SECTION 3: HACKATHONS (Typing & Left-to-Right Text)       */}
