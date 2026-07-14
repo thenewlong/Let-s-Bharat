@@ -570,11 +570,10 @@ const Home = () => {
                 <div className="absolute inset-0 m-auto w-24 h-24 flex items-center justify-center z-20">
                   
                   <img 
-                    src={centerAiImage} 
-                    alt="Center AI Logo" 
-                    className={`w-14 h-14 sm:w-20 sm:h-20 object-contain transition-opacity duration-1000 ${isSec2Visible ? 'opacity-100' : 'opacity-0'}`} 
-                  />
-                  
+                  src={centerAiImage} 
+                  alt="Center AI Logo" 
+                  className={`w-14 h-14 sm:w-15 sm:h-15 rounded-full object-cover bg-white shadow-md border border-gray-100 p-1 transition-opacity duration-1000 ${isSec2Visible ? 'opacity-100' : 'opacity-0'}`} 
+/>
                   {/* Center Dot Pivot */}
                   <div className="absolute w-3 h-3 bg-gray-900 rounded-full z-30 shadow-md"></div>
                   
