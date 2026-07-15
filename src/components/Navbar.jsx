@@ -48,6 +48,7 @@ const Navbar = () => {
               <Link to="/Startups" className="text-gray-600 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">AI STARTUPS</Link>
               <Link to="/hackathons" className="text-gray-600 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">HACKATHONS</Link>
               <Link to="/internships" className="text-gray-600 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">INTERNSHIPS</Link>
+              <Link to="/Jobs" className="text-gray-600 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">JOBS</Link>
               <Link to="/tournaments" className="text-gray-600 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">TOURNAMENTS</Link>
               <Link to="/resources" className="text-gray-600 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">RESOURCES</Link>
             </div>
@@ -113,6 +114,7 @@ const Navbar = () => {
           <Link to="/startups" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">AI STARTUPS</Link>
           <Link to="/hackathons" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">HACKATHONS</Link>    
           <Link to="/internships" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">INTERNSHIPS</Link>
+          <Link to="/jobs" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">JOBS</Link>
           <Link to="/tournaments" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">TOURNAMENTS</Link>
           <Link to="/resources" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">RESOURCES</Link>
         </div>

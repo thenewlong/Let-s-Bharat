@@ -9,6 +9,7 @@ import Internships from './pages/Internships';
 import Tournaments from './pages/Tournaments'; 
 import Startups from './pages/Startups'; 
 import Resources from './pages/Resources';
+import Jobs from './pages/Jobs';
 import About from './pages/About';
 import Profile from './pages/Profile'; 
 import IntroVideo from './components/IntroVideo'; // 🎥 Fix: IntroVideo component import kiya
@@ -46,6 +47,7 @@ function App() {
               <Route path="/internships" element={<Internships />} /> 
               <Route path="/tournaments" element={<Tournaments />} /> 
               <Route path="/Startups" element={<Startups />} />
+              <Route path="/Jobs" element={<Jobs />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/about" element={<About />} />
               <Route path="/profile" element={<Profile />} /> 
