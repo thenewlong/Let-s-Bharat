@@ -10,7 +10,7 @@ import video3 from '../assets/videos/video3.mp4';
 import video4 from '../assets/videos/video4.mp4';
 
 // laptop video ke liye bhi import karna hoga
-import laptopVideo from '../assets/laptop.mp4';
+import laptopVideo from '../assets/videos/laptop.mp4';
 
 // 👇 YAHAN APNI 2 IMAGES IMPORT KAREIN 👇
 import myProfileImage from '../assets/images/avater.jpeg'; // Trusted Avatar me aapki photo
