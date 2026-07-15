@@ -1,5 +1,5 @@
 import React from 'react';
-import introVideo from '../assets/videos/intro.mp4'; // Apni video ka sahi path check kar lena
+import introVideo from '../assets/videos/intro2.mp4'; // Apni video ka sahi path check kar lena
 
 const IntroVideo = ({ onVideoEnd }) => {
   return (
