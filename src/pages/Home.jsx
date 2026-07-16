@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 // 🎥 Apni saari videos yahan import karein (path check kar lena)
 import video1 from '../assets/videos/video1.mp4';
-import video2 from '../assets/videos/video6.mp4';
+import video2 from '../assets/videos/video8.mp4';
 import video3 from '../assets/videos/video3.mp4';
-import video4 from '../assets/videos/video7.mp4';
+import video4 from '../assets/videos/video9.mp4';
 
 // laptop video ke liye bhi import karna hoga
 import laptopVideo from '../assets/videos/laptop.mp4';
