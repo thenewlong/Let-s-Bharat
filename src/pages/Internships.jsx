@@ -140,7 +140,7 @@ const Internship = () => {
         {/* Banner Overlay Content */}
         <div className="absolute inset-0 flex flex-col justify-center max-w-7xl mx-auto px-6 md:px-10 z-10">
           <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">
-            Internships
+            NOT AVAILABLE ANY INTERNSHIP WAIT FOR 1 WEEK ALL TOP INTERSHIP UPDATES !!
           </h1>
           <p className="text-gray-300 max-w-2xl text-lg mb-10 leading-relaxed">
             Kickstart your career with top remote and onsite internships. Gain real-world experience, build your portfolio, and get hired.

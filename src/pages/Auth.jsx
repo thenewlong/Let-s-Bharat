@@ -8,43 +8,64 @@ const Auth = () => {
   const { signInWithGoogle, login, signup, user } = useAuth();
   const navigate = useNavigate();
 
-  // Form Field States
+  // Form Field States (Simplified as requested)
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [agreeTerms, setAgreeTerms] = useState(false);
   const [error, setError] = useState('');
 
-  // Premium platform automatic user checking (Unstop / LinkedIn style redirect)
+  // Premium platform automatic user checking
   useEffect(() => {
     if (user) {
-      navigate('/profile'); // Agar user pehle se login hai toh automatic dashboard bhej do
+      navigate('/profile');
     }
   }, [user, navigate]);
 
+  // Carousel Slides matching the provided image concept
   const slides = [
     {
-      title: "Connect with like-minded people",
-      desc: "Join a growing ecosystem of developer talent, designers, and innovators across Northeast India.",
-      icon: "👥"
+      title: "AI Startups",
+      desc: "Discover innovative AI startups shaping India.",
+      icon: (
+        <svg className="w-6 h-6 text-[#f5a623]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      )
     },
     {
-      title: "Discover hackathons & events",
-      desc: "Get direct access to major technical challenges, local meetups, and international prize pools.",
-      icon: "🏆"
+      title: "Hackathons",
+      desc: "Compete. Build. Win. Solve real-world problems.",
+      icon: (
+        <svg className="w-6 h-6 text-[#f5a623]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+        </svg>
+      )
     },
     {
-      title: "Learn, Grow & Build together",
-      desc: "Accelerate your product roadmap with mentorship, active support channels, and incubation paths.",
-      icon: "🚀"
+      title: "Internships",
+      desc: "Kickstart your career with top opportunities.",
+      icon: (
+        <svg className="w-6 h-6 text-[#f5a623]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      )
+    },
+    {
+      title: "Tournaments",
+      desc: "Compete in the ultimate esport Tournaments.",
+      icon: (
+        <svg className="w-6 h-6 text-[#f5a623]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      )
     }
   ];
 
+  // Auto-slide logic
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, 4000);
+    }, 3500);
     return () => clearInterval(timer);
   }, [slides.length]);
 
@@ -54,7 +75,7 @@ const Auth = () => {
       await signInWithGoogle();
       navigate('/profile'); 
     } catch (err) {
-      setError('Google Sign-In process dismiss ho gaya.');
+      setError('Google Sign-In failed.');
     }
   };
 
@@ -67,14 +88,6 @@ const Auth = () => {
         await login(email, password);
         navigate('/profile');
       } else {
-        if (password !== confirmPassword) {
-          setError('Passwords match nahi ho rahe hain.');
-          return;
-        }
-        if (!agreeTerms) {
-          setError('Aage badhne ke liye terms accept kijiye.');
-          return;
-        }
         await signup(fullName, email, password);
         navigate('/profile');
       }
@@ -83,225 +96,245 @@ const Auth = () => {
     }
   };
 
+  // Text for 3D Animation
+  const headline = "Learn ConnectGrow Won!";
+  const titleLetters = headline.split("");
+
   return (
-    <div className="w-full min-h-screen bg-[#060913] flex items-center justify-center p-4 md:p-10 font-sans text-white overflow-hidden perspective-viewport">
+    <div className="w-full min-h-screen bg-[#02040a] flex items-center justify-center p-4 md:p-10 font-sans overflow-hidden">
       
-      {/* Real-time 3D and Flipkart Micro-Animation Frame Configurations */}
+      {/* 🌟 CSS FOR 3D ANIMATION & STYLING */}
       <style>{`
-        .perspective-viewport {
-          perspective: 1500px;
+        .perspective-container {
+          perspective: 1200px;
         }
-        .animate-3d-modal {
-          animation: modal3DEntry 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        
+        .letter-3d-fast {
+          display: inline-block;
+          opacity: 0;
           transform-style: preserve-3d;
+          animation: popIn3DFast 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
-        @keyframes modal3DEntry {
+
+        @keyframes popIn3DFast {
           0% {
             opacity: 0;
-            transform: scale(0.85) rotateX(25deg) rotateY(-15deg) translateZ(-200px);
+            transform: scale(0.5) rotateX(-60deg) translateY(40px);
+            filter: blur(4px);
           }
           100% {
             opacity: 1;
-            transform: scale(1) rotateX(0deg) rotateY(0deg) translateZ(0);
+            transform: scale(1) rotateX(0deg) translateY(0);
+            filter: blur(0px);
           }
         }
-        .flipkart-slide-in {
-          animation: fSlide 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+
+        /* Form entrance animation */
+        .slide-up-fade {
+          animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        @keyframes fSlide {
-          0% {
-            opacity: 0;
-            transform: translateX(80px) skewX(-2deg);
-          }
-          100% {
-            opacity: 1;
-            transform: translateX(0) skewX(0deg);
-          }
+        
+        @keyframes slideUp {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Input autofill reset */
+        input:-webkit-autofill {
+          -webkit-box-shadow: 0 0 0 50px transparent inset;
+          -webkit-text-fill-color: #1f2937;
+          transition: background-color 5000s ease-in-out 0s;
         }
       `}</style>
 
-      {/* Main Framework Container */}
-      <div className="w-full max-w-6xl bg-[#0b0f19] rounded-3xl overflow-hidden shadow-[0_30px_70px_-15px_rgba(0,0,0,0.8)] border border-gray-800/60 flex flex-col md:flex-row min-h-[660px] animate-3d-modal">
+      {/* 🚀 MAIN WRAPPER */}
+      <div className="w-full max-w-6xl rounded-[2rem] overflow-hidden shadow-2xl flex flex-col md:flex-row min-h-[700px] border border-gray-800/50 bg-[#0a0a0a]">
         
-        {/* ================= LEFT SIDE: DARK PREMIUM PANELS ================= */}
-        <div className="w-full md:w-1/2 bg-[#0b0f19] p-8 md:p-12 flex flex-col justify-between relative overflow-hidden border-b md:border-b-0 md:border-r border-gray-800/40">
+        {/* ================= LEFT SIDE (DARK THEME + CAROUSEL) ================= */}
+        <div className="w-full md:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-between relative perspective-container">
           
-          {/* Dual Brand Identity Typography Wrapper */}
-          <div className="z-10">
-            <span className="text-2xl font-black tracking-tight text-white">
-              Let's <span className="text-[#7c3aed]">Sister</span>
-            </span>
+         
+          {/* 3D Animated Headline */}
+          <div className="z-10 mt-12 mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-xs font-semibold mb-6">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.381z" /></svg>
+              Empowering Ideas. Building Bharat.
+            </div>
+            
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight flex flex-wrap gap-[4px]">
+              {titleLetters.map((char, index) => (
+                <span
+                  key={index}
+                  className={`letter-3d-fast ${
+                    index >= 15 ? "text-[#f5a623]" : "text-white"
+                  }`}
+                  style={{
+                    animationDelay: `${index * 0.04}s`, // Very fast cascading effect
+                    marginRight: char === " " ? "0.25em" : "0" // Preserve spaces
+                  }}
+                >
+                  {char}
+                </span>
+              ))}
+            </h1>
+            <p className="text-gray-400 mt-6 text-sm md:text-base max-w-sm leading-relaxed slide-up-fade" style={{animationDelay: "1s"}}>
+              India's most vibrant platform for AI startups, hackathons, internships, and startup communities.
+            </p>
           </div>
 
-          {/* Micro-Interaction Showcase Carousel */}
-          <div className="my-auto py-10 relative h-48 flex items-center">
-            {slides.map((slide, index) => (
-              <div
-                key={index}
-                className={`absolute inset-0 flex flex-col justify-center transition-all duration-700 ease-in-out ${
-                  index === currentSlide 
-                    ? "opacity-100 transform translate-x-0 scale-100" 
-                    : "opacity-0 transform -translate-x-8 scale-95 pointer-events-none"
-                }`}
-              >
-                <div className="w-12 h-12 rounded-xl bg-purple-950/40 border border-purple-500/20 flex items-center justify-center text-2xl mb-4">
-                  {slide.icon}
+          {/* Premium Glassmorphism Carousel (Matched with Image) */}
+          <div className="relative h-44 z-10 slide-up-fade" style={{animationDelay: "1.2s"}}>
+            <div className="flex transition-transform duration-700 ease-in-out h-full" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
+              {slides.map((slide, index) => (
+                <div key={index} className="w-full flex-shrink-0 px-2 h-full">
+                  <div className={`h-full p-6 rounded-2xl border transition-all duration-500 flex flex-col justify-center ${
+                    index === currentSlide 
+                      ? "bg-gray-800/40 border-gray-600/50 scale-100 opacity-100" 
+                      : "bg-gray-900/20 border-gray-800/30 scale-95 opacity-50"
+                  }`}>
+                    <div className="mb-4">{slide.icon}</div>
+                    <h3 className="text-white font-semibold text-lg mb-1">{slide.title}</h3>
+                    <p className="text-gray-400 text-sm">{slide.desc}</p>
+                  </div>
                 </div>
-                <h2 className="text-2xl md:text-3xl font-black tracking-tight mb-2 text-white">
-                  {slide.title}
-                </h2>
-                <p className="text-gray-400 text-xs md:text-sm leading-relaxed max-w-sm">
-                  {slide.desc}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
+            
+            {/* Carousel Dots */}
+            <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2">
+              {slides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentSlide(i)}
+                  className={`h-1 rounded-full transition-all duration-300 ${
+                    i === currentSlide ? "w-6 bg-[#f5a623]" : "w-2 bg-gray-700"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
 
-          {/* Dots Indicator */}
-          <div className="flex gap-1.5 z-10">
-            {slides.map((_, i) => (
-              <span
-                key={i}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  i === currentSlide ? "w-6 bg-[#7c3aed]" : "w-1.5 bg-gray-700"
-                }`}
-              />
-            ))}
-          </div>
-
-          <div className="absolute -top-10 -left-10 w-48 h-48 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
+          {/* Background Glow Effect */}
+          <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#f5a623]/10 to-transparent pointer-events-none rounded-b-3xl"></div>
         </div>
 
-        {/* ================= RIGHT SIDE: PURE WHITE MODERN INTERFACE ================= */}
-        <div 
-          key={isLogin ? 'login-view' : 'signup-view'} 
-          className="w-full md:w-1/2 p-8 md:p-12 bg-white flex flex-col justify-center flipkart-slide-in"
-        >
-          <div className="max-w-md w-full mx-auto">
+        {/* ================= RIGHT SIDE (SKY-YELLOW FORM) ================= */}
+        <div className="w-full md:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center relative slide-up-fade" 
+             style={{ 
+               background: "linear-gradient(135deg, #eeeeee 0%, #bcc59d 40%, #dcc82e 100%)", // The Sky Yellow Gradient you requested
+             }}>
+          
+          <div className="max-w-md w-full mx-auto bg-white/60 backdrop-blur-xl p-8 rounded-[2rem] shadow-xl border border-white/50">
             
-            <h3 className="text-3xl font-black text-gray-900 mb-1.5 tracking-tight">
-              {isLogin ? 'Welcome Back!' : 'Create Account'}
-            </h3>
-            <p className="text-gray-500 text-sm mb-6 font-medium">
-              {isLogin ? 'Login to continue your dashboard journey.' : 'Join our professional network platform today!'}
-            </p>
+            {/* Custom Tab Switcher */}
+            <div className="flex relative border-b border-gray-300 mb-8">
+              <button
+                onClick={() => { setIsLogin(true); setError(''); }}
+                className={`flex-1 pb-4 text-sm font-bold transition-colors ${
+                  isLogin ? "text-[#f5a623] border-b-2 border-[#f5a623]" : "text-gray-500 hover:text-gray-700"
+                }`}
+              >
+                Login
+              </button>
+              <button
+                onClick={() => { setIsLogin(false); setError(''); }}
+                className={`flex-1 pb-4 text-sm font-bold transition-colors ${
+                  !isLogin ? "text-[#f5a623] border-b-2 border-[#f5a623]" : "text-gray-500 hover:text-gray-700"
+                }`}
+              >
+                Create Account
+              </button>
+            </div>
 
             {error && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-xs font-semibold">
+              <div className="mb-4 p-3 bg-red-100 border border-red-300 rounded-xl text-red-600 text-sm font-medium">
                 {error}
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               
+              {/* Full Name (Only for Create Account) */}
               {!isLogin && (
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">Full Name</label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                  </div>
                   <input
                     type="text"
                     required
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    placeholder="John Doe"
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:bg-white transition-all font-medium"
+                    placeholder="Full Name"
+                    className="w-full bg-white/80 border border-gray-200 rounded-xl pl-12 pr-4 py-3.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#f5a623] focus:border-transparent transition-all font-medium shadow-sm"
                   />
                 </div>
               )}
 
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">Email Address</label>
+              {/* Email */}
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                </div>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@domain.com"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:bg-white transition-all font-medium"
+                  placeholder="Email Address"
+                  className="w-full bg-white/80 border border-gray-200 rounded-xl pl-12 pr-4 py-3.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#f5a623] focus:border-transparent transition-all font-medium shadow-sm"
                 />
               </div>
 
-              <div>
-                <div className="flex justify-between items-center mb-1.5">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-500">Password</label>
-                  {isLogin && (
-                    <button type="button" className="text-xs font-bold text-[#7c3aed] hover:underline">Forgot?</button>
-                  )}
+              {/* Password */}
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                 </div>
                 <input
                   type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:bg-white transition-all font-medium"
+                  placeholder="Password"
+                  className="w-full bg-white/80 border border-gray-200 rounded-xl pl-12 pr-4 py-3.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#f5a623] focus:border-transparent transition-all font-medium shadow-sm"
                 />
               </div>
 
-              {!isLogin && (
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">Confirm Password</label>
-                  <input
-                    type="password"
-                    required
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:bg-white transition-all font-medium"
-                  />
-                </div>
-              )}
-
-              {!isLogin && (
-                <div className="flex items-start gap-2.5 pt-1">
-                  <input
-                    type="checkbox"
-                    id="terms"
-                    checked={agreeTerms}
-                    onChange={(e) => setAgreeTerms(e.target.checked)}
-                    className="w-4 h-4 rounded mt-0.5 border-gray-300 bg-gray-50 text-[#7c3aed] focus:ring-0 cursor-pointer"
-                  />
-                  <label htmlFor="terms" className="text-xs text-gray-500 leading-tight cursor-pointer select-none">
-                    I agree to the <span className="text-gray-900 font-bold hover:underline">Terms</span> and <span className="text-gray-900 font-bold hover:underline">Privacy Policy</span>.
-                  </label>
-                </div>
-              )}
-
+              {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-[#7c3aed] hover:bg-[#6d28d9] text-white py-3.5 rounded-xl font-bold text-sm transition-all shadow-md hover:shadow-purple-500/20 active:scale-[0.99] mt-2"
+                className="w-full bg-[#f5a623] hover:bg-[#e0961b] text-white py-3.5 rounded-xl font-bold text-sm transition-all shadow-[0_8px_20px_-6px_rgba(245,166,35,0.6)] active:scale-[0.98] mt-6"
               >
                 {isLogin ? 'Login' : 'Create Account'}
               </button>
             </form>
 
-            <div className="relative flex py-4 items-center">
-              <div className="flex-grow border-t border-gray-200"></div>
-              <span className="flex-shrink mx-3 text-gray-400 text-[10px] font-bold uppercase tracking-widest">or integrate via</span>
-              <div className="flex-grow border-t border-gray-200"></div>
+            <div className="relative flex py-6 items-center">
+              <div className="flex-grow border-t border-gray-300"></div>
+              <span className="flex-shrink mx-4 text-gray-500 text-xs font-semibold uppercase tracking-wider">OR</span>
+              <div className="flex-grow border-t border-gray-300"></div>
             </div>
 
-            {/* Google Authentication Anchor Link Button */}
+            {/* Google Authentication Button */}
             <button
               onClick={handleGoogleSignIn}
               type="button"
-              className="w-full bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2.5 active:scale-[0.99]"
+              className="w-full bg-white hover:bg-gray-50 border border-gray-200 text-gray-800 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-3 active:scale-[0.98] shadow-sm"
             >
-              <svg className="w-4 h-4" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.866-3.577-7.866-8s3.536-8 7.866-8c2.46 0 4.105 1.025 5.047 1.926l3.327-3.204C18.416 1.872 15.626.985 12.24.985A10.985 10.985 0 0 0 1.255 11.97a10.985 10.985 0 0 0 10.985 10.985c5.73 0 9.535-3.996 9.535-9.62c0-.65-.07-1.14-.155-1.636l-9.38-.415Z"/>
               </svg>
-              <span>Continue with Google</span>
+              Continue with Google
             </button>
 
-            {/* Account View Mode Selector Toggle */}
-            <p className="text-center text-xs text-gray-500 mt-6 font-medium">
+            {/* Bottom Toggle Text */}
+            <p className="text-center text-sm text-gray-600 mt-8 font-medium">
               {isLogin ? "Don't have an account? " : "Already have an account? "}
               <button
                 type="button"
-                onClick={() => {
-                  setIsLogin(!isLogin);
-                  setError('');
-                }}
-                className="text-[#7c3aed] font-bold hover:underline ml-0.5"
+                onClick={() => { setIsLogin(!isLogin); setError(''); }}
+                className="text-[#f5a623] font-bold hover:underline ml-1"
               >
                 {isLogin ? 'Sign up' : 'Login'}
               </button>

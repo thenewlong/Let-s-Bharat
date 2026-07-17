@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 // 📂 Apne local assets folder se images import karo (.jpeg extension ke sath)
 import banner1 from '../assets/images/banner1.jpeg';
 import banner2 from '../assets/images/banner2.jpeg';
-import banner3 from '../assets/images/banner3.jpeg';
+import banner3 from '../assets/images/hack3.jpeg';
 
 import hack1 from '../assets/images/hack1.jpeg';
 import hack2 from '../assets/images/hack2.jpeg';
@@ -142,7 +142,7 @@ const Hackathons = () => {
         {/* Banner Overlay Content */}
         <div className="absolute inset-0 flex flex-col justify-center max-w-7xl mx-auto px-6 md:px-10 z-10">
           <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">
-            Hackathons
+            NOT AVAILABLE ANY HACKATHONS EVENTS UPCOMING NEXT MONTHS UPDATES !! 
           </h1>
           <p className="text-gray-300 max-w-2xl text-lg mb-10 leading-relaxed">
             Discover hackathons, tech events and competitions happening in Northeast India and around the world. Build, learn, and grow.

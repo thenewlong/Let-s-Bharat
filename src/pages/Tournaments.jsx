@@ -72,7 +72,7 @@ const Tournaments = () => {
         <div className="absolute top-0 right-0 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl"></div>
         <div className="max-w-7xl mx-auto relative z-10">
           <span className="text-xs font-bold text-purple-400 uppercase tracking-widest bg-purple-500/10 px-3 py-1.5 rounded-full">Esports Hub</span>
-          <h1 className="text-4xl md:text-5xl font-extrabold mt-4 mb-4 tracking-tight">Gaming Tournaments</h1>
+          <h1 className="text-4xl md:text-5xl font-extrabold mt-4 mb-4 tracking-tight">NOW NOT AVAILABLE AFTER 20 JULY 2026 ARE COMING SOON !!</h1>
           <p className="text-gray-400 max-w-xl text-lg leading-relaxed">
             Compete with top squad players from Northeast, showcase your live skills, and win massive prize pools.
           </p>

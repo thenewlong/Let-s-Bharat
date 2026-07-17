@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router-dom';
 
 // 🎥 Apni saari videos yahan import karein
 import video1 from '../assets/videos/video1.mp4';
-import video2 from '../assets/videos/video8.mp4';
-import video3 from '../assets/videos/video3.mp4';
-import video4 from '../assets/videos/video9.mp4';
+import video2 from '../assets/videos/hero1.mp4';
+import video3 from '../assets/videos/hero4.mp4';
+import video4 from '../assets/videos/hero2.mp4';
 
 // laptop video ke liye bhi import karna hoga
-import laptopVideo from '../assets/videos/laptop.mp4';
+import laptopVideo from '../assets/videos/screen2.mp4';
 
 // 👇 YAHAN APNI 2 IMAGES IMPORT KAREIN 👇
 import myProfileImage from '../assets/images/avater.jpeg'; // Trusted Avatar me aapki photo
@@ -537,9 +537,9 @@ const Home = () => {
           </div>
         </div>
       </section>
-  
 
-    
+  
+                        {/* section 2*/}
       {/* ========================================================= */}
       {/* 🚀 CSS ANIMATIONS                                         */}
       {/* ========================================================= */}
@@ -561,7 +561,7 @@ const Home = () => {
       {/* ========================================================= */}
       <section 
         ref={section2Ref} 
-        className="relative w-full bg-white pt-6 pb-20 overflow-hidden border-t border-gray-100"
+        className="relative w-full bg-[#eef2f6] pt-6 pb-20 overflow-hidden border-t border-gray-100"
       >
         
         {/* 📜 NEW: PREMIUM HIGHLIGHTED HORIZONTAL MARQUEE */}

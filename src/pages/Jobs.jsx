@@ -204,7 +204,7 @@ const Jobs = () => {
             </div>
             <h1 className="text-4xl md:text-5xl font-black text-gray-900 leading-tight mb-4 tracking-tight uppercase">
               Discover The Right <br />
-              <span className="text-[#ffcc00] stroke-black drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">JOB</span> OPPORTUNITIES
+              <span className="text-[#ffcc00] stroke-black drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">NOT AVAILABLE ANY JOB</span> OPPORTUNITIES
             </h1>
             <p className="text-gray-700 text-sm md:text-base font-medium mb-8">
               Explore top job opportunities from innovative <br className="hidden md:block"/> companies and take the next step in your career.

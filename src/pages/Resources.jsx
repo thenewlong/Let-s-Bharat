@@ -16,15 +16,13 @@ const Resources = () => {
         <div className="flex flex-col md:flex-row items-center justify-between mb-16">
           <div className="max-w-lg">
             <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
-              Resources to Learn, <br/><span className="text-purple-600">Build & Grow</span>
+              UPCOMING NEXT MONTHS- 
+              Resources to Learn,<br/><span className="text-yellow-600">Build & Grow</span>
             </h1>
             <p className="text-gray-600 text-lg mb-8">
               Handpicked resources, tools, roadmaps and guides to help you level up your skills and build amazing things.
             </p>
-            <div className="relative">
-              <input type="text" placeholder="Search resources, tools, topics..." className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-50" />
-              <span className="absolute left-3 top-3.5 text-gray-400">🔍</span>
-            </div>
+            
           </div>
           {/* Illustration Placeholder */}
           <div className="hidden md:block w-1/3 h-64 bg-purple-50 rounded-3xl border border-purple-100"></div>

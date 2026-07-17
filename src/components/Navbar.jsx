@@ -64,8 +64,8 @@ const Navbar = () => {
                 <span className="text-sm font-medium text-gray-800">{user.displayName}</span>
               </Link>
             ) : (
-              <Link to="/auth" className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                Register
+              <Link to="/auth" className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                Let's Connect
               </Link>
             )}
           </div>
@@ -74,7 +74,7 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button 
               onClick={() => setIsOpen(true)}
-              className="text-gray-600 hover:text-purple-600 focus:outline-none"
+              className="text-gray-600 hover:text-yellow-600 focus:outline-none"
             >
               <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -143,9 +143,9 @@ const Navbar = () => {
             <Link 
               to="/auth" 
               onClick={closeMenu}
-              className="block w-full text-center bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-colors shadow-sm"
+              className="block w-full text-center bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-colors shadow-sm"
             >
-              Register
+              Let's Connect
             </Link>
           )}
         </div>

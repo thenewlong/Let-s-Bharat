@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 // 1. FULL BANNER SLIDER IMAGES (LOCAL FILES)
 // ==========================================
 // 👉 Yahan apni local images ka sahi path daaliye (apne folder structure ke hisaab se)
-import slide1 from '../assets/images/ai1.jpeg';
-import slide2 from '../assets/images/ai2.jpeg';
-import slide3 from '../assets/images/ai3.jpeg';
-import slide4 from '../assets/images/ai4.jpeg';
+import slide1 from '../assets/images/start4.jpeg';
+import slide2 from '../assets/images/start.jpeg';
+import slide3 from '../assets/images/start2.jpeg';
+import slide4 from '../assets/images/start3.jpeg';
 
 
 // ✅ Jab aap upar import kar lein, toh unhe niche is array mein daal dein.
