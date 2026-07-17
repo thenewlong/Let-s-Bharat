@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-
+// hero section
 // 🎥 Apni saari videos yahan import karein (path check kar lena)
 import video1 from '../assets/videos/video1.mp4';
 import video2 from '../assets/videos/video8.mp4';
