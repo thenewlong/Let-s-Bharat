@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-// hero section
-// 🎥 Apni saari videos yahan import karein (path check kar lena)
+
+// 🎥 Apni saari videos yahan import karein
 import video1 from '../assets/videos/video1.mp4';
 import video2 from '../assets/videos/video8.mp4';
 import video3 from '../assets/videos/video3.mp4';
@@ -36,17 +36,18 @@ import tourna3 from '../assets/images/tourna3.jpeg';
 import letsBharatLogo from '../assets/images/logos3.jpeg'; 
 import founderProfile from '../assets/images/profile.jpeg';
 
+
 // 📂 DYNAMIC SLIDES DATA
 const heroSlides = [
   {
     id: 1,
-    videoSrc: video1, // Yahan video variable imported hona chahiye
+    videoSrc: video1,
     title1: "NORTHEAST INDIA'S",
     titleHighlight: "YOUTH TECH & START-UP",
     title2: "COMMUNITY HUB",
     subtitle: "CONNECT. COLLABORATE. CREATE IMPACT.",
     desc: "Join thousands of students, developers and innovators building the future of Northeast India.",
-    btn1Text: "Explore Startups ➔", btn1Link: "/startups",
+    btn1Text: "Startups ➔", btn1Link: "/startups",
     btn2Text: "Hackathons ➔", btn2Link: "/hackathons"
   },
   {
@@ -84,9 +85,7 @@ const heroSlides = [
   }
 ];
 
-
-// 🗂️ GLOBAL SEARCH DATA (Future API/Database Integration ke liye)
-// Aap is array ko future mein apne backend cards data se replace kar sakte hain
+// 🗂️ GLOBAL SEARCH DATA
 const globalSearchData = [
   { id: 1, title: "React Native App Development Hackathon", category: "Hackathon", link: "/hackathons/react-native" },
   { id: 2, title: "Nomeo AI 2.0 API Integration", category: "Startup", link: "/startups/nomeo" },
@@ -95,7 +94,6 @@ const globalSearchData = [
   { id: 5, title: "Frontend Developer Internship", category: "Internship", link: "/internships/frontend" },
   { id: 6, title: "Free Fire Max Weekly Scrims", category: "Tournament", link: "/tournaments/freefire" },
 ];
-
 
 const Home = () => {
   const navigate = useNavigate();
@@ -109,6 +107,7 @@ const Home = () => {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchRef = useRef(null);
 
+  
   // Jab slide change ho, toh text animation wapas re-trigger ho
   useEffect(() => {
     setIsAnimating(true);
@@ -139,18 +138,18 @@ const Home = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // ✨ PREMIUM FLAT ANIMATION
+  // ✨ PREMIUM FLAT 3D ANIMATION (Tighter Y-axis for compactness)
   const renderAnimatedWords = (text, isActive, baseDelay = 0) => {
     if (!text) return null; 
     return text.split(" ").map((word, index) => (
       <span
         key={index}
-        className={`inline-block transition-all duration-[1000ms] ease-[cubic-bezier(0.25,1,0.5,1)] ${
+        className={`inline-block transition-all duration-[800ms] font-sans ease-[cubic-bezier(0.25,1,0.5,1)] ${
           isActive 
             ? "opacity-100 translate-y-0 blur-none tracking-normal" 
-            : "opacity-0 translate-y-6 blur-[3px] tracking-wide"
+            : "opacity-0 translate-y-4 blur-[2px] tracking-wide"
         }`}
-        style={{ transitionDelay: `${baseDelay + index * 80}ms` }}
+        style={{ transitionDelay: `${baseDelay + index * 50}ms` }}
       >
         {word}&nbsp;
       </span>
@@ -390,10 +389,13 @@ const Home = () => {
   return (
     <div className="w-full font-sans overflow-x-hidden">
       
+      
+  
       {/* ========================================================= */}
-      {/* SECTION 1: DYNAMIC VIDEO PLAYLIST HERO SECTION            */}
+      {/* SECTION 1: COMPACT CINEMATIC HERO SECTION                 */}
       {/* ========================================================= */}
-      <section className="relative w-full min-h-[100dvh] flex flex-col justify-center bg-[#070b14] pt-28 pb-12 overflow-hidden">
+      {/* min-h reduced to 65vh for mobile, 75vh for desktop */}
+      <section className="relative w-full min-h-[65vh] md:min-h-[75vh] max-h-[850px] flex flex-col justify-center bg-[#070b14] pt-24 md:pt-32 pb-10 overflow-hidden">
         
         {/* 🎥 DYNAMIC BACKGROUND VIDEO */}
         <video 
@@ -408,124 +410,120 @@ const Home = () => {
         </video>
 
         {/* 🌑 Deep Clean Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#070b14]/90 via-[#070b14]/40 to-transparent z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#070b14]/90 via-[#070b14]/50 to-transparent z-0"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#070b14] via-transparent to-transparent z-0"></div>
 
         {/* 📝 MAIN HERO CONTENT */}
-        <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-10 w-full flex-grow flex flex-col justify-center mt-2 md:mt-10">
+        <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-10 w-full flex-grow flex flex-col justify-center mt-2">
           <div className="flex flex-col items-start w-full">
 
             {/* ======================================================= */}
-            {/* 🔍 PREMIUM SEARCH BAR (Perfect for Mobile & Laptop)     */}
+            {/* 🔍 PREMIUM COMPACT SEARCH BAR                           */}
             {/* ======================================================= */}
-            <div ref={searchRef} className="w-full max-w-2xl mb-8 sm:mb-10 relative z-50">
+            <div ref={searchRef} className="w-full max-w-xl mb-6 sm:mb-8 relative z-50">
               <div className={`relative flex items-center w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
-                isSearchFocused ? 'scale-[1.02] sm:scale-105' : 'scale-100'
+                isSearchFocused ? 'scale-[1.01] sm:scale-102' : 'scale-100'
               }`}>
-                {/* Search Icon */}
-                <svg className={`absolute left-4 sm:left-5 w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-300 ${isSearchFocused ? 'text-[#f5a623]' : 'text-neutral-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className={`absolute left-3.5 sm:left-4 w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-300 ${isSearchFocused ? 'text-[#f5a623]' : 'text-neutral-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
 
-                {/* Input Field */}
                 <input
                   type="text"
-                  placeholder="Search Hackathons, Internships, Startups..."
+                  placeholder="Search Hackathons, Startups..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={() => setIsSearchFocused(true)}
-                  className={`w-full bg-white/5 backdrop-blur-xl border ${
-                    isSearchFocused ? 'border-[#f5a623] shadow-[0_0_25px_rgba(245,166,35,0.15)] bg-white/10' : 'border-white/10 hover:border-white/30'
-                  } text-white pl-10 pr-10 sm:pl-12 sm:pr-12 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl outline-none font-medium text-sm sm:text-base transition-all duration-300 placeholder:text-neutral-500`}
+                  className={`w-full bg-white/5 backdrop-blur-xl border font-sans ${
+                    isSearchFocused ? 'border-[#f5a623] shadow-[0_0_20px_rgba(245,166,35,0.15)] bg-white/10' : 'border-white/10 hover:border-white/30'
+                  } text-white pl-10 pr-10 sm:pl-12 py-2.5 sm:py-3.5 rounded-xl outline-none font-medium text-xs sm:text-sm transition-all duration-300 placeholder:text-neutral-400`}
                 />
 
-                {/* Clear (Cross) Icon */}
                 {searchQuery && (
-                  <button onClick={() => setSearchQuery('')} className="absolute right-4 sm:right-5 text-neutral-400 hover:text-white transition-colors">
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                  <button onClick={() => setSearchQuery('')} className="absolute right-3.5 sm:right-4 text-neutral-400 hover:text-white transition-colors">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                   </button>
                 )}
               </div>
 
-              {/* 🖱️ LIVE SEARCH DROPDOWN (Glassmorphism UI) */}
-              <div className={`absolute top-full mt-3 w-full bg-[#0a0f1c]/95 backdrop-blur-2xl border border-white/10 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] transform origin-top ${
+              {/* 🖱️ LIVE SEARCH DROPDOWN */}
+              <div className={`absolute top-full mt-2 w-full bg-[#0a0f1c]/95 backdrop-blur-2xl border border-white/10 rounded-xl overflow-hidden shadow-2xl transition-all duration-400 ease-out transform origin-top ${
                 isSearchFocused && searchQuery ? 'opacity-100 scale-y-100 translate-y-0' : 'opacity-0 scale-y-95 -translate-y-2 pointer-events-none'
               }`}>
                 {filteredResults.length > 0 ? (
-                  <ul className="max-h-64 sm:max-h-72 overflow-y-auto p-2 custom-scrollbar">
+                  <ul className="max-h-56 overflow-y-auto p-1.5 custom-scrollbar">
                     {filteredResults.map((item) => (
                       <li key={item.id}>
                         <button
                           onClick={() => {
                             navigate(item.link);
-                            setIsSearchFocused(false); // Link open hone pe dropdown band ho jayega
+                            setIsSearchFocused(false);
                           }}
-                          className="w-full flex items-center justify-between text-left px-3 sm:px-4 py-3 hover:bg-white/10 rounded-lg sm:rounded-xl transition-all group"
+                          className="w-full flex items-center justify-between text-left px-3 py-2.5 hover:bg-white/10 rounded-lg transition-all group"
                         >
-                          <span className="text-white font-medium text-xs sm:text-sm group-hover:text-[#f5a623] transition-colors line-clamp-1 mr-2">{item.title}</span>
-                          <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-neutral-400 bg-white/5 px-2.5 py-1 rounded-md whitespace-nowrap group-hover:bg-[#f5a623]/20 group-hover:text-[#f5a623] transition-colors">{item.category}</span>
+                          <span className="text-white font-sans font-medium text-xs sm:text-sm group-hover:text-[#f5a623] transition-colors line-clamp-1 mr-2">{item.title}</span>
+                          <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-neutral-400 bg-white/5 px-2 py-1 rounded whitespace-nowrap group-hover:bg-[#f5a623]/20 group-hover:text-[#f5a623]">{item.category}</span>
                         </button>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <div className="px-6 py-8 text-center text-neutral-500 text-xs sm:text-sm font-medium">
+                  <div className="px-5 py-6 text-center text-neutral-500 text-xs font-medium font-sans">
                     No results found for "{searchQuery}"
                   </div>
                 )}
               </div>
             </div>
-            {/* ======================================================= */}
             
             {/* Subtitle */}
-            <div className="overflow-hidden mb-4 sm:mb-5">
-              <p className={`text-[#f5a623] text-[10px] sm:text-xs md:text-sm font-black tracking-[0.2em] sm:tracking-[0.3em] uppercase transition-all duration-[1200ms] ease-out ${
+            <div className="overflow-hidden mb-2 sm:mb-3">
+              <p className={`text-[#f5a623] font-sans text-[9px] sm:text-xs font-black tracking-[0.2em] sm:tracking-[0.25em] uppercase transition-all duration-[1000ms] ease-out ${
                 isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}>
                 {currentSlide?.subtitle}
               </p>
             </div>
 
-            {/* Main Title */}
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.15] sm:leading-[1.1] tracking-tight uppercase select-none relative z-10">
-              <div className="block overflow-hidden py-0.5 sm:py-1">
+            {/* Main Title (Reduced Size for Compactness) */}
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white font-sans leading-[1.2] sm:leading-[1.1] tracking-tight uppercase select-none relative z-10">
+              <div className="block overflow-hidden pb-1">
                 {renderAnimatedWords(currentSlide?.title1 || "", isAnimating, 0)}
               </div>
-              <div className="block overflow-hidden py-0.5 sm:py-1 text-[#f5a623]">
-                {renderAnimatedWords(currentSlide?.titleHighlight || "", isAnimating, 200)}
+              <div className="block overflow-hidden pb-1 text-[#f5a623]">
+                {renderAnimatedWords(currentSlide?.titleHighlight || "", isAnimating, 150)}
               </div>
-              <div className="block overflow-hidden py-0.5 sm:py-1">
-                {renderAnimatedWords(currentSlide?.title2 || "", isAnimating, 400)}
+              <div className="block overflow-hidden pb-1">
+                {renderAnimatedWords(currentSlide?.title2 || "", isAnimating, 300)}
               </div>
             </h1>
             
             {/* Description Text */}
-            <p className={`text-neutral-300 text-sm sm:text-base lg:text-xl max-w-2xl mt-4 sm:mt-6 font-medium leading-relaxed transition-all duration-[1200ms] ease-out relative z-10 ${
-              isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`} style={{ transitionDelay: '600ms' }}>
+            <p className={`text-neutral-300 font-sans text-xs sm:text-sm md:text-base max-w-xl mt-3 sm:mt-4 font-medium leading-relaxed transition-all duration-[1000ms] ease-out relative z-10 ${
+              isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`} style={{ transitionDelay: '450ms' }}>
               {currentSlide?.desc}
             </p>
             
-            {/* Buttons */}
-            <div className={`flex flex-col sm:flex-row w-full sm:w-auto gap-3 sm:gap-4 mt-8 sm:mt-10 transition-all duration-[1200ms] ease-out relative z-10 ${
-              isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`} style={{ transitionDelay: '800ms' }}>
+            {/* Buttons (Side by side on mobile for better UX) */}
+            <div className={`flex flex-row flex-wrap w-full gap-2.5 sm:gap-4 mt-6 sm:mt-8 transition-all duration-[1000ms] ease-out relative z-10 ${
+              isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`} style={{ transitionDelay: '600ms' }}>
               <button 
                 onClick={() => navigate(currentSlide?.btn1Link)} 
-                className="w-full sm:w-auto bg-[#f5a623] hover:bg-[#e0961c] text-black px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-black tracking-wide transition-colors active:scale-95 uppercase text-xs sm:text-sm"
+                className="flex-1 sm:flex-none bg-[#f5a623] hover:bg-[#e0961c] text-black px-4 sm:px-8 py-2.5 sm:py-3.5 rounded-xl font-sans font-black tracking-wide transition-colors active:scale-95 uppercase text-[10px] sm:text-sm whitespace-nowrap text-center"
               >
                 {currentSlide?.btn1Text}
               </button>
               <button 
                 onClick={() => navigate(currentSlide?.btn2Link)} 
-                className="w-full sm:w-auto border-2 border-white/80 hover:border-white bg-transparent hover:bg-white/10 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-bold tracking-wide transition-colors active:scale-95 text-white uppercase text-xs sm:text-sm"
+                className="flex-1 sm:flex-none border-2 border-white/80 hover:border-white bg-transparent hover:bg-white/10 px-4 sm:px-8 py-2.5 sm:py-3.5 rounded-xl font-sans font-bold tracking-wide transition-colors active:scale-95 text-white uppercase text-[10px] sm:text-sm whitespace-nowrap text-center"
               >
                 {currentSlide?.btn2Text}
               </button>
             </div>
 
-            {/* Video Progress Indicators (Dots) */}
-            <div className="flex gap-1.5 sm:gap-2 mt-12 sm:mt-16 mb-4 relative z-10">
+            {/* Video Progress Indicators */}
+            <div className="flex gap-1.5 sm:gap-2 mt-8 sm:mt-12 relative z-10">
               {heroSlides.map((_, index) => (
                 <div 
                   key={index} 
@@ -539,9 +537,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+  
 
-
-     
     
       {/* ========================================================= */}
       {/* 🚀 CSS ANIMATIONS                                         */}
