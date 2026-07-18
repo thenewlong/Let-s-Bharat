@@ -170,7 +170,7 @@ const IntroVideo = ({ onVideoEnd }) => {
           onClick={() => { if(onVideoEnd) onVideoEnd(); }}
           className="relative z-20 absolute bottom-10 px-6 py-2 rounded-full border border-white/20 text-white/70 text-xs sm:text-sm font-medium tracking-widest uppercase hover:bg-white/10 hover:text-white transition-all duration-300 opacity-0 animate-[fadeInUp_1s_ease-out_3s_forwards]"
         >
-          Skip Intro
+        Skip →
         </button>
       </div>
     </>
