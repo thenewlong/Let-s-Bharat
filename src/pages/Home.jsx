@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 
 // 🎥 Apni saari videos yahan import karein
 import video1 from '../assets/videos/video1.mp4';
-import video2 from '../assets/videos/hero1.mp4';
-import video3 from '../assets/videos/hero4.mp4';
+import video2 from '../assets/videos/h1.mp4';
+import video3 from '../assets/videos/h2.mp4';
 import video4 from '../assets/videos/hero2.mp4';
 
 // laptop video ke liye bhi import karna hoga
@@ -37,7 +37,9 @@ import letsBharatLogo from '../assets/images/logos3.jpeg';
 import founderProfile from '../assets/images/profile.jpeg';
 
 
-// 📂 DYNAMIC SLIDES DATA
+// 📂 DYNAMIC SLIDES DATA (Replace video variables with your actual imports)
+
+
 const heroSlides = [
   {
     id: 1,
@@ -94,8 +96,6 @@ const globalSearchData = [
   { id: 5, title: "Frontend Developer Internship", category: "Internship", link: "/internships/frontend" },
   { id: 6, title: "Free Fire Max Weekly Scrims", category: "Tournament", link: "/tournaments/freefire" },
 ];
-
-// (Aapke heroSlides aur globalSearchData yahan upar rahenge, unko waisa hi rehne do)
 
 const Home = () => {
   const navigate = useNavigate();
@@ -415,6 +415,9 @@ const Home = () => {
       
       
 
+
+
+  
       {/* 🌟 3D ANIMATION CSS */}
       <style>{`
         .perspective-container {
@@ -442,12 +445,11 @@ const Home = () => {
         }
       `}</style>
 
-
       {/* ========================================================= */}
       {/* SECTION 1: COMPACT CINEMATIC HERO SECTION                 */}
       {/* ========================================================= */}
-      {/* Height aur Padding adjust kiya hai (pt-16) taaki UI upar shift ho */}
-      <section className="relative w-full h-[100vh] min-h-[350px] max-h-[650px] flex flex-col justify-center bg-[#070b14] pt-16 md:pt-24 pb-6 overflow-hidden perspective-container">
+      {/* YAHAN FIX KIYA HAI: h-[100vh] ki jagah mobile pe h-[65vh] aur min-h-[460px] lagaya hai taaki Section 2 dikhe */}
+      <section className="relative w-full h-[65vh] min-h-[460px] md:h-[100vh] max-h-[750px] flex flex-col justify-center bg-[#070b14] pt-20 md:pt-24 pb-6 overflow-hidden perspective-container">
         
         {/* 🎥 DYNAMIC BACKGROUND VIDEO */}
         <video 
@@ -470,7 +472,7 @@ const Home = () => {
           <div className="flex flex-col items-start w-full">
 
             {/* ======================================================= */}
-            {/* 🔍 PREMIUM COMPACT SEARCH BAR (Moved UP)                */}
+            {/* 🔍 PREMIUM COMPACT SEARCH BAR                           */}
             {/* ======================================================= */}
             <div ref={searchRef} className="w-full max-w-xl mb-4 sm:mb-8 relative z-50">
               <div className={`relative flex items-center w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
@@ -574,8 +576,8 @@ const Home = () => {
               </button>
             </div>
 
-            {/* Video Progress Indicators */}
-            <div className="flex gap-1.5 sm:gap-2 mt-6 sm:mt-12 relative z-10">
+            {/* Video Progress Indicators - Margin top thoda kam kiya */}
+            <div className="flex gap-1.5 sm:gap-2 mt-4 sm:mt-10 relative z-10">
               {heroSlides.map((_, index) => (
                 <div 
                   key={index} 
@@ -589,8 +591,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-    
-  
+
 
    {/* section2*/}
       {/* ========================================================= */}
