@@ -1,65 +1,73 @@
 import React, { useState, useEffect } from 'react';
-import  { useAuth } from '../context/AuthContext';
-import  { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
-// 📂 Apne local assets folder se images import karo (.jpeg extension)
+// 📂 1. Apne local assets folder se images import karo (Path apne hisaab se adjust kar lena)
 import banner1 from '../assets/images/banner1.jpeg';
 import banner2 from '../assets/images/banner2.jpeg';
-import banner3 from '../assets/images/banner3.jpeg';
+import banner4 from '../assets/images/banner4.jpeg'; // 👈 ERROR FIX: Yaha banner4 ki jagah banner3 import kiya
 
-// Internship cards ke liye images (agar alag se hain toh inka naam apne hisaab se rakhna)
+// 📂 Internship cards ke liye images
 import intern1 from '../assets/images/intern1.jpeg';
 import intern2 from '../assets/images/intern2.jpeg';
 import intern3 from '../assets/images/intern3.jpeg';
 import intern4 from '../assets/images/intern4.jpeg';
 
 const Internship = () => {
-  const { user } = useAuth(); // 👈 User ka status check karo
-  const navigate = useNavigate(); // 👈 Navigation ke liye hook
+  // const { user } = useAuth(); // Asli Auth use karte waqt isko uncomment karna
+  const user = null; // ⚠️ TEST KE LIYE: Isko null rakha hai taaki login alert test kar sako
+  const navigate = useNavigate();
 
-// 2. Click function for Apply Now button
-  const handleApplyClick = (link) => {
-    if (!user) {
-      alert("Please login to apply for this internship.");
-      navigate('/auth');
-    } else {
-      window.open(link, '_blank');
-    }
-  };
-  // ---------------------------------------------------------
-  // 1. BANNER SLIDER STATE & LOGIC
-  // ---------------------------------------------------------
-  const banners = [banner1, banner2, banner3];
-  const [currentSlide, setCurrentSlide] = useState(0);
+  // 🎛️ States
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("All Internships");
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
 
-  // 🚀 Auto Slider Logic (Har 4 seconds mein change hoga)
+  // Trigger initial animation for 3D Text
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const banners = [banner1, banner2, banner4];
+
+  // 🚀 Auto Slider Logic 
   useEffect(() => {
     const slideInterval = setInterval(() => {
       setCurrentSlide((prev) => (prev === banners.length - 1 ? 0 : prev + 1));
-    }, 4000);
+    }, 5000);
     return () => clearInterval(slideInterval);
   }, [banners.length]);
 
+  // 🛡️ SECURITY GUARD LOGIC FOR APPLY
+  const handleApplyClick = (e, link) => {
+    e.preventDefault(); 
+    if (user) {
+      window.open(link, '_blank');
+    } else {
+      alert("⚠️ Access Denied!\nPlease login to apply for this internship.");
+      navigate('/auth');
+    }
+  };
+
   // ---------------------------------------------------------
-  // 2. INTERNSHIP DATA (Details, Info, Eligibility, Links)
+  // 💼 INTERNSHIP DATA
   // ---------------------------------------------------------
   const internshipsData = [
     {
       id: 1,
       title: "Frontend React Developer",
       company: "TechNexus Solutions",
-      description: "Work on cutting-edge React applications, build responsive UIs, and integrate APIs in real-world projects.",
+      description: "Work on cutting-edge React applications, build responsive UIs, and integrate APIs.",
       eligibility: "CS/IT Students (Diploma & B.Tech)",
       duration: "3 Months",
-      location: "Remote (Work from Home)",
+      location: "Remote (WFH)",
       stipend: "₹10,000 / month",
       status: "HIRING NOW",
       tabCategory: "Tech",
       isOpen: true,
       image: intern1,
-      link: "https://easyshiksha.com/online_courses/full-stack-web-development-with-the-mern-stack" // 👈 YAHA APNA LINK DALO
+      link: "https://easyshiksha.com/online_courses/full-stack-web-development-with-the-mern-stack"
     },
     {
       id: 2,
@@ -68,7 +76,7 @@ const Internship = () => {
       description: "Design user-centric interfaces for mobile and web apps. Collaborate directly with the dev team.",
       eligibility: "Figma & Design Enthusiasts",
       duration: "6 Months",
-      location: "Agartala, Tripura (Onsite)",
+      location: "Agartala, Tripura",
       stipend: "₹12,000 / month",
       status: "URGENT",
       tabCategory: "Design",
@@ -81,7 +89,7 @@ const Internship = () => {
       title: "Full Stack Web Intern",
       company: "InnoWave Labs",
       description: "Get hands-on experience with Node.js, Express, MongoDB, and React. Build scalable systems.",
-      eligibility: "Basic knowledge of MERN stack",
+      eligibility: "MERN Stack Knowledge",
       duration: "4 Months",
       location: "Remote",
       stipend: "₹15,000 / month",
@@ -108,203 +116,190 @@ const Internship = () => {
     }
   ];
 
-  // ---------------------------------------------------------
-  // 3. SEARCH & TAB FILTER LOGIC
-  // ---------------------------------------------------------
+  // 🔍 Filtering Logic
   const filteredInternships = internshipsData.filter((intern) => {
-    const matchesSearch = intern.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          intern.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          intern.location.toLowerCase().includes(searchQuery.toLowerCase());
+    const searchLower = searchQuery.toLowerCase();
+    const matchesSearch = intern.title.toLowerCase().includes(searchLower) || 
+                          intern.company.toLowerCase().includes(searchLower) ||
+                          intern.location.toLowerCase().includes(searchLower);
     const matchesTab = activeTab === "All Internships" || intern.tabCategory === activeTab;
     return matchesSearch && matchesTab;
   });
 
+  // ✨ WORD-BY-WORD 3D ZOOM-OUT ANIMATION (Same as Tournaments)
+  const render3DWords = (text, delayOffset = 0) => {
+    return text.split(" ").map((word, index) => (
+      <span
+        key={index}
+        className={`inline-block transition-all duration-1000 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
+          isVisible ? "opacity-100 scale-100 translate-z-0" : "opacity-0 scale-150 translate-z-[100px]"
+        }`}
+        style={{ 
+          transitionDelay: `${delayOffset + index * 100}ms`, 
+          marginRight: "0.25em" 
+        }}
+      >
+        {word}
+      </span>
+    ));
+  };
+
   return (
-    <div className="w-full bg-[#f8fafc] min-h-screen font-sans pb-20">
+    <div className="w-full bg-[#fafafa] min-h-screen font-sans pb-10">
       
       {/* ========================================= */}
-      {/* SECTION 1: ANIMATED BANNER                */}
+      {/* 🚀 TOURNAMENT-STYLE HERO SLIDER           */}
       {/* ========================================= */}
-      <div className="relative w-full h-[450px] overflow-hidden bg-[#0b0f19]">
-        {/* Sliding Background Images */}
-        {banners.map((img, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 w-full h-full bg-cover bg-center transition-all duration-1000 ease-in-out ${
-              index === currentSlide ? "opacity-40 scale-105" : "opacity-0 scale-100"
-            }`}
-            style={{ backgroundImage: `url(${img})` }}
-          />
-        ))}
-        
-        {/* Banner Overlay Content */}
-        <div className="absolute inset-0 flex flex-col justify-center max-w-7xl mx-auto px-6 md:px-10 z-10">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">
-            NOT AVAILABLE ANY INTERNSHIP WAIT FOR 1 WEEK ALL TOP INTERSHIP UPDATES !!
-          </h1>
-          <p className="text-gray-300 max-w-2xl text-lg mb-10 leading-relaxed">
-            Kickstart your career with top remote and onsite internships. Gain real-world experience, build your portfolio, and get hired.
-          </p>
+      <div className="max-w-[1440px] mx-auto p-4 lg:p-6">
+        <div className="relative w-full h-[280px] sm:h-[350px] md:h-[400px] rounded-[24px] md:rounded-[30px] overflow-hidden shadow-2xl group perspective-[1000px]">
+          
+          {/* Slider Images */}
+          {banners.map((slide, index) => (
+            <div 
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+            >
+              <img src={slide} alt={`banner-${index}`} className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent"></div>
+            </div>
+          ))}
 
-          {/* Stats Row */}
-          <div className="flex flex-wrap gap-8 md:gap-16 mt-2">
-            {[
-              { icon: "🏢", value: "50+", label: "Companies" },
-              { icon: "💼", value: "120+", label: "Open Roles" },
-              { icon: "💸", value: "₹25K", label: "Max Stipend" },
-              { icon: "🌍", value: "Remote", label: "Opportunities" },
-            ].map((stat, i) => (
-              <div key={i} className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-2xl border border-white/5">
-                  {stat.icon}
-                </div>
-                <div>
-                  <h4 className="text-white font-bold text-xl">{stat.value}</h4>
-                  <p className="text-gray-400 text-sm font-medium">{stat.label}</p>
-                </div>
+          {/* Slider Content */}
+          <div className="absolute inset-0 z-20 flex flex-col justify-center px-6 md:px-16">
+            <div className={`inline-block mb-2 md:mb-4 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+              <span className="bg-[#6366f1]/20 border border-[#6366f1]/50 text-[#818cf8] text-[8px] md:text-xs font-black uppercase tracking-[0.2em] px-3 md:px-4 py-1.5 rounded-full">
+                Learn. Build. Get Hired.
+              </span>
+            </div>
+            
+            {/* 3D Animated Title */}
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-black text-white tracking-tight leading-[1.1] mb-3 md:mb-4 drop-shadow-lg" style={{ perspective: '1000px', transformStyle: 'preserve-3d' }}>
+              <div className="block overflow-hidden pb-0.5">{render3DWords("NOT AVAILABLE ANY EXPLORE TOP", 100)}</div>
+              <div className="block overflow-hidden text-[#818cf8] pb-0.5">
+                {render3DWords("INTERNSHIP", 400)} <span className="text-white">{render3DWords("OPPORTUNITIES", 600)}</span>
               </div>
+            </h1>
+            
+            <p className={`text-gray-300 max-w-sm text-[11px] md:text-sm font-medium mb-5 md:mb-6 transition-all duration-700 delay-[800ms] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+              Kickstart your career with remote and onsite internships. Gain real-world experience and build your portfolio.
+            </p>
+          </div>
+
+          {/* Slider Controls */}
+          <div className="absolute bottom-4 md:bottom-6 left-0 right-0 z-30 flex justify-center gap-1.5 md:gap-2">
+            {banners.map((_, idx) => (
+              <button 
+                key={idx} 
+                onClick={() => setCurrentSlide(idx)}
+                className={`w-2 h-2 md:w-2.5 md:h-2.5 rounded-full transition-all duration-300 ${currentSlide === idx ? 'bg-[#6366f1] w-6 md:w-8' : 'bg-white/50 hover:bg-white'}`}
+              />
             ))}
           </div>
         </div>
       </div>
 
       {/* ========================================= */}
-      {/* SECTION 2: TABS & SEARCH BAR              */}
+      {/* 🔍 SEARCH & FILTERS                       */}
       {/* ========================================= */}
-      <div className="max-w-7xl mx-auto px-6 md:px-10 mt-10 mb-8 flex flex-col md:flex-row justify-between items-center gap-6">
-        
-        {/* Categories Tabs */}
-        <div className="flex space-x-2 bg-white p-1.5 rounded-xl shadow-sm border border-gray-200 overflow-x-auto w-full md:w-auto">
-          {["All Internships", "Tech", "Design", "Management"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all whitespace-nowrap ${
-                activeTab === tab 
-                  ? "bg-[#6366f1] text-white shadow-md" 
-                  : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+      <div className="max-w-[1440px] mx-auto px-4 lg:px-6 mt-4 md:mt-6">
+        <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-center mb-6 w-full">
+          
+          {/* Search Bar */}
+          <div className="relative flex-grow w-full">
+            <span className="absolute left-4 top-4 text-gray-400"></span>
+            <input
+              type="text"
+              placeholder="Search by role, company or location..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#6366f1] text-sm font-medium bg-white text-gray-900 placeholder-gray-400"
+            />
+          </div>
 
-        {/* Search Bar (Oopar se niche laaya gaya hai) */}
-        <div className="w-full md:w-96 relative group">
-          <span className="absolute left-4 top-3.5 text-gray-400 group-focus-within:text-[#6366f1] transition-colors text-lg">
-            🔍
-          </span>
-          <input
-            type="text"
-            placeholder="Search roles, company or location..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#6366f1] focus:border-transparent text-sm font-medium transition-all"
-          />
+          {/* Filter Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-hide">
+            {["All Internships", "Tech", "Design", "Management"].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-4 py-2.5 rounded-xl text-[10px] md:text-xs font-bold whitespace-nowrap transition-all duration-300 ${
+                  activeTab === tab 
+                    ? "bg-[#6366f1] text-white shadow-md border border-[#6366f1]" 
+                    : "bg-white text-gray-500 border border-gray-200 hover:border-gray-400 hover:text-black"
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* ========================================= */}
-      {/* SECTION 3: INTERNSHIP CARDS GRID          */}
+      {/* 💼 INTERNSHIP CARDS GRID (Tournament Style)*/}
       {/* ========================================= */}
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
+      <div className="max-w-[1440px] mx-auto px-4 lg:px-6 mt-2">
         {filteredInternships.length === 0 ? (
-          <div className="text-center py-20 bg-white rounded-2xl border border-gray-200 shadow-sm">
-            <p className="text-gray-500 text-lg font-medium">No internships found matching your search.</p>
+          <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm">
+            <p className="text-gray-500 font-medium">No internships match your search.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
             {filteredInternships.map((intern) => (
-              // Card Container with smooth hover animation
               <div 
                 key={intern.id} 
-                className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 ease-out flex flex-col group"
+                className="bg-white rounded-[20px] overflow-hidden border border-gray-200 shadow-sm hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 group flex flex-col"
               >
-                
-                {/* Image & Status Badge */}
-                <div className="relative h-44 bg-gray-100 overflow-hidden">
-                  <img src={intern.image} alt={intern.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                {/* Card Image Banner */}
+                <div className="relative h-40 overflow-hidden bg-gray-900">
+                  <img src={intern.image} alt={intern.title} className="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-700" />
                   
-                  <span className={`absolute top-4 right-4 text-[10px] font-extrabold px-3 py-1.5 rounded-full text-white tracking-widest shadow-md ${
-                    intern.status === 'HIRING NOW' ? 'bg-[#6366f1]' : 
-                    intern.status === 'URGENT' ? 'bg-red-500' : 'bg-blue-600'
-                  }`}>
-                    {intern.status}
-                  </span>
-                </div>
-
-                {/* Content Section */}
-                <div className="p-6 flex flex-col flex-grow">
-                  <span className="text-xs font-bold text-gray-400 mb-1 tracking-wider uppercase">{intern.company}</span>
-                  <h3 className="font-extrabold text-xl text-gray-900 leading-snug mb-3 group-hover:text-[#6366f1] transition-colors">{intern.title}</h3>
-                  <p className="text-sm text-gray-500 mb-4 line-clamp-2 leading-relaxed">{intern.description}</p>
-                  
-                  {/* Eligibility Badge */}
-                  <div className="bg-blue-50 text-blue-700 text-xs font-bold px-3 py-2 rounded-lg mb-5 inline-block w-max">
-                    🎓 {intern.eligibility}
-                  </div>
-                  
-                  {/* Icons Details List */}
-                  <div className="space-y-3 mb-6 text-sm text-gray-600 font-medium mt-auto">
-                    <div className="flex items-center gap-3"><span className="text-lg">⏳</span> {intern.duration}</div>
-                    <div className="flex items-center gap-3"><span className="text-lg">📍</span> {intern.location}</div>
-                    <div className="flex items-center gap-3"><span className="text-lg">💰</span> <span className="text-green-600 font-bold">{intern.stipend}</span></div>
-                  </div>
-
-                  {/* Footer & Apply External Link Button */}
-                  <div className="flex flex-col sm:flex-row items-center justify-between pt-5 border-t border-gray-100 gap-4 sm:gap-0">
-                    <span className={`text-xs font-extrabold ${intern.isOpen ? 'text-emerald-600' : 'text-orange-500'}`}>
-                      {intern.isOpen ? '● Accepting Applications' : '○ Opening Soon'}
+                  {/* Status Badge */}
+                  <div className="absolute top-3 left-3">
+                    <span className={`text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded shadow-md text-white ${
+                      intern.status === 'HIRING NOW' ? 'bg-[#6366f1]' :
+                      intern.status === 'URGENT' ? 'bg-red-500' :
+                      'bg-emerald-500'
+                    }`}>
+                      {intern.status}
                     </span>
-                    
-                    {/* External Link for Google Form/Website */}
-                    <a 
-                      href={intern.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all text-center w-full sm:w-auto ${
-                        intern.isOpen 
-                          ? 'bg-[#6366f1] text-white hover:bg-[#4f46e5] shadow-lg shadow-indigo-500/30'
-                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                      }`}
-                    >
-                      {intern.isOpen ? 'Apply Now ↗' : 'Notify Me 🔔'}
-                    </a>
                   </div>
                 </div>
 
+                {/* Card Body */}
+                <div className="p-4 md:p-5 flex-grow flex flex-col">
+                  <p className="text-[10px] md:text-[11px] font-bold text-[#6366f1] tracking-wider uppercase mb-1">{intern.company}</p>
+                  <h3 className="text-base md:text-lg font-black text-gray-900 leading-tight mb-2">{intern.title}</h3>
+                  <p className="text-[11px] md:text-xs text-gray-500 font-medium mb-4 line-clamp-2">{intern.description}</p>
+                  
+                  {/* Details Grid (Tournament Format) */}
+                  <div className="grid grid-cols-2 gap-y-3 gap-x-2 text-[10px] md:text-[11px] mb-5 font-semibold text-gray-800">
+                    <div><p className="text-gray-400 font-medium mb-0.5">💰 Stipend</p><p className="text-green-600 font-bold">{intern.stipend}</p></div>
+                    <div><p className="text-gray-400 font-medium mb-0.5">⏳ Duration</p><p>{intern.duration}</p></div>
+                    <div><p className="text-gray-400 font-medium mb-0.5">📍 Location</p><p className="truncate pr-2">{intern.location}</p></div>
+                    <div><p className="text-gray-400 font-medium mb-0.5">🎓 Eligibility</p><p className="truncate pr-2">{intern.eligibility}</p></div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="mt-auto pt-2">
+                    {/* 👇 Yaha par 'a' tag hata kar button lagaya hai taaki Security Guard logic kaam kare */}
+                    <button 
+                      onClick={(e) => handleApplyClick(e, intern.link)}
+                      className={`w-full py-3 rounded-xl text-[10px] md:text-xs font-black transition-all active:scale-95 ${
+                        intern.isOpen 
+                          ? 'bg-[#6366f1] text-white hover:bg-[#4f46e5] hover:shadow-md'
+                          : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                      }`}
+                      disabled={!intern.isOpen}
+                    >
+                      {intern.isOpen ? 'APPLY NOW →' : 'OPENING SOON'}
+                    </button>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         )}
-      </div>
-
-      {/* ========================================= */}
-      {/* SECTION 4: NEWSLETTER BOTTOM BANNER       */}
-      {/* ========================================= */}
-      <div className="max-w-7xl mx-auto px-6 md:px-10 mt-20 mb-4">
-        <div className="bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl shadow-indigo-500/20">
-          <div className="flex items-center gap-6">
-            <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center text-3xl shadow-inner backdrop-blur-sm">
-              💼
-            </div>
-            <div className="text-white">
-              <h3 className="font-extrabold text-2xl mb-1">Get internship alerts!</h3>
-              <p className="text-indigo-100 text-sm font-medium">Subscribe to receive notifications when top companies start hiring.</p>
-            </div>
-          </div>
-          <div className="flex w-full md:w-auto gap-3 bg-white p-2 rounded-2xl shadow-lg">
-            <input 
-              type="email" 
-              placeholder="Enter your email address" 
-              className="w-full md:w-72 px-4 py-2 bg-transparent focus:outline-none text-gray-800 text-sm font-medium"
-            />
-            <button className="bg-black hover:bg-gray-800 text-white px-8 py-3 rounded-xl font-bold text-sm transition-colors whitespace-nowrap">
-              Subscribe
-            </button>
-          </div>
-        </div>
       </div>
 
     </div>
