@@ -125,7 +125,7 @@ const Home = () => {
     setIsAnimating(false); 
     setTimeout(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % heroSlides.length);
-    }, 200); 
+    }, 190); 
   };
 
   // 🔎 Search Filter Logic
@@ -447,7 +447,7 @@ const Home = () => {
       {/* SECTION 1: COMPACT CINEMATIC HERO SECTION                 */}
       {/* ========================================================= */}
       {/* Height aur Padding adjust kiya hai (pt-16) taaki UI upar shift ho */}
-      <section className="relative w-full h-[75vh] min-h-[500px] max-h-[750px] flex flex-col justify-center bg-[#070b14] pt-16 md:pt-24 pb-6 overflow-hidden perspective-container">
+      <section className="relative w-full h-[100vh] min-h-[350px] max-h-[650px] flex flex-col justify-center bg-[#070b14] pt-16 md:pt-24 pb-6 overflow-hidden perspective-container">
         
         {/* 🎥 DYNAMIC BACKGROUND VIDEO */}
         <video 
