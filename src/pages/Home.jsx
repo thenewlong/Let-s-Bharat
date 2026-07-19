@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 // 🎥 Apni saari videos yahan import karein
-import video1 from '../assets/videos/video1.mp4';
+import video1 from '../assets/videos/s.mp4';
 import video2 from '../assets/videos/h1.mp4';
 import video3 from '../assets/videos/h2.mp4';
 import video4 from '../assets/videos/hero2.mp4';
@@ -471,63 +471,7 @@ const Home = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-10 w-full flex-grow flex flex-col justify-center mt-2">
           <div className="flex flex-col items-start w-full">
 
-            {/* ======================================================= */}
-            {/* 🔍 PREMIUM COMPACT SEARCH BAR                           */}
-            {/* ======================================================= */}
-            <div ref={searchRef} className="w-full max-w-xl mb-4 sm:mb-8 relative z-50">
-              <div className={`relative flex items-center w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
-                isSearchFocused ? 'scale-[1.01] sm:scale-102' : 'scale-100'
-              }`}>
-                <svg className={`absolute left-3.5 sm:left-4 w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-300 ${isSearchFocused ? 'text-[#f5a623]' : 'text-neutral-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
-
-                <input
-                  type="text"
-                  placeholder="Search Hackathons, Startups..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={() => setIsSearchFocused(true)}
-                  className={`w-full bg-white/10 backdrop-blur-md border font-sans ${
-                    isSearchFocused ? 'border-[#f5a623] shadow-[0_0_20px_rgba(245,166,35,0.15)] bg-white/15' : 'border-white/20 hover:border-white/40'
-                  } text-white pl-10 pr-10 sm:pl-12 py-2 sm:py-3.5 rounded-xl outline-none font-medium text-xs sm:text-sm transition-all duration-300 placeholder:text-neutral-400`}
-                />
-
-                {searchQuery && (
-                  <button onClick={() => setSearchQuery('')} className="absolute right-3.5 sm:right-4 text-neutral-400 hover:text-white transition-colors">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                  </button>
-                )}
-              </div>
-
-              {/* 🖱️ LIVE SEARCH DROPDOWN */}
-              <div className={`absolute top-full mt-2 w-full bg-[#0a0f1c]/95 backdrop-blur-2xl border border-white/10 rounded-xl overflow-hidden shadow-2xl transition-all duration-400 ease-out transform origin-top ${
-                isSearchFocused && searchQuery ? 'opacity-100 scale-y-100 translate-y-0' : 'opacity-0 scale-y-95 -translate-y-2 pointer-events-none'
-              }`}>
-                {filteredResults.length > 0 ? (
-                  <ul className="max-h-48 overflow-y-auto p-1.5 custom-scrollbar">
-                    {filteredResults.map((item) => (
-                      <li key={item.id}>
-                        <button
-                          onClick={() => {
-                            navigate(item.link);
-                            setIsSearchFocused(false);
-                          }}
-                          className="w-full flex items-center justify-between text-left px-3 py-2 hover:bg-white/10 rounded-lg transition-all group"
-                        >
-                          <span className="text-white font-sans font-medium text-xs sm:text-sm group-hover:text-[#f5a623] transition-colors line-clamp-1 mr-2">{item.title}</span>
-                          <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-neutral-400 bg-white/5 px-2 py-1 rounded whitespace-nowrap group-hover:bg-[#f5a623]/20 group-hover:text-[#f5a623]">{item.category}</span>
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <div className="px-5 py-4 text-center text-neutral-500 text-xs font-medium font-sans">
-                    No results found for "{searchQuery}"
-                  </div>
-                )}
-              </div>
-            </div>
+           
             
             {/* Subtitle */}
             <div className="overflow-hidden mb-1 sm:mb-3">
