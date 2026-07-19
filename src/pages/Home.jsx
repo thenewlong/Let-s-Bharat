@@ -95,6 +95,8 @@ const globalSearchData = [
   { id: 6, title: "Free Fire Max Weekly Scrims", category: "Tournament", link: "/tournaments/freefire" },
 ];
 
+// (Aapke heroSlides aur globalSearchData yahan upar rahenge, unko waisa hi rehne do)
+
 const Home = () => {
   const navigate = useNavigate();
   
@@ -107,10 +109,15 @@ const Home = () => {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchRef = useRef(null);
 
-  
+  const currentSlide = heroSlides[currentIndex];
+
   // Jab slide change ho, toh text animation wapas re-trigger ho
   useEffect(() => {
-    setIsAnimating(true);
+    setIsAnimating(false);
+    const timer = setTimeout(() => {
+      setIsAnimating(true);
+    }, 50); // Short delay to re-trigger CSS animations
+    return () => clearTimeout(timer);
   }, [currentIndex]);
 
   // 🔄 Video slider automatic loop function
@@ -118,7 +125,7 @@ const Home = () => {
     setIsAnimating(false); 
     setTimeout(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % heroSlides.length);
-    }, 150); 
+    }, 200); 
   };
 
   // 🔎 Search Filter Logic
@@ -138,24 +145,22 @@ const Home = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // ✨ PREMIUM FLAT 3D ANIMATION (Tighter Y-axis for compactness)
-  const renderAnimatedWords = (text, isActive, baseDelay = 0) => {
+  // ✨ PREMIUM 3D LETTER-BY-LETTER ANIMATION
+  const renderAnimatedLetters = (text, isActive, baseDelay = 0) => {
     if (!text) return null; 
-    return text.split(" ").map((word, index) => (
+    return text.split("").map((char, index) => (
       <span
         key={index}
-        className={`inline-block transition-all duration-[800ms] font-sans ease-[cubic-bezier(0.25,1,0.5,1)] ${
-          isActive 
-            ? "opacity-100 translate-y-0 blur-none tracking-normal" 
-            : "opacity-0 translate-y-4 blur-[2px] tracking-wide"
-        }`}
-        style={{ transitionDelay: `${baseDelay + index * 50}ms` }}
+        className={`letter-3d ${isActive ? 'animate-3d-pop' : 'opacity-0'}`}
+        style={{ 
+          animationDelay: isActive ? `${baseDelay + index * 15}ms` : '0ms',
+          marginRight: char === " " ? "0.25em" : "0" // Preserve spaces
+        }}
       >
-        {word}&nbsp;
+        {char}
       </span>
     ));
   };
-
 
 
 
@@ -240,24 +245,44 @@ const Home = () => {
   const minDeg = minutes * 6 + seconds * 0.1;
   const hourDeg = (hours % 12) * 30 + minutes * 0.5;
 
-  // ✍️ 100% CLEAR Letter Animation (Blur Removed Completely on visible)
-  const renderTypingLetters = (text, delayOffset = 0, extraClass = "") => {
+    
+// ✍️ 100% CLEAR 3D Letter Animation (Tumhara function)
+  const render3DLetters = (text, delayOffset = 0, extraClass = "") => {
     if (typeof text !== 'string' || !text) return null; 
     
     return text.split("").map((char, index) => (
       <span
         key={index}
-        className={`inline-block transition-all duration-700 ease-out ${
+        className={`inline-block transition-all duration-700 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
           isSec2Visible 
-            ? "opacity-100 translate-y-0 scale-100 blur-0" // ✅ Explicit blur-0 for crystal clear text
-            : "opacity-0 translate-y-4 scale-95 blur-[4px]" // Start with blur
+            ? "opacity-100 [transform:translateY(0)_scale(1)_rotateX(0deg)] blur-0" 
+            : "opacity-0 [transform:translateY(20px)_scale(0.8)_rotateX(-60deg)] blur-[4px]"
         } ${extraClass}`}
-        style={{ transitionDelay: `${delayOffset + index * 40}ms` }} // Thoda slow letter animation for premium feel
+        style={{ 
+          transitionDelay: `${delayOffset + index * 30}ms`, // Premium letter delay
+          transformStyle: 'preserve-3d' 
+        }}
       >
         {char === " " ? "\u00A0" : char}
       </span>
     ));
   };
+
+  // 🌟 Marquee ke liye 3D Word Animation
+  const render3DWords = (wordsArray, baseDelay = 0) => {
+    return wordsArray.map((word, index) => (
+      <span 
+        key={index} 
+        className={`flex items-center gap-2 transition-all duration-1000 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
+          isSec2Visible ? "opacity-100 translate-y-0 rotateX-0 blur-0" : "opacity-0 translate-y-6 -rotate-x-90 blur-[2px]"
+        }`}
+        style={{ transitionDelay: `${baseDelay + index * 100}ms`, transformStyle: 'preserve-3d' }}
+      >
+        <span className="w-1.5 h-1.5 rounded-full bg-current animate-ping"></span> {word}
+      </span>
+    ));
+  };
+
 
   // 🌐 12 AI Startups Clock Data
   const aiLogos = [
@@ -275,7 +300,6 @@ const Home = () => {
     { name: 'Scale AI', img: 'https://scale.com/favicon.ico', angle: 330 },
   ];
 
-  
 
 
 // ==========================================
@@ -384,18 +408,46 @@ const Home = () => {
     ));
   };
 
-  const currentSlide = heroSlides[currentIndex];
+
 
   return (
     <div className="w-full font-sans overflow-x-hidden">
       
       
-  
+
+      {/* 🌟 3D ANIMATION CSS */}
+      <style>{`
+        .perspective-container {
+          perspective: 1000px;
+        }
+        .letter-3d {
+          display: inline-block;
+          transform-style: preserve-3d;
+          font-family: sans-serif;
+        }
+        .animate-3d-pop {
+          animation: popIn3D 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes popIn3D {
+          0% {
+            opacity: 0;
+            transform: scale(0.5) rotateX(-60deg) translateY(20px);
+            filter: blur(4px);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1) rotateX(0deg) translateY(0);
+            filter: blur(0px);
+          }
+        }
+      `}</style>
+
+
       {/* ========================================================= */}
       {/* SECTION 1: COMPACT CINEMATIC HERO SECTION                 */}
       {/* ========================================================= */}
-      {/* min-h reduced to 65vh for mobile, 75vh for desktop */}
-      <section className="relative w-full min-h-[65vh] md:min-h-[75vh] max-h-[850px] flex flex-col justify-center bg-[#070b14] pt-24 md:pt-32 pb-10 overflow-hidden">
+      {/* Height aur Padding adjust kiya hai (pt-16) taaki UI upar shift ho */}
+      <section className="relative w-full h-[75vh] min-h-[500px] max-h-[750px] flex flex-col justify-center bg-[#070b14] pt-16 md:pt-24 pb-6 overflow-hidden perspective-container">
         
         {/* 🎥 DYNAMIC BACKGROUND VIDEO */}
         <video 
@@ -410,17 +462,17 @@ const Home = () => {
         </video>
 
         {/* 🌑 Deep Clean Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#070b14]/90 via-[#070b14]/50 to-transparent z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#070b14]/90 via-[#070b14]/60 to-transparent z-0"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#070b14] via-transparent to-transparent z-0"></div>
 
         {/* 📝 MAIN HERO CONTENT */}
-        <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-10 w-full flex-grow flex flex-col justify-center mt-2">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-10 w-full flex-grow flex flex-col justify-center mt-2">
           <div className="flex flex-col items-start w-full">
 
             {/* ======================================================= */}
-            {/* 🔍 PREMIUM COMPACT SEARCH BAR                           */}
+            {/* 🔍 PREMIUM COMPACT SEARCH BAR (Moved UP)                */}
             {/* ======================================================= */}
-            <div ref={searchRef} className="w-full max-w-xl mb-6 sm:mb-8 relative z-50">
+            <div ref={searchRef} className="w-full max-w-xl mb-4 sm:mb-8 relative z-50">
               <div className={`relative flex items-center w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
                 isSearchFocused ? 'scale-[1.01] sm:scale-102' : 'scale-100'
               }`}>
@@ -434,9 +486,9 @@ const Home = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={() => setIsSearchFocused(true)}
-                  className={`w-full bg-white/5 backdrop-blur-xl border font-sans ${
-                    isSearchFocused ? 'border-[#f5a623] shadow-[0_0_20px_rgba(245,166,35,0.15)] bg-white/10' : 'border-white/10 hover:border-white/30'
-                  } text-white pl-10 pr-10 sm:pl-12 py-2.5 sm:py-3.5 rounded-xl outline-none font-medium text-xs sm:text-sm transition-all duration-300 placeholder:text-neutral-400`}
+                  className={`w-full bg-white/10 backdrop-blur-md border font-sans ${
+                    isSearchFocused ? 'border-[#f5a623] shadow-[0_0_20px_rgba(245,166,35,0.15)] bg-white/15' : 'border-white/20 hover:border-white/40'
+                  } text-white pl-10 pr-10 sm:pl-12 py-2 sm:py-3.5 rounded-xl outline-none font-medium text-xs sm:text-sm transition-all duration-300 placeholder:text-neutral-400`}
                 />
 
                 {searchQuery && (
@@ -451,7 +503,7 @@ const Home = () => {
                 isSearchFocused && searchQuery ? 'opacity-100 scale-y-100 translate-y-0' : 'opacity-0 scale-y-95 -translate-y-2 pointer-events-none'
               }`}>
                 {filteredResults.length > 0 ? (
-                  <ul className="max-h-56 overflow-y-auto p-1.5 custom-scrollbar">
+                  <ul className="max-h-48 overflow-y-auto p-1.5 custom-scrollbar">
                     {filteredResults.map((item) => (
                       <li key={item.id}>
                         <button
@@ -459,7 +511,7 @@ const Home = () => {
                             navigate(item.link);
                             setIsSearchFocused(false);
                           }}
-                          className="w-full flex items-center justify-between text-left px-3 py-2.5 hover:bg-white/10 rounded-lg transition-all group"
+                          className="w-full flex items-center justify-between text-left px-3 py-2 hover:bg-white/10 rounded-lg transition-all group"
                         >
                           <span className="text-white font-sans font-medium text-xs sm:text-sm group-hover:text-[#f5a623] transition-colors line-clamp-1 mr-2">{item.title}</span>
                           <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-neutral-400 bg-white/5 px-2 py-1 rounded whitespace-nowrap group-hover:bg-[#f5a623]/20 group-hover:text-[#f5a623]">{item.category}</span>
@@ -468,7 +520,7 @@ const Home = () => {
                     ))}
                   </ul>
                 ) : (
-                  <div className="px-5 py-6 text-center text-neutral-500 text-xs font-medium font-sans">
+                  <div className="px-5 py-4 text-center text-neutral-500 text-xs font-medium font-sans">
                     No results found for "{searchQuery}"
                   </div>
                 )}
@@ -476,54 +528,54 @@ const Home = () => {
             </div>
             
             {/* Subtitle */}
-            <div className="overflow-hidden mb-2 sm:mb-3">
-              <p className={`text-[#f5a623] font-sans text-[9px] sm:text-xs font-black tracking-[0.2em] sm:tracking-[0.25em] uppercase transition-all duration-[1000ms] ease-out ${
+            <div className="overflow-hidden mb-1 sm:mb-3">
+              <p className={`text-[#f5a623] font-sans text-[8px] sm:text-xs font-black tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-all duration-700 ease-out ${
                 isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}>
                 {currentSlide?.subtitle}
               </p>
             </div>
 
-            {/* Main Title (Reduced Size for Compactness) */}
-            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white font-sans leading-[1.2] sm:leading-[1.1] tracking-tight uppercase select-none relative z-10">
-              <div className="block overflow-hidden pb-1">
-                {renderAnimatedWords(currentSlide?.title1 || "", isAnimating, 0)}
+            {/* Main Title (3D Letter Animation & Compact Font Size) */}
+            <h1 className="text-xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white font-sans leading-[1.1] sm:leading-[1.1] tracking-tight uppercase select-none relative z-10 flex flex-col gap-0.5 sm:gap-1">
+              <div className="block overflow-hidden">
+                {renderAnimatedLetters(currentSlide?.title1 || "", isAnimating, 0)}
               </div>
-              <div className="block overflow-hidden pb-1 text-[#f5a623]">
-                {renderAnimatedWords(currentSlide?.titleHighlight || "", isAnimating, 150)}
+              <div className="block overflow-hidden text-[#f5a623]">
+                {renderAnimatedLetters(currentSlide?.titleHighlight || "", isAnimating, 300)}
               </div>
-              <div className="block overflow-hidden pb-1">
-                {renderAnimatedWords(currentSlide?.title2 || "", isAnimating, 300)}
+              <div className="block overflow-hidden">
+                {renderAnimatedLetters(currentSlide?.title2 || "", isAnimating, 600)}
               </div>
             </h1>
             
             {/* Description Text */}
-            <p className={`text-neutral-300 font-sans text-xs sm:text-sm md:text-base max-w-xl mt-3 sm:mt-4 font-medium leading-relaxed transition-all duration-[1000ms] ease-out relative z-10 ${
+            <p className={`text-neutral-300 font-sans text-[11px] sm:text-sm md:text-base max-w-lg mt-3 sm:mt-4 font-medium leading-snug sm:leading-relaxed transition-all duration-700 ease-out relative z-10 ${
               isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`} style={{ transitionDelay: '450ms' }}>
+            }`} style={{ transitionDelay: '900ms' }}>
               {currentSlide?.desc}
             </p>
             
-            {/* Buttons (Side by side on mobile for better UX) */}
-            <div className={`flex flex-row flex-wrap w-full gap-2.5 sm:gap-4 mt-6 sm:mt-8 transition-all duration-[1000ms] ease-out relative z-10 ${
+            {/* Buttons (Side-by-side flex for mobile to save vertical space) */}
+            <div className={`flex flex-row w-full sm:w-auto gap-2.5 sm:gap-4 mt-5 sm:mt-8 transition-all duration-700 ease-out relative z-10 ${
               isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`} style={{ transitionDelay: '600ms' }}>
+            }`} style={{ transitionDelay: '1100ms' }}>
               <button 
                 onClick={() => navigate(currentSlide?.btn1Link)} 
-                className="flex-1 sm:flex-none bg-[#f5a623] hover:bg-[#e0961c] text-black px-4 sm:px-8 py-2.5 sm:py-3.5 rounded-xl font-sans font-black tracking-wide transition-colors active:scale-95 uppercase text-[10px] sm:text-sm whitespace-nowrap text-center"
+                className="flex-1 sm:flex-none bg-[#f5a623] hover:bg-[#e0961c] text-black px-3 sm:px-8 py-2.5 sm:py-3.5 rounded-lg sm:rounded-xl font-sans font-black tracking-wide transition-colors active:scale-95 uppercase text-[9px] sm:text-sm whitespace-nowrap text-center"
               >
                 {currentSlide?.btn1Text}
               </button>
               <button 
                 onClick={() => navigate(currentSlide?.btn2Link)} 
-                className="flex-1 sm:flex-none border-2 border-white/80 hover:border-white bg-transparent hover:bg-white/10 px-4 sm:px-8 py-2.5 sm:py-3.5 rounded-xl font-sans font-bold tracking-wide transition-colors active:scale-95 text-white uppercase text-[10px] sm:text-sm whitespace-nowrap text-center"
+                className="flex-1 sm:flex-none border sm:border-2 border-white/80 hover:border-white bg-transparent hover:bg-white/10 px-3 sm:px-8 py-2.5 sm:py-3.5 rounded-lg sm:rounded-xl font-sans font-bold tracking-wide transition-colors active:scale-95 text-white uppercase text-[9px] sm:text-sm whitespace-nowrap text-center"
               >
                 {currentSlide?.btn2Text}
               </button>
             </div>
 
             {/* Video Progress Indicators */}
-            <div className="flex gap-1.5 sm:gap-2 mt-8 sm:mt-12 relative z-10">
+            <div className="flex gap-1.5 sm:gap-2 mt-6 sm:mt-12 relative z-10">
               {heroSlides.map((_, index) => (
                 <div 
                   key={index} 
@@ -537,16 +589,21 @@ const Home = () => {
           </div>
         </div>
       </section>
-
+    
   
-                        {/* section 2*/}
+
+   {/* section2*/}
       {/* ========================================================= */}
       {/* 🚀 CSS ANIMATIONS                                         */}
       {/* ========================================================= */}
       <style>{`
-        @keyframes scrollHoriz {
+        @keyframes scrollLeft {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
+        }
+        @keyframes scrollRight {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
         }
         @keyframes floatOut {
           0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
@@ -564,48 +621,25 @@ const Home = () => {
         className="relative w-full bg-[#eef2f6] pt-6 pb-20 overflow-hidden border-t border-gray-100"
       >
         
-        {/* 📜 NEW: PREMIUM HIGHLIGHTED HORIZONTAL MARQUEE */}
-        <div className="w-full bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 border-y border-gray-200 py-5 mb-16 overflow-hidden flex whitespace-nowrap shadow-sm">
-          <div className="animate-[scrollHoriz_25s_linear_infinite] flex items-center gap-16 text-sm font-black text-gray-800 uppercase tracking-[0.25em] w-max">
-            {/* Real Marquee Content */}
-            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> OpenAI</span>
-            <span className="text-gray-300">|</span>
-            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-[#ff6600] animate-ping"></span> Google</span>
-            <span className="text-gray-300">|</span>
-            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-blue-500 animate-ping"></span> Anthropic</span>
-            <span className="text-gray-300">|</span>
-            <span>Microsoft</span>
-            <span className="text-gray-300">|</span>
-            <span>Hugging Face</span>
-            <span className="text-gray-300">|</span>
-            <span>Amazon</span>
-            <span className="text-gray-300">|</span>
-            <span>Midjourney</span>
-            <span className="text-gray-300">|</span>
-            <span>Meta</span>
-            <span className="text-gray-300">|</span>
-            <span>Perplexity</span>
-            <span className="text-gray-300">|</span>
-
-            {/* Duplicated for seamless loop */}
-            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> OpenAI</span>
-            <span className="text-gray-300">|</span>
-            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-[#ff6600] animate-ping"></span> Google</span>
-            <span className="text-gray-300">|</span>
-            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-blue-500 animate-ping"></span> Anthropic</span>
-            <span className="text-gray-300">|</span>
-            <span>Microsoft</span>
-            <span className="text-gray-300">|</span>
-            <span>Hugging Face</span>
-            <span className="text-gray-300">|</span>
-            <span>Amazon</span>
-            <span className="text-gray-300">|</span>
-            <span>Midjourney</span>
-            <span className="text-gray-300">|</span>
-            <span>Meta</span>
-            <span className="text-gray-300">|</span>
-            <span>Perplexity</span>
+        {/* 📜 NEW: DUAL PREMIUM HIGHLIGHTED MARQUEE (Right & Left with 3D Words) */}
+        <div className="w-full mb-16 flex flex-col shadow-sm perspective-[1000px]">
+          
+          {/* Top Marquee: Moving RIGHT (AI Startups) */}
+          <div className="w-full bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 border-t border-gray-200 py-3 overflow-hidden flex whitespace-nowrap">
+            <div className="animate-[scrollRight_30s_linear_infinite] flex items-center gap-12 text-[11px] font-black text-[#ff6600] uppercase tracking-[0.25em] w-max">
+              {render3DWords(['OpenAI', '|', 'Anthropic', '|', 'Google Gemini', '|', 'Midjourney', '|', 'Perplexity', '|', 'Hugging Face', '|', 'Mistral', '|'], 0)}
+              {render3DWords(['OpenAI', '|', 'Anthropic', '|', 'Google Gemini', '|', 'Midjourney', '|', 'Perplexity', '|', 'Hugging Face', '|', 'Mistral', '|'], 0)}
+            </div>
           </div>
+
+          {/* Bottom Marquee: Moving LEFT (Companies & Jobs) */}
+          <div className="w-full bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 border-y border-gray-200 py-3 overflow-hidden flex whitespace-nowrap">
+            <div className="animate-[scrollLeft_30s_linear_infinite] flex items-center gap-12 text-[11px] font-black text-blue-600 uppercase tracking-[0.25em] w-max">
+              {render3DWords(['Microsoft', '|', 'Amazon', '|', 'TCS Jobs', '|', 'Product Design', '|', 'AI Engineering', '|', 'Meta', '|', 'Data Science', '|'], 300)}
+              {render3DWords(['Microsoft', '|', 'Amazon', '|', 'TCS Jobs', '|', 'Product Design', '|', 'AI Engineering', '|', 'Meta', '|', 'Data Science', '|'], 300)}
+            </div>
+          </div>
+
         </div>
 
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
@@ -621,22 +655,22 @@ const Home = () => {
                 </span>
               </div>
 
-              {/* Main Title (Clear Letter Animation) */}
-              <h2 className="text-3xl sm:text-5xl lg:text-5xl font-black text-gray-900 tracking-tight leading-[1.15] mb-7">
+              {/* Main Title (3D Letter Animation Applied Here) */}
+              <h2 className="text-3xl sm:text-5xl lg:text-5xl font-black text-gray-900 tracking-tight leading-[1.15] mb-7" style={{ perspective: '1000px' }}>
                 <div className="block whitespace-nowrap overflow-hidden pb-1">
-                  {renderTypingLetters("EXPLORE THE WORLD'S", 200)}
+                  {render3DLetters("EXPLORE THE WORLD'S", 200)}
                 </div>
                 <div className="flex flex-wrap items-center gap-x-3 mt-2 overflow-hidden pb-1">
-                  {renderTypingLetters("TOP", 600)}
+                  {render3DLetters("TOP", 600)}
                   <span className="text-[#ff6600] drop-shadow-sm font-extrabold tracking-tighter">
-                    {renderTypingLetters("AI", 800)}
+                    {render3DLetters("AI", 800)}
                   </span>
-                  {renderTypingLetters("STARTUPS", 1000)}
+                  {render3DLetters("STARTUPS", 1000)}
                 </div>
                 <div className="flex items-center gap-x-3 overflow-hidden mt-2 text-gray-800 pb-1">
-                  {renderTypingLetters("&", 1400)}
+                  {render3DLetters("&", 1400)}
                   <span className="text-blue-600 drop-shadow-sm font-extrabold tracking-tighter">
-                    {renderTypingLetters("JOBS", 1600)}
+                    {render3DLetters("JOBS", 1600)}
                   </span>
                 </div>
               </h2>
@@ -673,25 +707,33 @@ const Home = () => {
                   />
                   <div className="absolute w-2 h-2 bg-gray-900 rounded-full z-30 shadow-md"></div>
                   
-                  {/* Analog Hands */}
+                  {/* ⏱️ REALTIME Analog Hands (Continuous Automatic Run) */}
                   <div className="absolute w-1 h-12 bg-gray-900 rounded-full origin-bottom bottom-1/2 z-20 transition-transform duration-300 ease-out" style={{ transform: `rotate(${hourDeg}deg)` }}></div>
                   <div className="absolute w-0.5 h-16 bg-gray-700 rounded-full origin-bottom bottom-1/2 z-20 transition-transform duration-300 ease-out" style={{ transform: `rotate(${minDeg}deg)` }}></div>
                   <div className="absolute w-px h-20 bg-[#ff6600] rounded-full origin-bottom bottom-1/2 z-20" style={{ transform: `rotate(${secDeg}deg)` }}></div>
                 </div>
 
-                {/* 12 AI Startups Orbiting */}
-                {aiLogos.map((logo, idx) => (
-                  <div 
-                    key={idx}
-                    className={`absolute top-1/2 left-1/2 w-10 h-10 -ml-5 -mt-5 flex items-center justify-center bg-white rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.08)] border border-gray-100 transition-all duration-[1200ms] group z-30 p-1.5`}
-                    style={{
-                      transform: isSec2Visible ? `rotate(${logo.angle}deg) translate(0, var(--radius)) rotate(-${logo.angle}deg)` : `translate(0,0) scale(0)`,
-                      transitionDelay: `${idx * 80}ms`
-                    }}
-                  >
-                    <img src={logo.img} alt={logo.name} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = `https://ui-avatars.com/api/?name=${logo.name}&background=random&color=fff&bold=true`; }} />
-                  </div>
-                ))}
+                {/* 🌀 Anti-Clockwise Scroll Effect Wrapper for Logos */}
+                <div 
+                  className={`absolute inset-0 w-full h-full transition-transform duration-[2000ms] ease-[cubic-bezier(0.25,1,0.5,1)] ${
+                    isSec2Visible ? '-rotate-[360deg]' : 'rotate-[90deg] scale-50'
+                  }`}
+                >
+                  {/* 12 AI Startups Orbiting */}
+                  {aiLogos.map((logo, idx) => (
+                    <div 
+                      key={idx}
+                      className={`absolute top-1/2 left-1/2 w-10 h-10 -ml-5 -mt-5 flex items-center justify-center bg-white rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.08)] border border-gray-100 transition-all duration-[1200ms] group z-30 p-1.5`}
+                      style={{
+                        transform: isSec2Visible ? `rotate(${logo.angle}deg) translate(0, var(--radius)) rotate(-${logo.angle}deg)` : `translate(0,0) scale(0)`,
+                        transitionDelay: `${idx * 80}ms`
+                      }}
+                    >
+                      <img src={logo.img} alt={logo.name} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = `https://ui-avatars.com/api/?name=${logo.name}&background=random&color=fff&bold=true`; }} />
+                    </div>
+                  ))}
+                </div>
+
               </div>
             </div>
 
@@ -711,18 +753,16 @@ const Home = () => {
                 </div>
               </div>
 
-              {/* 💻 Static 3D Premium Laptop (No Mouse Hover Bug) */}
+              {/* 💻 Static 3D Premium Laptop */}
               <div 
                 className={`relative w-full max-w-[380px] z-20 transition-all duration-1000 delay-[1000ms] ${isSec2Visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}
                 style={{ perspective: '1200px' }}
               >
-                {/* Laptop Screen / Lid - Premium Static Angle */}
+                {/* Laptop Screen / Lid */}
                 <div 
                   className="relative w-full aspect-[16/10] bg-black rounded-t-2xl border-[6px] border-gray-800 shadow-[0_25px_55px_rgba(0,0,0,0.4)] overflow-hidden"
                   style={{ transform: 'rotateY(-8deg) rotateX(8deg)', transformStyle: 'preserve-3d' }}
                 >
-                  
-                  {/* 🎬 FIXED: ROBUST VIDEO TAG (Guaranteed to Play) */}
                   <video 
                     autoPlay 
                     loop 
@@ -733,7 +773,6 @@ const Home = () => {
                     <source src={laptopVideo} type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
-
                 </div>
                 
                 {/* Laptop Base */}
@@ -775,6 +814,10 @@ const Home = () => {
 
         </div>
       </section>
+
+  
+
+
 
 {/* ========================================================= */}
       {/* SECTION 3: HACKATHONS (Premium Black & Yellow Theme)      */}

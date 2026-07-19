@@ -51,6 +51,8 @@ const Navbar = () => {
               <Link to="/Jobs" className="text-gray-600 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">JOBS</Link>
               <Link to="/tournaments" className="text-gray-600 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">TOURNAMENTS</Link>
               <Link to="/resources" className="text-gray-600 hover:text-yellow-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">RESOURCES</Link>
+              
+              
             </div>
           </div>
 
@@ -117,6 +119,7 @@ const Navbar = () => {
           <Link to="/jobs" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">JOBS</Link>
           <Link to="/tournaments" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">TOURNAMENTS</Link>
           <Link to="/resources" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">RESOURCES</Link>
+          <Link to="/about" onClick={closeMenu} className="text-gray-700 hover:text-purple-600 hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium">ABOUT</Link>
         </div>
 
         {/* Drawer Footer (Auth/Profile Mobile View) */}
