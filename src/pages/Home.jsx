@@ -417,8 +417,7 @@ const Home = () => {
 
 
 
-  
-      {/* 🌟 3D ANIMATION CSS */}
+  {/* 🌟 3D ANIMATION CSS */}
       <style>{`
         .perspective-container {
           perspective: 1000px;
@@ -448,8 +447,6 @@ const Home = () => {
       {/* ========================================================= */}
       {/* SECTION 1: COMPACT CINEMATIC HERO SECTION                 */}
       {/* ========================================================= */}
-      {/* 📱 MOBILE FIX: aspect-square (1:1 ratio) use kiya hai taaki Image 2 jaisa exact box bane. */}
-      {/* 💻 DESKTOP FIX: lg:h-[100vh] laptop ke liye maintain kiya hai. */}
       <section className="relative w-full aspect-square min-h-[400px] lg:aspect-auto lg:h-[100vh] lg:max-h-[850px] flex flex-col justify-center bg-[#070b14] pt-16 md:pt-24 pb-6 overflow-hidden perspective-container">
         
         {/* 🎥 DYNAMIC BACKGROUND VIDEO */}
@@ -472,11 +469,51 @@ const Home = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-10 w-full flex-grow flex flex-col justify-center mt-4">
           <div className="flex flex-col items-start w-full">
             
+            {/* 🔍 MOBILE ONLY SEARCH BAR (TOP PAR MOVE KIYA HAI) */}
+            <div className={`block lg:hidden w-full mb-6 relative z-50 transition-all duration-700 ease-out ${
+              isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`} style={{ transitionDelay: '100ms' }} ref={searchRef}>
+              <div className="relative w-[95%]">
+                <svg className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={() => setIsSearchFocused(true)}
+                  placeholder="Search opportunities..."
+                  className="w-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[11px] rounded-md py-2.5 pl-9 pr-4 focus:outline-none focus:ring-1 focus:ring-[#f5a623] focus:bg-white/20 transition-all placeholder-gray-400 shadow-lg"
+                />
+              </div>
+
+              {/* Mobile Search Dropdown */}
+              {isSearchFocused && searchQuery && (
+                <div className="absolute top-full mt-1.5 w-[95%] bg-[#0f1523] border border-gray-700 shadow-2xl rounded-md py-1.5 px-1.5 z-[60] max-h-40 overflow-y-auto">
+                  {filteredResults.length > 0 ? (
+                    filteredResults.map((item, index) => (
+                      <div 
+                        key={index}
+                        onClick={() => {
+                          setIsSearchFocused(false);
+                          setSearchQuery("");
+                          navigate(item.path || '/'); 
+                        }}
+                        className="block px-3 py-2.5 text-[11px] font-semibold text-gray-300 hover:bg-white/10 hover:text-[#f5a623] rounded transition-colors cursor-pointer"
+                      >
+                        {item.title}
+                      </div>
+                    ))
+                  ) : (
+                    <p className="px-3 py-2 text-[11px] text-gray-500">No results found...</p>
+                  )}
+                </div>
+              )}
+            </div>
+
             {/* Subtitle */}
             <div className="overflow-hidden mb-1 sm:mb-3">
               <p className={`text-[#f5a623] font-sans text-[9px] sm:text-xs font-black tracking-[0.2em] sm:tracking-[0.25em] uppercase transition-all duration-700 ease-out ${
                 isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              }`}>
+              }`} style={{ transitionDelay: '300ms' }}>
                 {currentSlide?.subtitle}
               </p>
             </div>
@@ -519,46 +556,6 @@ const Home = () => {
               </button>
             </div>
 
-            {/* 🔍 MOBILE ONLY SEARCH BAR (Laptop pe lg:hidden se hide ho jayega) */}
-            <div className={`block lg:hidden w-full mt-5 relative z-30 transition-all duration-700 ease-out ${
-              isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`} style={{ transitionDelay: '1300ms' }} ref={searchRef}>
-              <div className="relative w-[95%]">
-                <svg className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={() => setIsSearchFocused(true)}
-                  placeholder="Search opportunities..."
-                  className="w-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[11px] rounded-md py-2.5 pl-9 pr-4 focus:outline-none focus:ring-1 focus:ring-[#f5a623] focus:bg-white/20 transition-all placeholder-gray-400"
-                />
-              </div>
-
-              {/* Mobile Search Dropdown */}
-              {isSearchFocused && searchQuery && (
-                <div className="absolute top-full mt-1.5 w-[95%] bg-[#0f1523] border border-gray-700 shadow-2xl rounded-md py-1.5 px-1.5 z-[60] max-h-40 overflow-y-auto">
-                  {filteredResults.length > 0 ? (
-                    filteredResults.map((item, index) => (
-                      <div 
-                        key={index}
-                        onClick={() => {
-                          setIsSearchFocused(false);
-                          setSearchQuery("");
-                          navigate(item.path || '/'); 
-                        }}
-                        className="block px-3 py-2.5 text-[11px] font-semibold text-gray-300 hover:bg-white/10 hover:text-[#f5a623] rounded transition-colors cursor-pointer"
-                      >
-                        {item.title}
-                      </div>
-                    ))
-                  ) : (
-                    <p className="px-3 py-2 text-[11px] text-gray-500">No results found...</p>
-                  )}
-                </div>
-              )}
-            </div>
-
             {/* Video Progress Indicators */}
             <div className="flex gap-1.5 sm:gap-2 mt-5 sm:mt-10 relative z-10">
               {heroSlides.map((_, index) => (
@@ -574,7 +571,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-
+      
 
    {/* section2*/}
       {/* ========================================================= */}
