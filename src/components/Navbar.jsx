@@ -15,7 +15,7 @@ const Navbar = () => {
   // 🚀 FUTURE SCALE: Bas yahan naye sections add karo, wo search mein aa jayenge
   const searchableItems = [
     { name: "Home", path: "/" },
-    { name: "AI Startups, ", path: "/startups" },
+    { name: "AI Startups ", path: "/startups" },
     { name: "Hackathons", path: "/hackathons" },
     { name: "Internships", path: "/internships" },
     { name: "Jobs", path: "/jobs" },
@@ -24,7 +24,7 @@ const Navbar = () => {
     { name: "About Us", path: "/about" },
   ];
 
-  // Logic: Search filtering
+  // Logic: Search filtering (Only used for Desktop now)
   const filteredItems = searchableItems.filter(item =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -58,15 +58,16 @@ const Navbar = () => {
       {/* 🟢 TOP TIER (White Bar) */}
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20 gap-4">
+          <div className="flex items-center justify-between h-16 lg:h-20 gap-4">
             
             <div className="flex-shrink-0 flex items-center">
               <Link to="/" className="flex items-center">
-                <img src={logo} alt="Let's Bharat Logo" className="h-14 w-auto object-contain transition-transform hover:scale-105" />
+                {/* 🎨 LOGO RESPONSIVENESS APPLIED HERE: h-10 for mobile, lg:h-14 for desktop */}
+                <img src={logo} alt="Let's Bharat Logo" className="h-10 lg:h-14 w-auto object-contain transition-transform hover:scale-105" />
               </Link>
             </div>
 
-            {/* Desktop Search Bar */}
+            {/* Desktop Search Bar (Only visible on lg devices) */}
             <div className="hidden lg:flex flex-1 max-w-2xl px-6 relative" ref={searchRef}>
               <div className="w-full relative">
                 <svg className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -113,6 +114,7 @@ const Navbar = () => {
               )}
             </div>
 
+            {/* Mobile Hamburger Icon */}
             <div className="lg:hidden flex items-center">
               <button onClick={() => setIsOpen(true)} className="text-gray-800 hover:text-yellow-500 p-2"><svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
             </div>
@@ -120,7 +122,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* 🔴 BOTTOM TIER (Black Bar) */}
+      {/* 🔴 BOTTOM TIER (Black Bar) - Desktop Only */}
       <div className="hidden lg:flex bg-[#111111] text-gray-200">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="flex items-center justify-center py-3.5 space-x-10 text-xs font-bold tracking-widest uppercase">
@@ -131,7 +133,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* 📱 MOBILE DRAWER */}
+      {/* 📱 MOBILE DRAWER (Cleaned Up - No Search) */}
       {isOpen && <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 lg:hidden" onClick={closeMenu}></div>}
 
       <div className={`fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-50 transform transition-transform duration-300 lg:hidden flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
@@ -140,24 +142,23 @@ const Navbar = () => {
           <button onClick={closeMenu} className="text-gray-400 hover:text-red-500 bg-white p-2 rounded-full shadow-sm">✕</button>
         </div>
 
-        <div className="p-4">
-           {/* Mobile Search - Reusing same filteredItems logic */}
-           <div className="relative">
-              <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onFocus={() => setIsSearchFocused(true)} className="w-full bg-gray-100 rounded-xl py-3 px-4 focus:ring-2 focus:ring-yellow-400 outline-none text-sm"/>
-              {isSearchFocused && (
-                 <div className="mt-2 w-full bg-white border border-gray-100 shadow-xl rounded-xl py-2 z-50">
-                    {filteredItems.map((item, idx) => (
-                       <Link key={idx} to={item.path} onClick={() => { setIsSearchFocused(false); closeMenu(); }} className="block px-4 py-3 text-sm font-bold text-gray-700 hover:bg-yellow-50">{item.name}</Link>
-                    ))}
-                 </div>
-              )}
-           </div>
-        </div>
-
-        <div className="flex flex-col px-4 pt-2 space-y-1 flex-1 font-bold text-sm">
+        {/* Navigation Links for Mobile */}
+        <div className="flex flex-col px-4 pt-6 space-y-2 flex-1 font-bold text-sm overflow-y-auto">
           {searchableItems.map((item, idx) => (
              <Link key={idx} to={item.path} onClick={closeMenu} className="text-gray-700 hover:text-yellow-500 hover:bg-yellow-50 px-4 py-3 rounded-xl transition-all">{item.name.toUpperCase()}</Link>
           ))}
+          
+          {/* Mobile Auth Status */}
+          <div className="border-t border-gray-100 pt-4 mt-4">
+            {user ? (
+              <>
+                <Link to="/profile" onClick={closeMenu} className="block text-gray-700 hover:text-yellow-500 hover:bg-yellow-50 px-4 py-3 rounded-xl transition-all">MY PROFILE</Link>
+                <button onClick={handleLogout} className="w-full text-left text-red-500 hover:bg-red-50 px-4 py-3 rounded-xl transition-all mt-1">LOGOUT</button>
+              </>
+            ) : (
+              <Link to="/auth" onClick={closeMenu} className="block text-center bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-3 rounded-xl transition-all">LET'S CONNECT</Link>
+            )}
+          </div>
         </div>
       </div>
     </nav>

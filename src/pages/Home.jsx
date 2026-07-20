@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 // 🎥 Apni saari videos yahan import karein
-import video1 from '../assets/videos/s.mp4';
-import video2 from '../assets/videos/h1.mp4';
+import video1 from '../assets/videos/s00.mp4';
+import video2 from '../assets/videos/second.mp4';
 import video3 from '../assets/videos/h2.mp4';
 import video4 from '../assets/videos/hero2.mp4';
 
