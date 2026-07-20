@@ -136,7 +136,7 @@ const Navbar = () => {
       {/* 📱 MOBILE DRAWER (Cleaned Up - No Search) */}
       {isOpen && <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 lg:hidden" onClick={closeMenu}></div>}
 
-      <div className={`fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-50 transform transition-transform duration-300 lg:hidden flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`fixed top-0 right-0 h-full w-72 bg-black shadow-2xl z-50 transform transition-transform duration-300 lg:hidden flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="flex items-center justify-between p-5 border-b border-gray-100 bg-gray-50">
           <span className="text-xl font-black text-gray-900">Menu</span>
           <button onClick={closeMenu} className="text-gray-400 hover:text-red-500 bg-white p-2 rounded-full shadow-sm">✕</button>
