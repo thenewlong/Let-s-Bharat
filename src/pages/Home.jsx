@@ -32,20 +32,6 @@ import mobileVeo from '../assets/videos/pooo.mp4';
 
 
 
-// 📂 Hackathon Images (File ke top par add karein)
-import hack1 from '../assets/images/hack1.jpeg'; // Apni images ke naam yahan set karein
-import hack2 from '../assets/images/hack2.jpeg';
-import hack3 from '../assets/images/hack3.jpeg';
-
-import intern1 from '../assets/images/intern1.jpeg'; // Apni images set karein
-import intern2 from '../assets/images/intern2.jpeg';
-import intern3 from '../assets/images/intern3.jpeg';
-
-
-// Apni zaroorat ke hisaab se images import karein
-import tourna1 from '../assets/images/tourna1.jpeg'; 
-import tourna2 from '../assets/images/tourna2.jpeg';
-import tourna3 from '../assets/images/tourna3.jpeg';
 
 // Inko file ke sabse upar import karna (apne actual folder path ke hisaab se adjust kar lena)
 import letsBharatLogo from '../assets/images/logos3.jpeg'; 
