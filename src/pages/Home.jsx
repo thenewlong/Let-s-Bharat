@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { Helmet } from "react-helmet-async";
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// Register GSAP Plugin
+gsap.registerPlugin(ScrollTrigger);
 
 // 🎥 Apni saari videos yahan import karein
 import video1 from '../assets/videos/s00.mp4';
@@ -9,12 +14,22 @@ import video2 from '../assets/videos/second.mp4';
 import video3 from '../assets/videos/h2.mp4';
 import video4 from '../assets/videos/hero2.mp4';
 
-// laptop video ke liye bhi import karna hoga
-import laptopVideo from '../assets/videos/screen2.mp4';
+//hackathons
+import desktopVideo from '../assets/videos/lap00.mp4';
+import mobileVideo from '../assets/videos/po.mp4';
 
-// 👇 YAHAN APNI 2 IMAGES IMPORT KAREIN 👇
-import myProfileImage from '../assets/images/avater.jpeg'; // Trusted Avatar me aapki photo
-import centerAiImage from '../assets/images/center.jpeg';   // Clock ke center me yellow text ki jagah wali image
+
+//interships
+import desktopVio from '../assets/videos/lap01.mp4';
+import mobileVio from '../assets/videos/po1.mp4';
+
+
+
+//tournaments
+//import desktopVeo from '../assets/videos/lap02.mp4';
+//import mobileVeo from '../assets/videos/po2.mp4';
+
+
 
 
 // 📂 Hackathon Images (File ke top par add karein)
@@ -163,258 +178,204 @@ const Home = () => {
   };
 
 
-
+// ==========================================
+  // SECTION 2: HACKATHONS VIDEO & INTERACTIVE BUTTON
   // ==========================================
-  // SECTION 2: AI STARTUPS & JOBS (Premium Logic)
-  // ==========================================
-  const [isSec2Visible, setIsSec2Visible] = useState(false);
-  const section2Ref = useRef(null);
-  
-  // ⏱️ Realtime Clock State
-  const [time, setTime] = useState(new Date());
-
-  // 👥 Rotating Avatars State
-  const [avatarIndex, setAvatarIndex] = useState(0);
-  const avatarList = [
-    "https://i.pravatar.cc/150?img=11",
-    "https://i.pravatar.cc/150?img=47",
-    myProfileImage, // Aapki image
-    "https://i.pravatar.cc/150?img=33",
-    "https://i.pravatar.cc/150?img=12",
-    "https://i.pravatar.cc/150?img=59"
-  ];
-
-  // 💯 Animated Counters State
-  const [counts, setCounts] = useState({ startups: 0, companies: 0, innovators: 0, countries: 0, jobs: 0 });
+  const hackathonSectionRef = useRef(null);
+  const hackathonButtonRef = useRef(null);
 
   useEffect(() => {
-    // Scroll Animation Observer
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsSec2Visible(true);
-          startCounters(); 
+    gsap.registerPlugin(ScrollTrigger);
+
+    let ctx = gsap.context(() => {
+      const btn = hackathonButtonRef.current;
+
+      // 1. Scroll karke aane wali 3D Entry Animation (Niche se upar)
+      gsap.set(btn, { transformPerspective: 1000, transformStyle: "preserve-3d" });
+      
+      gsap.fromTo(btn,
+        { y: 80, opacity: 0, scale: 0.8, rotationX: -30 },
+        { 
+          y: 0, opacity: 1, scale: 1, rotationX: 0, 
+          duration: 1.2, 
+          ease: "expo.out",
+          scrollTrigger: {
+            trigger: hackathonSectionRef.current,
+            start: "top 75%", 
+            end: "bottom 20%",
+            toggleActions: "play none none reverse",
+          }
         }
-      },
-      { threshold: 0.1 } 
-    );
-    if (section2Ref.current) observer.observe(section2Ref.current);
+      );
 
-    // Live Clock Interval
-    const timerId = setInterval(() => setTime(new Date()), 1000);
+      // 2. Premium Mouse & Touch Interaction (Gen Z Feel)
+      const onEnter = () => gsap.to(btn, { scale: 1.05, duration: 0.4, ease: "power3.out", boxShadow: "0px 10px 30px rgba(255, 255, 255, 0.2)" });
+      const onLeave = () => gsap.to(btn, { scale: 1, duration: 0.4, ease: "power3.out", boxShadow: "0px 0px 0px rgba(255, 255, 255, 0)" });
+      const onPress = () => gsap.to(btn, { scale: 0.95, duration: 0.1, ease: "power1.inOut" });
+      const onRelease = () => gsap.to(btn, { scale: 1.05, duration: 0.2, ease: "back.out(2)" });
 
-    // Avatar Rotation Interval (Changes every 2.5 seconds)
-    const avatarTimerId = setInterval(() => {
-      setAvatarIndex((prev) => (prev + 1) % avatarList.length);
-    }, 2500);
+      // Add Listeners
+      if (btn) {
+        btn.addEventListener("mouseenter", onEnter);
+        btn.addEventListener("mouseleave", onLeave);
+        btn.addEventListener("mousedown", onPress);
+        btn.addEventListener("mouseup", onRelease);
+        btn.addEventListener("touchstart", onPress, { passive: true });
+        btn.addEventListener("touchend", onLeave, { passive: true });
+      }
 
-    return () => {
-      if (section2Ref.current) observer.unobserve(section2Ref.current);
-      clearInterval(timerId); 
-      clearInterval(avatarTimerId);
-    };
+      // Cleanup
+      return () => {
+        if (btn) {
+          btn.removeEventListener("mouseenter", onEnter);
+          btn.removeEventListener("mouseleave", onLeave);
+          btn.removeEventListener("mousedown", onPress);
+          btn.removeEventListener("mouseup", onRelease);
+          btn.removeEventListener("touchstart", onPress);
+          btn.removeEventListener("touchend", onLeave);
+        }
+      };
+    }, hackathonSectionRef);
+
+    return () => ctx.revert();
+  }, []);
+  
+// ==========================================
+  // SECTION 4: INTERNSHIPS VIDEO & INTERACTIVE BUTTON
+  // ==========================================
+  const internshipSectionRef = useRef(null);
+  const internshipButtonRef = useRef(null);
+
+  useEffect(() => {
+    // Scroll Animation Logic
+    let ctx = gsap.context(() => {
+      const btn = internshipButtonRef.current;
+      
+      gsap.set(btn, { transformPerspective: 1000, transformStyle: "preserve-3d" });
+      
+      gsap.fromTo(btn,
+        { y: 80, opacity: 0, scale: 0.8, rotationX: -30 },
+        { 
+          y: 0, opacity: 1, scale: 1, rotationX: 0, 
+          duration: 1.2, 
+          ease: "expo.out",
+          scrollTrigger: {
+            trigger: internshipSectionRef.current,
+            start: "top 75%", 
+            end: "bottom 20%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+    }, internshipSectionRef);
+
+    return () => ctx.revert(); // Safe cleanup
   }, []);
 
-  // 💯 Fast Counter Logic
-  const startCounters = () => {
-    const duration = 2000; 
-    const fps = 60;
-    const steps = duration / (1000 / fps);
-    let currentStep = 0;
-
-    const counterInterval = setInterval(() => {
-      currentStep++;
-      const progress = currentStep / steps;
-      setCounts({
-        startups: Math.floor(progress * 1250),
-        companies: Math.floor(progress * 320),
-        innovators: Math.floor(progress * 25), 
-        countries: Math.floor(progress * 120),
-        jobs: Math.floor(progress * 500)
-      });
-
-      if (currentStep >= steps) clearInterval(counterInterval);
-    }, 1000 / fps);
-  };
-
-  const hours = time.getHours();
-  const minutes = time.getMinutes();
-  const seconds = time.getSeconds();
-
-  const secDeg = seconds * 6;
-  const minDeg = minutes * 6 + seconds * 0.1;
-  const hourDeg = (hours % 12) * 30 + minutes * 0.5;
-
-    
-// ✍️ 100% CLEAR 3D Letter Animation (Tumhara function)
-  const render3DLetters = (text, delayOffset = 0, extraClass = "") => {
-    if (typeof text !== 'string' || !text) return null; 
-    
-    return text.split("").map((char, index) => (
-      <span
-        key={index}
-        className={`inline-block transition-all duration-700 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
-          isSec2Visible 
-            ? "opacity-100 [transform:translateY(0)_scale(1)_rotateX(0deg)] blur-0" 
-            : "opacity-0 [transform:translateY(20px)_scale(0.8)_rotateX(-60deg)] blur-[4px]"
-        } ${extraClass}`}
-        style={{ 
-          transitionDelay: `${delayOffset + index * 30}ms`, // Premium letter delay
-          transformStyle: 'preserve-3d' 
-        }}
-      >
-        {char === " " ? "\u00A0" : char}
-      </span>
-    ));
-  };
-
-  // 🌟 Marquee ke liye 3D Word Animation
-  const render3DWords = (wordsArray, baseDelay = 0) => {
-    return wordsArray.map((word, index) => (
-      <span 
-        key={index} 
-        className={`flex items-center gap-2 transition-all duration-1000 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
-          isSec2Visible ? "opacity-100 translate-y-0 rotateX-0 blur-0" : "opacity-0 translate-y-6 -rotate-x-90 blur-[2px]"
-        }`}
-        style={{ transitionDelay: `${baseDelay + index * 100}ms`, transformStyle: 'preserve-3d' }}
-      >
-        <span className="w-1.5 h-1.5 rounded-full bg-current animate-ping"></span> {word}
-      </span>
-    ));
-  };
-
-
-  // 🌐 12 AI Startups Clock Data
-  const aiLogos = [
-    { name: 'OpenAI', img: 'https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg', angle: 0 },
-    { name: 'Anthropic', img: 'https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg', angle: 30 },
-    { name: 'Gemini', img: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg', angle: 60 },
-    { name: 'Mistral AI', img: 'https://mistral.ai/images/logo.svg', angle: 90 },
-    { name: 'Hugging Face', img: 'https://huggingface.co/front/assets/huggingface_logo-noborder.svg', angle: 120 },
-    { name: 'Perplexity', img: 'https://www.perplexity.ai/favicon.ico', angle: 150 },
-    { name: 'Cohere', img: 'https://cohere.com/favicon.ico', angle: 180 },
-    { name: 'Runway', img: 'https://runwayml.com/favicon.ico', angle: 210 },
-    { name: 'Stability AI', img: 'https://stability.ai/favicon.ico', angle: 240 },
-    { name: 'Meta AI', img: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Meta-Logo.png', angle: 270 },
-    { name: 'Character.AI', img: 'https://character.ai/favicon.ico', angle: 300 },
-    { name: 'Scale AI', img: 'https://scale.com/favicon.ico', angle: 330 },
-  ];
+  // 🚀 Premium Mouse & Touch Interaction (React Native Way - No Errors)
+  const internEnter = () => gsap.to(internshipButtonRef.current, { scale: 1.05, duration: 0.4, ease: "power3.out", boxShadow: "0px 10px 30px rgba(255, 255, 255, 0.2)" });
+  const internLeave = () => gsap.to(internshipButtonRef.current, { scale: 1, duration: 0.4, ease: "power3.out", boxShadow: "0px 0px 0px rgba(255, 255, 255, 0)" });
+  const internPress = () => gsap.to(internshipButtonRef.current, { scale: 0.95, duration: 0.1, ease: "power1.inOut" });
+  const internRelease = () => gsap.to(internshipButtonRef.current, { scale: 1.05, duration: 0.2, ease: "back.out(2)" });
 
 
 
 // ==========================================
-  // SECTION 3: HACKATHONS ANIMATION LOGIC (Premium)
+  // SECTION 5: TOURNAMENTS VIDEO & INTERACTIVE BUTTON
   // ==========================================
-  const [isSec3Visible, setIsSec3Visible] = useState(false);
-  const section3Ref = useRef(null);
+  const tournamentSectionRef = useRef(null);
+  const tournamentButtonRef = useRef(null);
 
   useEffect(() => {
-    const observer3 = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsSec3Visible(true);
-      },
-      { threshold: 0.1 }
-    );
-    if (section3Ref.current) observer3.observe(section3Ref.current);
-    return () => {
-      if (section3Ref.current) observer3.unobserve(section3Ref.current);
-    };
+    // GSAP Scroll Animation Logic
+    let ctx = gsap.context(() => {
+      const btn = tournamentButtonRef.current;
+      
+      gsap.set(btn, { transformPerspective: 1000, transformStyle: "preserve-3d" });
+      
+      gsap.fromTo(btn,
+        { y: 80, opacity: 0, scale: 0.8, rotationX: -30 },
+        { 
+          y: 0, opacity: 1, scale: 1, rotationX: 0, 
+          duration: 1.2, 
+          ease: "expo.out",
+          scrollTrigger: {
+            trigger: tournamentSectionRef.current,
+            start: "top 75%", 
+            end: "bottom 20%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+    }, tournamentSectionRef);
+
+    return () => ctx.revert(); // Safe cleanup
   }, []);
 
-  const renderTypingLettersSec3 = (text, delayOffset = 0) => {
-    return text.toUpperCase().split("").map((char, index) => (
-      <span
-        key={index}
-        className={`inline-block transition-all duration-[600ms] ease-out ${
-          isSec3Visible 
-            ? "opacity-100 translate-y-0 filter blur-0" 
-            : "opacity-0 translate-y-4 filter blur-[2px]"
-        }`}
-        style={{ transitionDelay: `${delayOffset + index * 20}ms` }}
-      >
-        {char === " " ? "\u00A0" : char}
-      </span>
-    ));
-  };
-
-
-  // ==========================================
-  // SECTION 4: INTERNSHIPS ANIMATION LOGIC
-  // ==========================================
-  const [isSec4Visible, setIsSec4Visible] = useState(false);
-  const section4Ref = useRef(null);
-
-  useEffect(() => {
-    const observer4 = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) setIsSec4Visible(true);
-    }, { threshold: 0.1 });
-    
-    if (section4Ref.current) observer4.observe(section4Ref.current);
-    
-    return () => {
-      if (section4Ref.current) observer4.unobserve(section4Ref.current);
-    };
-  }, []);
-
-  const renderTypingLettersSec4 = (text, delayOffset = 0) => {
-    return text.toUpperCase().split("").map((char, index) => (
-      <span
-        key={index}
-        className={`inline-block transition-all duration-[600ms] ease-out ${
-          isSec4Visible 
-            ? "opacity-100 translate-y-0 filter blur-0" 
-            : "opacity-0 translate-y-4 filter blur-[2px]"
-        }`}
-        style={{ transitionDelay: `${delayOffset + index * 20}ms` }}
-      >
-        {char === " " ? "\u00A0" : char}
-      </span>
-    ));
-  };
-  // ==========================================
-  // SECTION 5: TOURNAMENTS ANIMATION LOGIC (Premium)
-  // ==========================================
-  const [isSec5Visible, setIsSec5Visible] = useState(false);
-  const section5Ref = useRef(null);
-
-  useEffect(() => {
-    const observer5 = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) setIsSec5Visible(true);
-    }, { threshold: 0.1 });
-    
-    if (section5Ref.current) observer5.observe(section5Ref.current);
-    
-    return () => {
-      if (section5Ref.current) observer5.unobserve(section5Ref.current);
-    };
-  }, []);
-
-  // 🚨 CRASH-PROOF FIX: Agar text kisi wajah se missing hoga, toh page blank nahi hoga
-  const renderTypingLettersSec5 = (text = "", delayOffset = 0) => {
-    if (!text) return null; // Failsafe
-
-    return String(text).toUpperCase().split("").map((char, index) => (
-      <span
-        key={index}
-        className={`inline-block transition-all duration-[600ms] ease-out ${
-          isSec5Visible 
-            ? "opacity-100 translate-y-0 filter blur-0" 
-            : "opacity-0 translate-y-4 filter blur-[2px]"
-        }`}
-        style={{ transitionDelay: `${delayOffset + index * 20}ms` }}
-      >
-        {char === " " ? "\u00A0" : char}
-      </span>
-    ));
-  };
-
+  // 🚀 Premium Mouse & Touch Interaction (React Native Way - No Errors)
+  const tournaEnter = () => gsap.to(tournamentButtonRef.current, { scale: 1.05, duration: 0.4, ease: "power3.out", boxShadow: "0px 10px 30px rgba(255, 255, 255, 0.2)" });
+  const tournaLeave = () => gsap.to(tournamentButtonRef.current, { scale: 1, duration: 0.4, ease: "power3.out", boxShadow: "0px 0px 0px rgba(255, 255, 255, 0)" });
+  const tournaPress = () => gsap.to(tournamentButtonRef.current, { scale: 0.95, duration: 0.1, ease: "power1.inOut" });
+  const tournaRelease = () => gsap.to(tournamentButtonRef.current, { scale: 1.05, duration: 0.2, ease: "back.out(2)" });
 
 
   return (
     <div className="w-full font-sans overflow-x-hidden">
       
       
+      <Helmet>
+        <title>
+          Letsbharat | India's Student Platform for Hackathons, Jobs & Internships
+        </title>
 
+        <meta
+          name="description"
+          content="Letsbharat helps students discover Hackathons, Jobs, Internships, AI Tools, Startup Opportunities and eSports Tournaments across India."
+        />
+
+        <meta
+          name="keywords"
+          content="Letsbharat, Hackathons, Jobs, Internships, AI Tools, Startup, Free Fire Tournament, BGMI Tournament"
+        />
+      
+
+      <script type="application/ld+json">
+{`
+{
+  "@context":"https://schema.org",
+  "@type":"Organization",
+  "name":"Letsbharat",
+  "url":"https://www.letsbharat.com",
+  "logo":"https://www.letsbharat.com/logos2.jpeg",
+  "founder":{
+    "@type":"Person",
+    "name":"Newlong Debbarma"
+  },
+  "sameAs":[]
+}
+`}
+</script>
+
+<script type="application/ld+json">
+{`
+{
+ "@context":"https://schema.org",
+ "@type":"WebSite",
+ "name":"Letsbharat",
+ "url":"https://www.letsbharat.com",
+ "potentialAction":{
+   "@type":"SearchAction",
+   "target":"https://www.letsbharat.com/search?q={search_term_string}",
+   "query-input":"required name=search_term_string"
+ }
+}
+`}
+</script>
+</Helmet>
+
+      {/* Hero Section */}
+  
+   
 
 
   {/* 🌟 3D ANIMATION CSS */}
@@ -573,493 +534,186 @@ const Home = () => {
       </section>
       
 
-   {/* section2*/}
-      {/* ========================================================= */}
-      {/* 🚀 CSS ANIMATIONS                                         */}
-      {/* ========================================================= */}
-      <style>{`
-        @keyframes scrollLeft {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        @keyframes scrollRight {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0); }
-        }
-        @keyframes floatOut {
-          0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
-          20% { opacity: 1; scale: 1; }
-          80% { opacity: 1; }
-          100% { transform: translate(var(--tx), var(--ty)) scale(1.2); opacity: 0; }
-        }
-      `}</style>
-
-      {/* ========================================================= */}
-      {/* SECTION 2: AI STARTUPS & JOBS                             */}
-      {/* ========================================================= */}
-      <section 
-        ref={section2Ref} 
-        className="relative w-full bg-[#eef2f6] pt-6 pb-20 overflow-hidden border-t border-gray-100"
-      >
-        
-        {/* 📜 NEW: DUAL PREMIUM HIGHLIGHTED MARQUEE (Right & Left with 3D Words) */}
-        <div className="w-full mb-16 flex flex-col shadow-sm perspective-[1000px]">
-          
-          {/* Top Marquee: Moving RIGHT (AI Startups) */}
-          <div className="w-full bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 border-t border-gray-200 py-3 overflow-hidden flex whitespace-nowrap">
-            <div className="animate-[scrollRight_30s_linear_infinite] flex items-center gap-12 text-[11px] font-black text-[#ff6600] uppercase tracking-[0.25em] w-max">
-              {render3DWords(['OpenAI', '|', 'Anthropic', '|', 'Google Gemini', '|', 'Midjourney', '|', 'Perplexity', '|', 'Hugging Face', '|', 'Mistral', '|'], 0)}
-              {render3DWords(['OpenAI', '|', 'Anthropic', '|', 'Google Gemini', '|', 'Midjourney', '|', 'Perplexity', '|', 'Hugging Face', '|', 'Mistral', '|'], 0)}
-            </div>
-          </div>
-
-          {/* Bottom Marquee: Moving LEFT (Companies & Jobs) */}
-          <div className="w-full bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 border-y border-gray-200 py-3 overflow-hidden flex whitespace-nowrap">
-            <div className="animate-[scrollLeft_30s_linear_infinite] flex items-center gap-12 text-[11px] font-black text-blue-600 uppercase tracking-[0.25em] w-max">
-              {render3DWords(['Microsoft', '|', 'Amazon', '|', 'TCS Jobs', '|', 'Product Design', '|', 'AI Engineering', '|', 'Meta', '|', 'Data Science', '|'], 300)}
-              {render3DWords(['Microsoft', '|', 'Amazon', '|', 'TCS Jobs', '|', 'Product Design', '|', 'AI Engineering', '|', 'Meta', '|', 'Data Science', '|'], 300)}
-            </div>
-          </div>
-
-        </div>
-
-        <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* ---------------- LEFT SIDE: TEXT CONTENT (Col Span 4) ---------------- */}
-            <div className="lg:col-span-4 flex flex-col items-start text-left z-10">
-              
-              <div className={`inline-flex items-center gap-2 mb-6 border border-[#ff6600]/30 bg-[#ff6600]/5 px-4 py-1.5 rounded-full transition-all duration-700 ${isSec2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-                <span className="text-[#ff6600] text-sm animate-pulse">✦</span>
-                <span className="text-xs font-bold text-[#ff6600] tracking-[0.2em] uppercase">
-                  Discover. Connect. Empower.
-                </span>
-              </div>
-
-              {/* Main Title (3D Letter Animation Applied Here) */}
-              <h2 className="text-3xl sm:text-5xl lg:text-5xl font-black text-gray-900 tracking-tight leading-[1.15] mb-7" style={{ perspective: '1000px' }}>
-                <div className="block whitespace-nowrap overflow-hidden pb-1">
-                  {render3DLetters("EXPLORE THE WORLD'S", 200)}
-                </div>
-                <div className="flex flex-wrap items-center gap-x-3 mt-2 overflow-hidden pb-1">
-                  {render3DLetters("TOP", 600)}
-                  <span className="text-[#ff6600] drop-shadow-sm font-extrabold tracking-tighter">
-                    {render3DLetters("AI", 800)}
-                  </span>
-                  {render3DLetters("STARTUPS", 1000)}
-                </div>
-                <div className="flex items-center gap-x-3 overflow-hidden mt-2 text-gray-800 pb-1">
-                  {render3DLetters("&", 1400)}
-                  <span className="text-blue-600 drop-shadow-sm font-extrabold tracking-tighter">
-                    {render3DLetters("JOBS", 1600)}
-                  </span>
-                </div>
-              </h2>
-
-              <p className={`text-gray-500 text-sm sm:text-base font-medium max-w-sm mb-8 transition-all duration-700 delay-[1800ms] ${isSec2Visible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-6 blur-sm'}`}>
-                Your gateway to the most innovative AI startups and top-tier career opportunities globally.
-              </p>
-
-              {/* 👥 ROTATING AVATARS */}
-              <div className={`flex items-center gap-4 transition-all duration-700 delay-[2000ms] ${isSec2Visible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-6 blur-sm'}`}>
-                <div className="flex -space-x-3">
-                  <img src={avatarList[avatarIndex]} alt="user" className="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover transition-all duration-500" />
-                  <img src={avatarList[(avatarIndex + 1) % avatarList.length]} alt="user" className="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover transition-all duration-500" />
-                  <img src={avatarList[(avatarIndex + 2) % avatarList.length]} alt="user" className="w-10 h-10 rounded-full border-2 border-white shadow-md z-10 object-cover transition-all duration-500" />
-                  <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-900 flex items-center justify-center shadow-sm z-20">
-                    <span className="text-[10px] text-white font-bold tracking-wider">1K+</span>
-                  </div>
-                </div>
-                <div className="text-xs text-gray-600 font-bold uppercase tracking-wider">
-                  Trusted by innovators
-                </div>
-              </div>
-            </div>
-
-            {/* ---------------- MIDDLE: REALTIME AI CLOCK ---------------- */}
-            <div className="lg:col-span-4 w-full flex flex-col items-center justify-center relative scale-90 sm:scale-100 z-10">
-              <div className="relative w-full aspect-square max-w-[280px] sm:max-w-[300px] mx-auto [--radius:-100px] sm:[--radius:-130px]">
-                
-                <div className="absolute inset-0 m-auto w-20 h-20 flex items-center justify-center z-20">
-                  <img 
-                    src={centerAiImage} 
-                    alt="Center AI Logo" 
-                    className={`w-12 h-12 rounded-full object-cover bg-white shadow-md border border-gray-100 p-1 transition-opacity duration-1000 delay-[500ms] ${isSec2Visible ? 'opacity-100' : 'opacity-0'}`} 
-                  />
-                  <div className="absolute w-2 h-2 bg-gray-900 rounded-full z-30 shadow-md"></div>
-                  
-                  {/* ⏱️ REALTIME Analog Hands (Continuous Automatic Run) */}
-                  <div className="absolute w-1 h-12 bg-gray-900 rounded-full origin-bottom bottom-1/2 z-20 transition-transform duration-300 ease-out" style={{ transform: `rotate(${hourDeg}deg)` }}></div>
-                  <div className="absolute w-0.5 h-16 bg-gray-700 rounded-full origin-bottom bottom-1/2 z-20 transition-transform duration-300 ease-out" style={{ transform: `rotate(${minDeg}deg)` }}></div>
-                  <div className="absolute w-px h-20 bg-[#ff6600] rounded-full origin-bottom bottom-1/2 z-20" style={{ transform: `rotate(${secDeg}deg)` }}></div>
-                </div>
-
-                {/* 🌀 Anti-Clockwise Scroll Effect Wrapper for Logos */}
-                <div 
-                  className={`absolute inset-0 w-full h-full transition-transform duration-[2000ms] ease-[cubic-bezier(0.25,1,0.5,1)] ${
-                    isSec2Visible ? '-rotate-[360deg]' : 'rotate-[90deg] scale-50'
-                  }`}
-                >
-                  {/* 12 AI Startups Orbiting */}
-                  {aiLogos.map((logo, idx) => (
-                    <div 
-                      key={idx}
-                      className={`absolute top-1/2 left-1/2 w-10 h-10 -ml-5 -mt-5 flex items-center justify-center bg-white rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.08)] border border-gray-100 transition-all duration-[1200ms] group z-30 p-1.5`}
-                      style={{
-                        transform: isSec2Visible ? `rotate(${logo.angle}deg) translate(0, var(--radius)) rotate(-${logo.angle}deg)` : `translate(0,0) scale(0)`,
-                        transitionDelay: `${idx * 80}ms`
-                      }}
-                    >
-                      <img src={logo.img} alt={logo.name} className="w-full h-full object-contain" onError={(e) => { e.target.onerror = null; e.target.src = `https://ui-avatars.com/api/?name=${logo.name}&background=random&color=fff&bold=true`; }} />
-                    </div>
-                  ))}
-                </div>
-
-              </div>
-            </div>
-
-            {/* ---------------- RIGHT SIDE: 💻 STATIC PREMIUM 3D LAPTOP & 100% FIXED VIDEO ---------------- */}
-            <div className="lg:col-span-4 w-full flex items-center justify-center relative mt-10 lg:mt-0 z-20">
-              
-              {/* Floating Logos */}
-              <div className={`absolute top-1/2 left-1/2 w-full h-full pointer-events-none z-30 ${isSec2Visible ? 'block' : 'hidden'}`}>
-                <div className="absolute left-1/2 top-1/2 w-10 h-10 bg-white rounded-xl shadow-lg border border-gray-100 flex items-center justify-center p-2 animate-[floatOut_4s_ease-in-out_infinite]" style={{ '--tx': '-120px', '--ty': '-100px', animationDelay: '0s' }}>
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" className="w-full h-full object-contain" alt="Microsoft" />
-                </div>
-                <div className="absolute left-1/2 top-1/2 w-8 h-8 bg-white rounded-xl shadow-lg border border-gray-100 flex items-center justify-center p-1.5 animate-[floatOut_3.5s_ease-in-out_infinite]" style={{ '--tx': '90px', '--ty': '-130px', animationDelay: '1.5s' }}>
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg" className="w-full h-full object-contain" alt="Gemini" />
-                </div>
-                <div className="absolute left-1/2 top-1/2 w-12 h-12 bg-white rounded-xl shadow-lg border border-gray-100 flex items-center justify-center p-2 animate-[floatOut_4.5s_ease-in-out_infinite]" style={{ '--tx': '-80px', '--ty': '130px', animationDelay: '2.5s' }}>
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" className="w-full h-full object-contain" alt="ChatGPT" />
-                </div>
-              </div>
-
-              {/* 💻 Static 3D Premium Laptop */}
-              <div 
-                className={`relative w-full max-w-[380px] z-20 transition-all duration-1000 delay-[1000ms] ${isSec2Visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}
-                style={{ perspective: '1200px' }}
-              >
-                {/* Laptop Screen / Lid */}
-                <div 
-                  className="relative w-full aspect-[16/10] bg-black rounded-t-2xl border-[6px] border-gray-800 shadow-[0_25px_55px_rgba(0,0,0,0.4)] overflow-hidden"
-                  style={{ transform: 'rotateY(-8deg) rotateX(8deg)', transformStyle: 'preserve-3d' }}
-                >
-                  <video 
-                    autoPlay 
-                    loop 
-                    muted 
-                    playsInline 
-                    className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-                  >
-                    <source src={laptopVideo} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
-                
-                {/* Laptop Base */}
-                <div 
-                  className="relative w-[105%] -ml-[2.5%] h-6 bg-gradient-to-b from-gray-300 to-gray-500 rounded-b-xl border-t border-gray-400 shadow-2xl flex justify-center items-start"
-                  style={{ transform: 'rotateX(60deg) rotateY(-2.6deg)', transformOrigin: 'top' }}
-                >
-                  <div className="w-1/4 h-1.5 bg-gray-600 rounded-b-md mt-0.5"></div>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-
-          {/* ---------------- 💯 BOTTOM STATS ROW (Animated Counters) ---------------- */}
-          <div className={`mt-20 pt-10 border-t border-gray-100 grid grid-cols-2 md:grid-cols-5 gap-6 text-center transition-all duration-1000 delay-[800ms] ${isSec2Visible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-10 blur-sm'}`}>
-            <div>
-              <h4 className="text-2xl font-black text-gray-900">{counts.startups.toLocaleString()}+</h4>
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">AI Startups</p>
-            </div>
-            <div>
-              <h4 className="text-2xl font-black text-gray-900">{counts.companies.toLocaleString()}+</h4>
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Top Companies</p>
-            </div>
-            <div>
-              <h4 className="text-2xl font-black text-[#ff6600]">{counts.innovators}K+</h4>
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Innovators</p>
-            </div>
-            <div>
-              <h4 className="text-2xl font-black text-gray-900">{counts.countries.toLocaleString()}+</h4>
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Countries</p>
-            </div>
-            <div className="col-span-2 md:col-span-1">
-              <h4 className="text-2xl font-black text-blue-600">{counts.jobs.toLocaleString()}+</h4>
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">New Jobs</p>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
   
 
 
-
 {/* ========================================================= */}
-      {/* SECTION 3: HACKATHONS (Premium Black & Yellow Theme)      */}
+      {/* SECTION 2: HACKATHONS (Gen-Z Premium Background)          */}
       {/* ========================================================= */}
       <section 
+        ref={hackathonSectionRef}
         id="hackathons"
-        ref={section3Ref}
-        className="w-full py-20 px-4 md:px-8 bg-[#eef2f6] overflow-hidden border-t border-gray-100"
+        // items-end add kiya hai taaki button niche rahe, aur pb-12 padding di hai
+        className="relative w-full h-[70vh] md:h-screen bg-black overflow-hidden flex flex-col justify-end items-center pb-12 md:pb-20 border-t border-white/5"
       >
-        <div className="max-w-7xl mx-auto">
+        {/* 📱 PHONE DEVICE VIDEO (Clear visibility) */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          // brightness-[0.8] kiya hai taaki video text mast aur clear dikhe
+          className="absolute inset-0 w-full h-full object-cover block md:hidden filter brightness-[0.85]"
+          src={mobileVideo}
+        />
+
+        {/* 💻 LAPTOP/DESKTOP VIDEO (Clear visibility) */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover hidden md:block filter brightness-[0.85]"
+          src={desktopVideo}
+        />
+
+        {/* 🌑 BOTTOM GRADIENT ONLY (Taki video clear rahe, bas bottom me button pe focus aaye) */}
+        <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none z-10"></div>
+
+        {/* 🚀 SMALL, PREMIUM 3D BUTTON */}
+        <div className="relative z-20 w-full px-4 flex justify-center perspective-[1000px]">
           
-          {/* Header Area */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 gap-6">
-            <div>
-              <span className={`text-[10px] font-bold tracking-[0.2em] text-[#ff6600] uppercase block mb-3 transition-all duration-700 ${isSec3Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
-                EXPLORE. CODE. IMPACT.
-              </span>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 uppercase font-sans">
-                <div className="leading-tight">{renderTypingLettersSec3("Live & Upcoming ", 0)}</div>
-                <div className="text-[#ff6600] leading-tight mt-1">{renderTypingLettersSec3("Hackathons", 300)}</div>
-              </h2>
-            </div>
-            
-            <button 
-              onClick={() => navigate('/hackathons')}
-               className={`text-[black] font-bold flex items-center gap-1 hover:underline bg-indigo-50 px-5 py-2.5 rounded-xl whitespace-nowrap transition-all duration-1000 delay-1000 ${isSec4Visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
-            >
-              View All Events →
-            </button>
-          </div>
-
-          {/* Cards Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-5">
-            {[
-              { title: "AI Innovation Hackathon", image: hack1, tag: "REMOTE", date: "24 MAY 2025", prize: "₹10,000" },
-              { title: "Web3 Builders Hackathon", image: hack2, tag: "ONSITE", date: "07 JUN 2025", prize: "₹15,000" },
-              { title: "Sustainability Hackathon", image: hack3, tag: "HYBRID", date: "21 JUN 2025", prize: "₹20,000" },
-              { title: "Cyber Security Sprint", image: hack1, tag: "REMOTE", date: "12 JUL 2025", prize: "₹12,000" },
-              { title: "Northeast Dev Clash", image: hack2, tag: "ONSITE", date: "02 AUG 2025", prize: "₹25,000" }
-            ].map((hack, index) => (
-              <div 
-                key={index} 
-                onClick={() => navigate('/hackathons')}
-                className={`bg-white rounded-3xl border border-gray-100 overflow-hidden flex flex-col aspect-square shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.1)] hover:border-[#ff6600]/20 transition-all duration-700 cursor-pointer group ${
-                  isSec3Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                }`}
-                style={{ transitionDelay: `${400 + index * 150}ms` }}
-              >
-                
-                {/* Image Section */}
-                <div className="w-full h-[55%] overflow-hidden relative bg-gray-100">
-                  <img 
-                    src={hack.image} 
-                    alt={hack.title} 
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                  />
-                  {/* Premium Dark Tag */}
-                  <div className="absolute top-3 left-3">
-                    <span className="text-[9px] font-black tracking-widest text-white bg-gray-900/90 backdrop-blur-sm px-2.5 py-1 rounded-md">
-                      {hack.tag}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Content Section */}
-                <div className="p-4 flex flex-col justify-between flex-grow">
-                  <div>
-                    <h3 className="text-xs font-bold text-gray-900 group-hover:text-[#ff6600] transition-colors leading-tight mb-1.5 uppercase tracking-wide">
-                      {hack.title}
-                    </h3>
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
-                      {hack.date}
-                    </p>
-                  </div>
-
-                  <div className="pt-2 border-t border-gray-50 flex items-center justify-between mt-2">
-                    <span className="text-xs font-black text-gray-900">{hack.prize}</span>
-                    <span className="text-[10px] font-bold text-[#ff6600] group-hover:translate-x-1 transition-transform">
-                      JOIN →
-                    </span>
-                  </div>
-                </div>
-
-              </div>
-            ))}
-          </div>
+          <button 
+            ref={hackathonButtonRef}
+            onClick={() => navigate('/hackathons')}
+            // px-6 py-3.5 karke button ko chota aur sleek banaya hai
+            className="group relative inline-flex items-center justify-center px-6 py-3.5 md:px-8 md:py-4 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full font-medium transition-colors duration-300 hover:bg-white hover:text-black overflow-hidden"
+          >
+            <span className="relative z-10 flex items-center gap-2.5 tracking-[0.15em] uppercase text-xs md:text-sm">
+             Lestbharat Updates All Opportunity Can't Register Explore Hackathons
+              <svg className="w-4 h-4 md:w-5 md:h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </span>
+            {/* Minimal Reflection Effect */}
+            <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out z-0"></div>
+          </button>
 
         </div>
       </section>
 
 {/* ========================================================= */}
-      {/* SECTION 4: LATEST INTERNSHIPS (Premium Black & Yellow)    */}
+      {/* SECTION 4: INTERNSHIPS (Gen-Z Premium Background)         */}
       {/* ========================================================= */}
       <section 
-        id="internships" 
-        ref={section4Ref} 
-        className="w-full py-20 px-4 md:px-8 bg-[#eeeeee] overflow-hidden border-t border-gray-100"
+        ref={internshipSectionRef}
+        id="internships"
+        className="relative w-full h-[70vh] md:h-screen bg-black overflow-hidden flex flex-col justify-end items-center pb-12 md:pb-20 border-t border-white/5"
       >
-        <div className="max-w-7xl mx-auto">
+        {/* 📱 PHONE DEVICE VIDEO */}
+        {/* Apna Mobile Internship Video path yahan do */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover block md:hidden filter brightness-[0.85]"
+          src={mobileVio}
+        />
+
+        {/* 💻 LAPTOP/DESKTOP VIDEO */}
+        {/* Apna Desktop Internship Video path yahan do */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover hidden md:block filter brightness-[0.85]"
+          src={desktopVio}
+        />
+
+        {/* 🌑 BOTTOM GRADIENT ONLY (Taki button background se clash na kare) */}
+        <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none z-10"></div>
+
+        {/* 🚀 SMALL, PREMIUM 3D BUTTON (With Safe React Events) */}
+        <div className="relative z-20 w-full px-4 flex justify-center perspective-[1000px]">
           
-          {/* Header Area */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 gap-6">
-            <div>
-              <span className={`text-[10px] font-bold tracking-[0.2em] text-[#ff6600] uppercase block mb-3 transition-all duration-700 ${isSec4Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
-                LEARN. BUILD. GROW.
-              </span>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 uppercase font-sans">
-                <div className="leading-tight">{renderTypingLettersSec4("Latest ", 0)}</div>
-                <div className="text-[#ff6600] leading-tight mt-1">{renderTypingLettersSec4("Internships", 300)}</div>
-              </h2>
-            </div>
-            
-            <button 
-              onClick={() => navigate('/internships')}
-              className={`text-[black] font-bold flex items-center gap-1 hover:underline bg-indigo-50 px-5 py-2.5 rounded-xl whitespace-nowrap transition-all duration-1000 delay-1000 ${isSec4Visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
-            >
-              View All Internships →
-            </button>
-          </div>
+          <button 
+            ref={internshipButtonRef}
+            onClick={() => navigate('/internships')}
+            // React Event Handlers (Error Free Logic)
+            onMouseEnter={internEnter}
+            onMouseLeave={internLeave}
+            onMouseDown={internPress}
+            onMouseUp={internRelease}
+            onTouchStart={internPress}
+            onTouchEnd={internLeave}
+            className="group relative inline-flex items-center justify-center px-6 py-3.5 md:px-8 md:py-4 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full font-medium transition-colors duration-300 hover:bg-white hover:text-black overflow-hidden"
+          >
+            <span className="relative z-10 flex items-center gap-2.5 tracking-[0.15em] uppercase text-xs md:text-sm">
+              Explore Internships
+              <svg className="w-4 h-4 md:w-5 md:h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </span>
+            {/* Premium Shine Hover Effect */}
+            <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out z-0"></div>
+          </button>
 
-          {/* Cards Grid: Mobile 2, Desktop 4-5 */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-5">
-            {[
-              { title: "Frontend Developer", image: intern1, tag: "REMOTE", stipend: "₹10,000 / MO" },
-              { title: "UI/UX Designer", image: intern2, tag: "ONSITE", stipend: "₹12,000 / MO" },
-              { title: "Full Stack Intern", image: intern3, tag: "HYBRID", stipend: "₹15,000 / MO" },
-              { title: "Backend Engineer", image: intern1, tag: "REMOTE", stipend: "₹18,000 / MO" },
-              { title: "Product Manager", image: intern2, tag: "ONSITE", stipend: "₹20,000 / MO" }
-            ].map((intern, index) => (
-              <div 
-                key={index}
-                onClick={() => navigate('/internships')}
-                className={`bg-white rounded-3xl border border-gray-100 overflow-hidden flex flex-col aspect-square shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.1)] hover:border-[#ff6600]/20 transition-all duration-700 cursor-pointer group ${
-                  isSec4Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                }`}
-                style={{ transitionDelay: `${400 + index * 150}ms` }}
-              >
-                {/* Image Section */}
-                <div className="w-full h-[55%] overflow-hidden relative bg-gray-100">
-                  <img src={intern.image} alt={intern.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
-                  {/* Tag */}
-                  <div className="absolute top-3 left-3">
-                    <span className="text-[9px] font-black tracking-widest text-white bg-gray-900/90 backdrop-blur-sm px-2.5 py-1 rounded-md">
-                      {intern.tag}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Content Section */}
-                <div className="p-4 flex flex-col justify-between flex-grow">
-                  <div>
-                    <h3 className="text-xs font-bold text-gray-900 group-hover:text-[#ff6600] transition-colors leading-tight mb-1.5 uppercase tracking-wide">
-                      {intern.title}
-                    </h3>
-                  </div>
-
-                  <div className="pt-2 border-t border-gray-50 flex items-center justify-between mt-2">
-                    <span className="text-xs font-black text-gray-900">{intern.stipend}</span>
-                    <span className="text-[10px] font-bold text-[#ff6600] group-hover:translate-x-1 transition-transform">
-                      APPLY →
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          
         </div>
       </section>
 
-
-     {/* ========================================================= */}
-      {/* SECTION 5: ESPORTS TOURNAMENTS (Premium Black & Yellow)   */}
+{/* ========================================================= */}
+      {/* SECTION 5: TOURNAMENTS (Gen-Z Premium Background)         */}
       {/* ========================================================= */}
       <section 
-        id="tournaments" 
-        ref={section5Ref} 
-        className="w-full py-20 px-4 md:px-8 bg-[#eef2f6] overflow-hidden border-t border-gray-100"
+        ref={tournamentSectionRef}
+        id="tournaments"
+        className="relative w-full h-[70vh] md:h-screen bg-black overflow-hidden flex flex-col justify-end items-center pb-12 md:pb-20 border-t border-white/5"
       >
-        <div className="max-w-7xl mx-auto">
+        {/* 📱 PHONE DEVICE VIDEO */}
+        {/* Apna Mobile Tournament Video path yahan do */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover block md:hidden filter brightness-[0.85]"
+          src=""
+        />
+
+        {/* 💻 LAPTOP/DESKTOP VIDEO */}
+        {/* Apna Desktop Tournament Video path yahan do */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover hidden md:block filter brightness-[0.85]"
+          src=""
+        />
+
+        {/* 🌑 BOTTOM GRADIENT ONLY (Taki button background se clash na kare) */}
+        <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none z-10"></div>
+
+        {/* 🚀 SMALL, PREMIUM 3D BUTTON (With Safe React Events) */}
+        <div className="relative z-20 w-full px-4 flex justify-center perspective-[1000px]">
           
-          {/* Header Area */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 gap-6">
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#ff6600] animate-ping"></span>
-                <span className={`text-[10px] font-bold tracking-[0.2em] text-[#ff6600] uppercase transition-all duration-700 ${isSec5Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
-                  LIVE ARENA
-                </span>
-              </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 uppercase font-sans">
-                <div className="leading-tight">{renderTypingLettersSec5("Esports ", 0)}</div>
-                <div className="text-[#ff6600] leading-tight mt-1">{renderTypingLettersSec5("Tournaments", 300)}</div>
-              </h2>
-            </div>
-            
-            {/* View More Button */}
-            <button 
-              onClick={() => navigate('/tournaments')}
-             className={`text-[black] font-bold flex items-center gap-1 hover:underline bg-indigo-50 px-5 py-2.5 rounded-xl whitespace-nowrap transition-all duration-1000 delay-1000 ${isSec4Visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
-            >
-              View All Tournaments →
-            </button>
-          </div>
-
-          {/* Cards Grid: Mobile 2, Desktop 4-5 */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-5">
-            {[
-              { title: "Ultimate Showdown", image: tourna1, game: "BGMI", type: "SQUAD 4V4", prize: "₹50,000" },
-              { title: "Clash Championship", image: tourna2, game: "FREE FIRE", type: "CLASH SQUAD", prize: "₹30,000" },
-              { title: "Regional Masters", image: tourna3, game: "HOK", type: "5V5 MODE", prize: "₹40,000" },
-              { title: "Valorant Cup", image: tourna1, game: "VALORANT", type: "5V5 DEFUSE", prize: "₹60,000" },
-              { title: "Apex Legends Solo", image: tourna2, game: "APEX", type: "SOLO BATTLE", prize: "₹25,000" }
-            ].map((tourna, index) => (
-              <div 
-                key={index}
-                onClick={() => navigate('/tournaments')}
-                className={`bg-white rounded-3xl border border-gray-100 overflow-hidden flex flex-col aspect-square shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.1)] hover:border-[#ff6600]/20 transition-all duration-700 cursor-pointer group ${
-                  isSec5Visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                }`}
-                style={{ transitionDelay: `${400 + index * 150}ms` }}
-              >
-                
-                {/* Image Section */}
-                <div className="w-full h-[55%] overflow-hidden relative bg-gray-100">
-                  <img src={tourna.image} alt={tourna.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
-                  
-                  {/* Game Tag */}
-                  <div className="absolute top-3 left-3">
-                    <span className="text-[9px] font-black tracking-widest text-white bg-gray-900/90 backdrop-blur-sm px-2.5 py-1 rounded-md">
-                      {tourna.game}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Content Section */}
-                <div className="p-4 flex flex-col justify-between flex-grow">
-                  <div>
-                    <h3 className="text-xs font-bold text-gray-900 group-hover:text-[#ff6600] transition-colors leading-tight mb-1.5 uppercase tracking-wide">
-                      {tourna.title}
-                    </h3>
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
-                      🎮 {tourna.type}
-                    </p>
-                  </div>
-                  
-                  {/* Footer Section */}
-                  <div className="pt-2 border-t border-gray-50 flex items-center justify-between mt-2">
-                    <span className="text-xs font-black text-gray-900">{tourna.prize}</span>
-                    <span className="text-[10px] font-bold text-[#ff6600] group-hover:translate-x-1 transition-transform">
-                      JOIN →
-                    </span>
-                  </div>
-                </div>
-
-              </div>
-            ))}
-          </div>
+          <button 
+            ref={tournamentButtonRef}
+            onClick={() => navigate('/tournaments')}
+            // React Event Handlers (Error Free Logic)
+            onMouseEnter={tournaEnter}
+            onMouseLeave={tournaLeave}
+            onMouseDown={tournaPress}
+            onMouseUp={tournaRelease}
+            onTouchStart={tournaPress}
+            onTouchEnd={tournaLeave}
+            className="group relative inline-flex items-center justify-center px-6 py-3.5 md:px-8 md:py-4 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full font-medium transition-colors duration-300 hover:bg-white hover:text-black overflow-hidden"
+          >
+            <span className="relative z-10 flex items-center gap-2.5 tracking-[0.15em] uppercase text-xs md:text-sm">
+              Explore Tournaments
+              <svg className="w-4 h-4 md:w-5 md:h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </span>
+            {/* Premium Shine Hover Effect */}
+            <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out z-0"></div>
+          </button>
 
         </div>
       </section>
+     
 
 {/* ========================================================= */}
       {/* SECTION 6: FOOTER (Dark Theme, Let's Bharat Layout)       */}

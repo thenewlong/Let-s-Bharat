@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 
+
+import { Helmet } from "react-helmet-async";
 // 🔐 IMPORT YOUR AUTH CONTEXT HERE (Path apne hisaab se adjust kar lena)
-// import { useAuth } from '../context/AuthContext'; 
+import { useAuth } from '../context/AuthContext'; 
 
 // 🖼️ IMPORT YOUR LOCAL IMAGES HERE (File explorer se apne paths daal do)
  import slide1 from '../assets/images/t1.jpeg';
@@ -157,6 +159,47 @@ const Tournaments = () => {
   return (
     <div className="w-full bg-[#fafafa] min-h-screen font-sans pb-10">
       
+
+      
+
+<Helmet>
+  <title>Free Fire, BGMI & eSports Tournaments | Letsbharat</title>
+
+  <meta
+    name="description"
+    content="Join Free Fire, BGMI, Valorant, Call of Duty Mobile, Clash Royale and Mobile Legends tournaments with cash prizes on Letsbharat."
+  />
+
+  <meta
+    name="keywords"
+    content="Free Fire Tournament, BGMI Tournament, Valorant Tournament, Call of Duty Mobile Tournament, Mobile Legends Tournament, eSports India, Gaming Tournament"
+  />
+
+    <script type="application/ld+json">
+{`
+{
+ "@context":"https://schema.org",
+ "@type":"BreadcrumbList",
+ "itemListElement":[
+   {
+     "@type":"ListItem",
+     "position":1,
+     "name":"Home",
+     "item":"https://www.letsbharat.com"
+   },
+   {
+     "@type":"ListItem",
+     "position":2,
+     "name":"Tournaments",
+     "item":"https://www.letsbharat.com/tournaments"
+   }
+ ]
+}
+`}
+</script>
+
+     
+</Helmet>
       {/* 🎨 ANIMATIONS CSS */}
       <style>{`
         .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }

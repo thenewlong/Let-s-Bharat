@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Helmet } from "react-helmet-async";
 const Resources = () => {
   const categories = [
     { name: "Programming", count: "25+ Resources", icon: "</>" },
@@ -12,6 +12,24 @@ const Resources = () => {
     <div className="min-h-screen bg-white py-12 px-6 md:px-10">
       <div className="max-w-7xl mx-auto">
         
+      
+
+<Helmet>
+  <title>Free Learning Resources | Letsbharat</title>
+
+  <meta
+    name="description"
+    content="Access Study Materials, Coding Roadmaps, Interview Questions, Resume Templates, AI Learning Resources and Career Guides."
+  />
+
+  <meta
+    name="keywords"
+    content="Study Resources, Coding Resources, Resume Template, Interview Questions, AI Learning, Career Guide, Programming Roadmap"
+  />
+
+    
+</Helmet>
+
         {/* Header Section */}
         <div className="flex flex-col md:flex-row items-center justify-between mb-16">
           <div className="max-w-lg">

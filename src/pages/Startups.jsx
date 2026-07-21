@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import { Helmet } from "react-helmet-async";
 // ==========================================
 // 1. FULL BANNER SLIDER IMAGES (LOCAL FILES)
 // ==========================================
@@ -177,6 +177,23 @@ const Startups = () => {
   return (
     <div className="min-h-screen bg-[#fcf9f2] font-sans pb-10">
       
+
+      
+
+<Helmet>
+  <title>AI Startups & Innovation | Letsbharat</title>
+
+  <meta
+    name="description"
+    content="Explore AI Startups, Startup Ideas, Funding, Innovation Challenges, Entrepreneurship Resources and Business Opportunities on Letsbharat."
+  />
+
+  <meta
+    name="keywords"
+    content="AI Startup, Startup India, Startup Ideas, Innovation, Entrepreneurs, Startup Funding, Business Ideas, Technology Startup"
+  />
+</Helmet>
+
       {/* HERO SECTION */}
       <div className="max-w-[1300px] mx-auto pt-6 px-4 sm:px-6 lg:px-8" ref={heroRef}>
         <div className="relative w-full h-[320px] md:h-[400px] rounded-[2rem] overflow-hidden flex items-center px-6 sm:px-12 md:px-20 shadow-lg group border-0">

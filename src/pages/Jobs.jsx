@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { Helmet } from "react-helmet-async";
+
+
+
 // ==========================================
 // 1. IMPORT LOCAL IMAGES (Yahan apne File Explorer se draft karke dalein)
 // ==========================================
@@ -191,6 +195,48 @@ const Jobs = () => {
   return (
     <div className="min-h-screen bg-[#fcf9f2] font-sans pb-20">
       
+
+  
+
+<Helmet>
+  <title>Latest Jobs for Students & Freshers | Letsbharat</title>
+
+  <meta
+    name="description"
+    content="Explore Freshers Jobs, Software Developer Jobs, IT Jobs, AI Jobs, Startup Jobs, Remote Jobs and Career Opportunities across India."
+  />
+
+  <meta
+    name="keywords"
+    content="Jobs India, Freshers Jobs, IT Jobs, Software Jobs, AI Jobs, Startup Jobs, Remote Jobs, Full Stack Developer Jobs, Frontend Jobs, Backend Jobs"
+  />
+
+  <script type="application/ld+json">
+{`
+{
+ "@context":"https://schema.org",
+ "@type":"BreadcrumbList",
+ "itemListElement":[
+   {
+     "@type":"ListItem",
+     "position":1,
+     "name":"Home",
+     "item":"https://www.letsbharat.com"
+   },
+   {
+     "@type":"ListItem",
+     "position":2,
+     "name":"Jobs",
+     "item":"https://www.letsbharat.com/jobs"
+   }
+ ]
+}
+`}
+</script>
+
+          
+</Helmet>
+
       {/* ========================================================= */}
       {/* HERO SECTION (Dynamic Banner Slider)                      */}
       {/* ========================================================= */}

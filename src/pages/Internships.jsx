@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
+import { Helmet } from "react-helmet-async";
+
+
 // Import Assets
 import inter1 from '../assets/images/inter1.png';
 import inter2 from '../assets/images/inter2.png';
@@ -53,6 +56,47 @@ const Internship = () => {
 
   return (
     <div className="w-full bg-[#fcfcfc] min-h-screen pb-10">
+
+
+<Helmet>
+  <title>Paid & Remote Internships | Letsbharat</title>
+
+  <meta
+    name="description"
+    content="Find Paid Internships, Remote Internships, Software Development Internships, AI Internships, UI UX Internships, Startup Internships and Career Opportunities for students."
+  />
+
+  <meta
+    name="keywords"
+    content="Paid Internship, Remote Internship, Software Internship, AI Internship, React Internship, Frontend Internship, Backend Internship, Startup Internship, Student Internship, Internship India"
+  />
+
+  <script type="application/ld+json">
+{`
+{
+ "@context":"https://schema.org",
+ "@type":"BreadcrumbList",
+ "itemListElement":[
+   {
+     "@type":"ListItem",
+     "position":1,
+     "name":"Home",
+     "item":"https://www.letsbharat.com"
+   },
+   {
+     "@type":"ListItem",
+     "position":2,
+     "name":"Internships",
+     "item":"https://www.letsbharat.com/internships"
+   }
+ ]
+}
+`}
+</script>
+  
+      
+</Helmet>
+
       <style>{`
         @keyframes zoomIn3D { 0% { opacity: 0; transform: scale(0.3) translateZ(-150px); } 100% { opacity: 1; transform: scale(1) translateZ(0); } }
         .animate-text-3d { animation: zoomIn3D 0.8s forwards; }

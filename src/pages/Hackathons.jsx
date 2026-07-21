@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext'; // Agar AuthContext path alag ho toh change kar lena
 
+
+import { Helmet } from "react-helmet-async";
+
 // 📂 Local Assets (Aapke file explorer se)
 import banner1 from '../assets/images/banner1.jpeg';
 import banner2 from '../assets/images/banner2.jpeg';
@@ -155,6 +158,49 @@ const Hackathons = () => {
   return (
     <div className="w-full bg-[#fcfcfc] min-h-screen font-sans pb-10">
       
+    
+
+     <Helmet>
+  <title>Latest Hackathons in India | Letsbharat</title>
+
+  <meta
+    name="description"
+    content="Discover AI Hackathons, Student Hackathons, Coding Competitions, Web Development Challenges, Startup Innovation Programs, College Hackathons and National Hackathons on Letsbharat."
+  />
+
+  <meta
+    name="keywords"
+    content="Hackathons India, Student Hackathon, AI Hackathon, Coding Competition, React Hackathon, Web Development Hackathon, Startup Hackathon, College Hackathon, National Hackathon, Programming Challenge"
+  />
+      
+
+       <script type="application/ld+json">
+{`
+{
+ "@context":"https://schema.org",
+ "@type":"BreadcrumbList",
+ "itemListElement":[
+   {
+     "@type":"ListItem",
+     "position":1,
+     "name":"Home",
+     "item":"https://www.letsbharat.com"
+   },
+   {
+     "@type":"ListItem",
+     "position":2,
+     "name":"Hackathons",
+     "item":"https://www.letsbharat.com/hackathons"
+   }
+ ]
+}
+`}
+</script>
+       
+       
+ </Helmet>
+   
+
       {/* CSS for 3D Text Animation and Modal Pop */}
       <style>
         {`
