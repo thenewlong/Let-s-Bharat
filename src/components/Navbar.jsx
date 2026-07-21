@@ -56,13 +56,12 @@ const Navbar = () => {
     <nav className="w-full relative z-50 shadow-sm flex flex-col">
       
       {/* 🟢 TOP TIER (White Bar) */}
-      <div className="bg-white border-b border-gray-100">
+      <div className="bg-white border-b border-gray-100 relative z-50">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20 gap-4">
             
             <div className="flex-shrink-0 flex items-center">
               <Link to="/" className="flex items-center">
-                {/* 🎨 LOGO RESPONSIVENESS APPLIED HERE: h-10 for mobile, lg:h-14 for desktop */}
                 <img src={logo} alt="Let's Bharat Logo" className="h-10 lg:h-14 w-auto object-contain transition-transform hover:scale-105" />
               </Link>
             </div>
@@ -116,51 +115,120 @@ const Navbar = () => {
 
             {/* Mobile Hamburger Icon */}
             <div className="lg:hidden flex items-center">
-              <button onClick={() => setIsOpen(true)} className="text-gray-800 hover:text-yellow-500 p-2"><svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
+              <button onClick={() => setIsOpen(true)} className="text-gray-800 hover:text-yellow-500 p-2 focus:outline-none">
+                <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 🔴 BOTTOM TIER (Black Bar) - Desktop Only */}
-      <div className="hidden lg:flex bg-[#111111] text-gray-200">
+      {/* 🔴 BOTTOM TIER (Black Bar) - Desktop Only with Hover Underline Animation */}
+      <div className="hidden lg:flex bg-[#111111] text-gray-200 relative z-40">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="flex items-center justify-center py-3.5 space-x-10 text-xs font-bold tracking-widest uppercase">
+          <div className="flex items-center justify-center py-4 space-x-10 text-xs font-bold tracking-widest uppercase">
             {searchableItems.map((item, idx) => (
-              <Link key={idx} to={item.path} className="hover:text-yellow-400 transition-colors duration-200">{item.name}</Link>
+              <Link 
+                key={idx} 
+                to={item.path} 
+                className="relative group transition-colors duration-200 hover:text-white"
+              >
+                {item.name}
+                {/* ✨ Animated Underline Magic Here ✨ */}
+                <span className="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-yellow-400 transition-all duration-300 ease-out group-hover:w-full"></span>
+              </Link>
             ))}
           </div>
         </div>
       </div>
 
-      {/* 📱 MOBILE DRAWER (Cleaned Up - No Search) */}
-      {isOpen && <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 lg:hidden" onClick={closeMenu}></div>}
+      {/* ========================================================= */}
+      {/* 📱 MOBILE DRAWER (Exact Photo Match)                        */}
+      {/* ========================================================= */}
+      
+      {/* Background Overlay */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 lg:hidden transition-opacity" 
+          onClick={closeMenu}
+        ></div>
+      )}
 
-      <div className={`fixed top-0 right-0 h-full w-72 bg-black shadow-2xl z-50 transform transition-transform duration-300 lg:hidden flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="flex items-center justify-between p-5 border-b border-gray-100 bg-gray-50">
-          <span className="text-xl font-black text-gray-900">Menu</span>
-          <button onClick={closeMenu} className="text-gray-400 hover:text-red-500 bg-white p-2 rounded-full shadow-sm">✕</button>
+      {/* Right Side Drawer */}
+      <div 
+        className={`fixed top-0 right-0 h-full w-[85%] max-w-[320px] bg-white shadow-2xl z-50 transform transition-transform duration-400 ease-in-out lg:hidden flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+      >
+        {/* Top Header inside Drawer (Logo + Close Button) */}
+        <div className="flex items-center justify-between p-5 pb-4 border-b border-gray-100">
+          <img src={logo} alt="Let's Bharat Logo" className="h-10 w-auto object-contain" />
+          <button 
+            onClick={closeMenu} 
+            className="text-gray-400 hover:text-red-500 p-2 rounded-full transition-colors focus:outline-none"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
 
-        {/* Navigation Links for Mobile */}
-        <div className="flex flex-col px-4 pt-6 space-y-2 flex-1 font-bold text-sm overflow-y-auto">
-          {searchableItems.map((item, idx) => (
-             <Link key={idx} to={item.path} onClick={closeMenu} className="text-gray-700 hover:text-yellow-500 hover:bg-yellow-50 px-4 py-3 rounded-xl transition-all">{item.name.toUpperCase()}</Link>
-          ))}
+        {/* Navigation Links for Mobile (Like the reference image) */}
+        <div className="flex flex-col flex-1 overflow-y-auto bg-white">
+          <div className="flex flex-col px-6 pt-2">
+            {searchableItems.map((item, idx) => (
+              <Link 
+                key={idx} 
+                to={item.path} 
+                onClick={closeMenu} 
+                // Border bottom for every item like the image
+                className="text-gray-700 hover:text-yellow-600 font-medium py-3.5 border-b border-gray-200 transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
           
-          {/* Mobile Auth Status */}
-          <div className="border-t border-gray-100 pt-4 mt-4">
+          {/* Mobile Auth Status (Also styled like list items) */}
+          <div className="flex flex-col px-6 pb-8 mt-2">
             {user ? (
               <>
-                <Link to="/profile" onClick={closeMenu} className="block text-gray-700 hover:text-yellow-500 hover:bg-yellow-50 px-4 py-3 rounded-xl transition-all">MY PROFILE</Link>
-                <button onClick={handleLogout} className="w-full text-left text-red-500 hover:bg-red-50 px-4 py-3 rounded-xl transition-all mt-1">LOGOUT</button>
+                <Link 
+                  to="/profile" 
+                  onClick={closeMenu} 
+                  className="text-gray-700 hover:text-yellow-600 font-medium py-3.5 border-b border-gray-200 transition-colors"
+                >
+                  My Profile
+                </Link>
+                <button 
+                  onClick={handleLogout} 
+                  className="text-left text-red-500 font-medium py-3.5 border-b border-gray-200 transition-colors"
+                >
+                  Sign Out
+                </button>
               </>
             ) : (
-              <Link to="/auth" onClick={closeMenu} className="block text-center bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-3 rounded-xl transition-all">LET'S CONNECT</Link>
+              <>
+                <Link 
+                  to="/auth" 
+                  onClick={closeMenu} 
+                  className="text-gray-700 hover:text-yellow-600 font-medium py-3.5 border-b border-gray-200 transition-colors"
+                >
+                  Sign In
+                </Link>
+                <Link 
+                  to="/auth" 
+                  onClick={closeMenu} 
+                  className="text-yellow-600 font-bold py-3.5 transition-colors"
+                >
+                  Get Started
+                </Link>
+              </>
             )}
           </div>
         </div>
       </div>
+
     </nav>
   );
 };
