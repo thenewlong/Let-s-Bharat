@@ -26,8 +26,8 @@ import mobileVio from '../assets/videos/poo.mp4';
 
 
 //tournaments
-//import desktopVeo from '../assets/videos/lap02.mp4';
-//import mobileVeo from '../assets/videos/po2.mp4';
+import desktopVeo from '../assets/videos/lap0000.mp4';
+import mobileVeo from '../assets/videos/pooo.mp4';
 
 
 
@@ -669,7 +669,7 @@ const Home = () => {
           muted
           playsInline
           className="absolute inset-0 w-full h-full object-cover block md:hidden filter brightness-[0.85]"
-          src=""
+          src={mobileVeo}
         />
 
         {/* 💻 LAPTOP/DESKTOP VIDEO */}
@@ -680,7 +680,7 @@ const Home = () => {
           muted
           playsInline
           className="absolute inset-0 w-full h-full object-cover hidden md:block filter brightness-[0.85]"
-          src=""
+          src={desktopVeo}
         />
 
         {/* 🌑 BOTTOM GRADIENT ONLY (Taki button background se clash na kare) */}
@@ -702,7 +702,7 @@ const Home = () => {
             className="group relative inline-flex items-center justify-center px-6 py-3.5 md:px-8 md:py-4 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full font-medium transition-colors duration-300 hover:bg-white hover:text-black overflow-hidden"
           >
             <span className="relative z-10 flex items-center gap-2.5 tracking-[0.15em] uppercase text-xs md:text-sm">
-             Upcoming Explore Tournaments
+              Explore Tournaments
               <svg className="w-4 h-4 md:w-5 md:h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
