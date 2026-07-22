@@ -8,11 +8,14 @@ const Auth = () => {
   const { signInWithGoogle, login, signup, user } = useAuth();
   const navigate = useNavigate();
 
-  // Form Field States (Simplified as requested)
+  // Form Field States
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  
+  // NAYA: Loading state taaki security check ke time button disable ho sake
+  const [isLoading, setIsLoading] = useState(false); 
 
   // Premium platform automatic user checking
   useEffect(() => {
@@ -79,20 +82,49 @@ const Auth = () => {
     }
   };
 
+  // NAYA: reCAPTCHA ke sath handleSubmit updated
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true); // Loading shuru
 
-    try {
-      if (isLogin) {
-        await login(email, password);
-        navigate('/profile');
-      } else {
-        await signup(fullName, email, password);
-        navigate('/profile');
-      }
-    } catch (err) {
-      setError(err.message || 'Authentication system error.');
+    // 1. Check karo window aur grecaptcha object available hai
+    if (typeof window !== 'undefined' && window.grecaptcha) {
+      window.grecaptcha.enterprise.ready(async () => {
+        try {
+          // 2. Apni key .env se nikal lo
+          const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+
+          
+          if (!siteKey) {
+            throw new Error("Site key missing in .env file");
+          }
+
+          // 3. Token generate karo
+          const token = await window.grecaptcha.enterprise.execute(siteKey, {
+            action: isLogin ? 'login' : 'signup'
+          });
+
+          console.log("✅ reCAPTCHA Token Generated:", token);
+
+          // 4. Apna original Firebase logic yaha aayega
+          if (isLogin) {
+            await login(email, password);
+            navigate('/profile');
+          } else {
+            await signup(fullName, email, password);
+            navigate('/profile');
+          }
+        } catch (err) {
+          console.error("❌ Auth/reCAPTCHA Error:", err);
+          setError(err.message || 'Authentication system error.');
+        } finally {
+          setIsLoading(false); // Loading khatam chahe pass ho ya fail
+        }
+      });
+    } else {
+      setError("Security check (reCAPTCHA) failed to load. Please check your connection.");
+      setIsLoading(false);
     }
   };
 
@@ -221,7 +253,7 @@ const Auth = () => {
         {/* ================= RIGHT SIDE (SKY-YELLOW FORM) ================= */}
         <div className="w-full md:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center relative slide-up-fade" 
              style={{ 
-               background: "linear-gradient(135deg, #eeeeee 0%, #bcc59d 40%, #dcc82e 100%)", // The Sky Yellow Gradient you requested
+               background: "linear-gradient(135deg, #eeeeee 0%, #bcc59d 40%, #dcc82e 100%)", 
              }}>
           
           <div className="max-w-md w-full mx-auto bg-white/60 backdrop-blur-xl p-8 rounded-[2rem] shadow-xl border border-white/50">
@@ -301,12 +333,15 @@ const Auth = () => {
                 />
               </div>
 
-              {/* Submit Button */}
+              {/* NAYA: Submit Button disabled logic during loading */}
               <button
                 type="submit"
-                className="w-full bg-[#f5a623] hover:bg-[#e0961b] text-white py-3.5 rounded-xl font-bold text-sm transition-all shadow-[0_8px_20px_-6px_rgba(245,166,35,0.6)] active:scale-[0.98] mt-6"
+                disabled={isLoading}
+                className={`w-full bg-[#f5a623] text-white py-3.5 rounded-xl font-bold text-sm transition-all shadow-[0_8px_20px_-6px_rgba(245,166,35,0.6)] mt-6 ${
+                  isLoading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-[#e0961b] active:scale-[0.98]'
+                }`}
               >
-                {isLogin ? 'Login' : 'Create Account'}
+                {isLoading ? 'Verifying Security...' : (isLogin ? 'Login' : 'Create Account')}
               </button>
             </form>
 

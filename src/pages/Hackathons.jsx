@@ -4,9 +4,9 @@ import { useAuth } from '../context/AuthContext';
 import { Helmet } from "react-helmet-async";
 
 // 📂 Local Assets 
-import banner1 from '../assets/images/banner1.jpeg';
-import banner2 from '../assets/images/banner2.jpeg';
-import banner3 from '../assets/images/hack3.png';
+import banner1 from '../assets/images/banner1.png';
+import banner2 from '../assets/images/banner2.png';
+import banner3 from '../assets/images/banner3.png';
 
 import hack1 from '../assets/images/hack1.png';
 import hack2 from '../assets/images/hack2.png';
@@ -66,37 +66,90 @@ const Hackathons = () => {
   const hackathonsData = [
     {
       id: 1,
-      title: "AI FOR IMPACT HACKATHON 2026",
-      description: "Build AI solutions that solve real-world problems in healthcare, education, and sustainability. Gather your squad and battle it out against top teams.",
-      prizePool: "₹2,00,000",
-      prizeValue: 200000, 
-      date: "10 - 12 May 2026",
+      title: "THE 3D WEBSITE DESIGN HACKATHON",
+      description:
+  "About the Challenge\n\n" +
+
+  "The 3D Websites Hackathon is a global creative competition for developers, designers, artists, and creative coders who want to build immersive web experiences. Participants are encouraged to push the boundaries of modern web design by creating interactive 3D websites that captivate users through stunning visuals, smooth animations, and unique storytelling.\n\n" +
+
+  "There are no limits on the theme or industry. Whether it's a futuristic world, portfolio, virtual museum, gaming experience, product showcase, educational platform, or a completely original concept, participants have the freedom to transform their imagination into an unforgettable digital experience.\n\n" +
+
+  "Unlike traditional hackathons that focus mainly on solving technical problems, this event celebrates creativity, aesthetics, user engagement, and innovation. The goal is to design websites that leave a lasting impression and showcase the creative potential of modern web technologies.\n\n" +
+
+  "What You Can Build\n\n" +
+
+  "Create any web-based 3D experience using your preferred tools and frameworks. Projects should include meaningful 3D environments, interactive animations, creative UI/UX, and engaging visual storytelling. Individual participants and teams are both welcome.\n\n" +
+
+  "Recommended Technologies\n\n" +
+
+  "Participants may use Three.js, React Three Fiber, Babylon.js, Blender, Spline, WebGL, WebGPU, GSAP, Framer Motion, AI-powered design tools, open-source assets, or any other technology that enhances the final experience.\n\n" +
+
+  "Submission Requirements\n\n" +
+
+  "Each submission should include a live website URL, project description, source code repository, at least three screenshots, a list of technologies used, and an optional demonstration video explaining the project and its features.\n\n" +
+
+  "Judging Criteria\n\n" +
+
+  "Projects will be evaluated on creativity, originality, visual quality, user experience, interaction design, storytelling, animation, and the effective use of 3D technologies. Technical complexity is not the primary focus—an elegant and memorable experience is valued above all.\n\n" +
+
+  "Prizes\n\n" +
+
+  "🥇 First Place — $30 Cash + Official Certificate\n" +
+  "🥈 Second Place — $15 Cash + Official Certificate\n" +
+  "🥉 Third Place — $10 Cash + Official Certificate\n\n" +
+
+  "The total prize pool is $55, with winners recognized for outstanding creativity, exceptional design, and innovative use of 3D web technologies.",
+      prizePool: "$55",
+      prizeValue: 10000, 
+      date: "22 July - 31 July 2026",
       mode: "Online",
       teamSize: "1 - 4 Members",
-      tags: ["AI/ML", "HEALTHCARE", "SUSTAINABILITY"],
+      tags: ["AI/ML", "DESIGN", "WEB", "BEGINNER FRIENDLY"],
       status: "FEATURED",
       statusColor: "bg-yellow-500",
       category: "ONLINE",
-      addedOn: "2026-06-10",
+      addedOn: "2026-06-21",
       image: hack1,
-      link: "https://forms.gle/sample1",
+      link: "https://3d-websites-hackathon.devpost.com/?ref_feature=challenge&ref_medium=discover&_gl=1*1i4f97h*_gcl_au*MTY4MjE5NDAxNi4xNzgyMjk4NzIw*_ga*NDM0Njk0NDUwLjE3ODIyOTg3MjA.*_ga_0YHJK3Y10M*czE3ODQ3MDc3MTIkbzExJGcxJHQxNzg0NzA3NzEyJGo2MCRsMCRoMA..",
     },
     {
       id: 2,
-      title: "WEB3 INNOVATORS HACKATHON",
-      description: "Create the next generation of decentralized apps and Web3 solutions. Gather your squad and battle it out against top teams.",
-      prizePool: "₹1,50,000",
-      prizeValue: 150000,
-      date: "18 - 20 May 2026",
+      title: "INTERNATIONAL YOUTH AI COMPETITION 2026",
+      description:
+                  "About the Challenge\n\n" +
+
+                   "The International Youth AI Competition is a global event that encourages young innovators to explore the power of artificial intelligence through creativity, technology, and problem-solving. Students from different countries and educational backgrounds are invited to develop AI-driven projects that demonstrate innovation, practical application, and positive social impact.\n\n" +
+
+                   "The competition welcomes both individual participants and teams, providing a platform to showcase ideas, learn emerging AI technologies, and collaborate with like-minded innovators. Participants can create projects across multiple categories, including AI applications, innovative AI concepts, AI-generated visual storytelling, and AI-powered video creation.\n\n" +
+
+                  "Competition Tracks\n\n" +
+
+                  "Track 1 – AI Application Development\nBuild intelligent web, mobile, or desktop applications that solve real-world challenges using artificial intelligence and modern technologies.\n\n" +
+
+                  "Track 2 – AI Innovation Proposal\nPresent a unique AI-powered concept with clear objectives, technical feasibility, expected impact, and future implementation strategy.\n\n" +
+
+                  "Track 3 – AI Image Storytelling\nCreate a compelling visual story using AI-generated images with a structured narrative and creative presentation.\n\n" +
+
+                  "Track 4 – AI Video Creation\nProduce an original AI-assisted video using modern generative AI tools, combining storytelling, visuals, voice, and editing techniques.\n\n" +
+
+                "Submission Requirements\n\n" +
+                "Participants should submit their project presentation, demonstration video, source code or deployment link (where applicable), and supporting documentation explaining the project's concept, development process, AI technologies used, and overall impact.\n\n" +
+
+                "Awards & Recognition\n\n" +
+
+                    "Outstanding submissions will receive Gold, Silver, Bronze, and Honorable Mention Awards. Winners will be recognized for innovation, creativity, technical excellence, and the responsible application of artificial intelligence.",
+      prizePool: "3 Non-Cash Prize",
+      prizeValue: 10000,
+      date: "18 July - 01 Sep 2026",
       mode: "Online",
       teamSize: "1 - 4 Members",
-      tags: ["WEB3", "BLOCKCHAIN", "DEFI"],
-      status: "UPCOMING",
+      tags: ["MACHINE LEARNING / AI", "EDUCATION", "BEGINNER FRIENDLY"],
+      status: "ONGOING",
       statusColor: "bg-emerald-500",
-      category: "UPCOMING",
-      addedOn: "2026-06-12",
+      category: "ONGOING",
+      addedOn: "2026-06-18",
       image: hack2,
-      link: "https://forms.gle/sample2",
+      link: "https://ai-yes-competition-30441.devpost.com/?ref_feature=challenge&ref_medium=discover&_gl=1*lw0sy9*_gcl_au*MTY4MjE5NDAxNi4xNzgyMjk4NzIw*_ga*NDM0Njk0NDUwLjE3ODIyOTg3MjA.*_ga_0YHJK3Y10M*czE3ODQ2OTkzODQkbzEwJGcxJHQxNzg0Njk5NDEyJGozMiRsMCRoMA..",
     },
     {
       id: 3,
