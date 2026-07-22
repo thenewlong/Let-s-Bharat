@@ -105,7 +105,7 @@ const Hackathons = () => {
       mode: "Online",
       teamSize: "1 - 4 Members",
       tags: ["AI/ML", "DESIGN", "WEB", "BEGINNER FRIENDLY"],
-      status: "FEATURED",
+      status: "ONGOING",
       statusColor: "bg-yellow-500",
       category: "ONLINE",
       addedOn: "2026-06-21",
@@ -184,7 +184,7 @@ const Hackathons = () => {
                 "The total prize pool includes ₹12,000 for 1st Place, ₹7,500 for 2nd Place, and ₹3,000 for 3rd Place. All eligible participants will receive an official E-Certificate, while winning teams will gain recognition, exciting rewards, and the opportunity to showcase their innovative projects.",
       prizePool: "₹22,500",
       prizeValue: 75000,
-      date: "24 - 25 May 2026",
+      date: "16 Aug - 25 Sep 2026",
       mode: "Online",
       teamSize: "1 - 4 Members",
       tags: ["MARKETPLACE", "AI API", "PROBLEM SLOVING"],
@@ -378,7 +378,7 @@ const Hackathons = () => {
                 />
               ))}
               <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent flex flex-col justify-center px-6 md:px-16">
-                <p className="text-[#f5a623] font-bold text-xs md:text-sm tracking-[0.2em] mb-3 uppercase">DISCOVER. COMPETE. INNOVATE.</p>
+               
                 <h1 className="text-3xl md:text-6xl font-black text-white leading-tight mb-4 flex flex-wrap gap-x-4">
                   <span className="animate-text-3d" style={{ animationDelay: '0.1s' }}>EXPLORE</span>
                   <span className="animate-text-3d" style={{ animationDelay: '0.3s' }}>THE</span>
