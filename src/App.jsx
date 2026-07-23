@@ -13,6 +13,10 @@ import Jobs from './pages/Jobs';
 import About from './pages/About';
 import Profile from './pages/Profile'; 
 
+// Naye Pages ke Imports
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+
 function App() {
   return (
     <AuthProvider>
@@ -32,6 +36,10 @@ function App() {
           <Route path="/resources" element={<Resources />} />
           <Route path="/about" element={<About />} />
           <Route path="/profile" element={<Profile />} /> 
+          
+          {/* Naye Privacy Policy aur Terms of Service ke routes */}
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
         </Routes>
       </Router>
     </AuthProvider>

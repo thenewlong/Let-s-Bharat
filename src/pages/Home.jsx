@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { Link } from 'react-router-dom';
 import { Helmet } from "react-helmet-async";
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -792,9 +793,9 @@ const Home = () => {
                 <li><button onClick={() => navigate('/internships')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">💼 Internships</button></li>
                 <li><button onClick={() => navigate('/tournaments')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">🎮 Tournaments</button></li>
                 <li><button onClick={() => navigate('/resources')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">📚 Free Resources</button></li>
-                <li><button onClick={() => navigate('/blogs')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">📢 Blogs & News</button></li>
+                <li><button onClick={() => navigate('/about')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">📢About Us </button></li>
                 <li><button onClick={() => navigate('/contact')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">✉ Contact Us</button></li>
-                <li><button onClick={() => navigate('/privacy')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">🛡 Privacy Policy</button></li>
+                
               </ul>
             </div>
 
@@ -827,11 +828,11 @@ const Home = () => {
                   <svg className="w-4 h-4 fill-gray-400 group-hover:fill-white transition-colors" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
                 {/* WhatsApp */}
-                <a href="YOUR_WHATSAPP_LINK" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-[#25D366] hover:border-[#25D366] transition-all group">
+                <a href="https://wa.me/qr/EZC25VUHXVVMM1" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-[#25D366] hover:border-[#25D366] transition-all group">
                   <svg className="w-4 h-4 fill-gray-400 group-hover:fill-white transition-colors" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 .003 5.378.003 12.023c0 2.124.553 4.195 1.603 6.02L.05 24l6.096-1.597c1.761.961 3.743 1.468 5.882 1.468 6.643 0 12.025-5.38 12.025-12.026C24.053 5.381 18.675 0 12.031 0zm7.151 17.15c-.297.839-1.733 1.547-2.424 1.644-.551.077-1.258.12-3.52-.816-3.415-1.411-5.632-4.908-5.803-5.135-.17-.227-1.385-1.844-1.385-3.518 0-1.673.87-2.496 1.184-2.813.243-.243.684-.36 1.1-.36.137 0 .262.006.376.012.336.015.503.036.726.57.28.67 1.01 2.457 1.101 2.64.09.183.151.396.037.623-.113.228-.172.365-.34.562-.17.198-.359.428-.516.593-.17.18-.355.378-.146.738.208.36 1.01 1.666 2.19 2.716 1.521 1.353 2.8 1.77 3.16 1.954.36.183.574.153.79-.092.217-.244.927-1.073 1.176-1.442.25-.368.5-.306.83-.183.33.122 2.091.986 2.451 1.168.361.183.603.275.69.428.087.153.087.886-.21 1.725z"/></svg>
                 </a>
                 {/* Facebook */}
-                <a href="YOUR_FACEBOOK_LINK" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-[#1877f2] hover:border-[#1877f2] transition-all group">
+                <a href="https://www.facebook.com/share/18v8B5maNK/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-[#1877f2] hover:border-[#1877f2] transition-all group">
                   <svg className="w-4 h-4 fill-gray-400 group-hover:fill-white transition-colors" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                 </a>
               </div>
@@ -842,10 +843,10 @@ const Home = () => {
                   <span>✉</span> HELLO@LETSBHARAT.COM
                 </a>
                 <a href="tel:+919876543210" className="flex items-center gap-3 text-gray-400 hover:text-[#ffcc00] transition-colors text-xs font-medium tracking-wide">
-                  <span>📞</span> +91 98765 43210
+                  <span>📞</span> +91 7630808203
                 </a>
                 <div className="flex items-center gap-3 text-gray-400 text-xs font-medium tracking-wide uppercase">
-                  <span>📍</span> Agartala, Tripura, India
+                  <span>📍</span>India
                 </div>
               </div>
             </div>
@@ -853,16 +854,17 @@ const Home = () => {
           </div>
 
           {/* Bottom Copyright Section */}
-          <div className="pt-6 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 font-medium tracking-wide uppercase">
-            <p>© 2026 LET'S BHARAT. ALL RIGHTS RESERVED.</p>
-            <p className="flex items-center gap-1">
-              <span className="text-[#ffcc00] text-sm">💛</span> MADE WITH PASSION FOR INNOVATORS
-            </p>
-            <div className="flex gap-6">
-              <a href="#" className="hover:text-white transition-colors">PRIVACY POLICY</a>
-              <a href="#" className="hover:text-white transition-colors">TERMS OF SERVICE</a>
-            </div>
-          </div>
+<div className="pt-6 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 font-medium tracking-wide uppercase">
+  <p>© 2026 LET'S BHARAT. ALL RIGHTS RESERVED.</p>
+  <p className="flex items-center gap-1">
+    <span className="text-[#ffcc00] text-sm">💛</span> MADE WITH PASSION FOR INNOVATORS
+  </p>
+  <div className="flex gap-6">
+    {/* a tag ko Link tag se replace kar diya aur correct path de diya */}
+    <Link to="/privacy-policy" className="hover:text-white transition-colors">PRIVACY POLICY</Link>
+    <Link to="/terms-of-service" className="hover:text-white transition-colors">TERMS OF SERVICE</Link>
+  </div>
+</div>
           
         </div>
       </footer>

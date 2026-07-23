@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { Helmet } from "react-helmet-async";
-import { useAuth } from '../context/AuthContext'; 
 
 // 🖼️ IMPORT YOUR LOCAL IMAGES HERE
 import slide1 from '../assets/images/t3.jpeg';
@@ -16,11 +15,7 @@ import tourneyImg2 from '../assets/images/tourney002.jpeg';
 import tourneyImg3 from '../assets/images/tourney004.jpeg';
 import tourneyImg4 from '../assets/images/tourney003.jpeg';
 
-
-
-
 const Tournaments = () => {
-  const { user } = useAuth(); // Auth context integrated
   const navigate = useNavigate();
 
   // 🎛️ States
@@ -61,13 +56,13 @@ const Tournaments = () => {
     {
       id: 1,
       title: "FREE FIRE MOBILE TOURNAMENT 2026",
-      subtitle: "Custome Game Mode Tournament",
+      subtitle: "Custom Game Mode Tournament",
       image: tourneyImg1,
       status: "UPCOMING",
       platform: "MOBILE",
-      prizePool: "₹500",
-      date: "30 July - 6 Aug 2026",
-      entryFee: "Free / Team",
+      prizePool: "₹850",
+      date: "30 uly - 6 Aug 2026",
+      entryFee: "₹5 / Team",
       teamSize: "1/2 Players",
       categories: ["ALL", "MOBILE", "CUSTOM ROOM ", "SOLO/DUO"],
       link: "https://forms.gle/Za9GnkwDk3DEc8U19",
@@ -83,7 +78,7 @@ const Tournaments = () => {
   "🎮 Game: Free Fire MAX\n" +
   "⚔️ Modes: 1V1 & 2V2 Custom Room\n" +
   "💰 Entry Fee: As Mentioned During Registration\n" +
-  "🏆 Prize Pool: ₹500 • ₹250 • ₹120 • ₹50\n" +
+  "🏆 Prize Pool: ₹500 • ₹200 • ₹100 • ₹50\n" +
   "🎁 Every registered participant will receive a special participation gift.\n\n" +
 
   "Tournament Rules\n\n" +
@@ -138,7 +133,7 @@ const Tournaments = () => {
       id: 3,
       title: "CODM WC 2026 FALL SPLIT",
       subtitle: "5v5 Competitive Tournament",
-      image: tourneyImg3, // 🔧 Fixed string issue here
+      image: tourneyImg3, 
       status: "UPCOMING",
       platform: "PC",
       prizePool: "₹85,000",
@@ -150,10 +145,10 @@ const Tournaments = () => {
       description: "Updates......"
     },
     {
-      id: 3,
+      id: 4,
       title: "KRAFTON INDIA BGMI ESPORT TOURNAMENT",
       subtitle: "2V2 Competitive Tournament",
-      image: tourneyImg4, // 🔧 Fixed string issue here
+      image: tourneyImg4, 
       status: "UPCOMING",
       platform: "MOBILE",
       prizePool: "₹75,000",
@@ -209,15 +204,10 @@ const Tournaments = () => {
     ));
   };
 
-  // 🛡️ SECURITY GUARD LOGIC FOR REGISTRATION
+  // 🔗 DIRECT REGISTRATION LINK HANDLER (No Login/Signup Required)
   const handleApplyClick = (e, link) => {
     e.stopPropagation(); 
-    if (user) {
-      window.open(link, '_blank'); 
-    } else {
-      alert("⚠️ Access Denied!\nPlease Sign Up or Log In first to register for this event!");
-      navigate('/auth'); 
-    }
+    window.open(link, '_blank'); 
   };
 
   // 👁️ View Details Handler (Scrolls to top smoothly like Hackathon page)
@@ -532,7 +522,7 @@ const Tournaments = () => {
                           VIEW DETAILS
                         </button>
                         
-                        {/* Register Uses handleApplyClick Security Guard */}
+                        {/* Register Directly Opens Google Form / External Link */}
                         <button 
                           onClick={(e) => handleApplyClick(e, tourney.link)}
                           className="py-2.5 rounded-xl text-[10px] md:text-xs font-black text-black bg-[#ffcc00] hover:bg-yellow-500 hover:shadow-md transition-all active:scale-95"
