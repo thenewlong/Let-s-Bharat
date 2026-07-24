@@ -61,7 +61,7 @@ const Tournaments = () => {
       status: "UPCOMING",
       platform: "MOBILE",
       prizePool: "₹850",
-      date: "30 uly - 6 Aug 2026",
+      date: "30 July - 6 Aug 2026",
       entryFee: "₹5 / Team",
       teamSize: "1/2 Players",
       categories: ["ALL", "MOBILE", "CUSTOM ROOM ", "SOLO/DUO"],
