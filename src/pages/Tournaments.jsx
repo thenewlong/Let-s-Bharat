@@ -14,6 +14,7 @@ import tourneyImg1 from '../assets/images/tourney001.jpeg';
 import tourneyImg2 from '../assets/images/tourney002.jpeg';
 import tourneyImg3 from '../assets/images/tourney004.jpeg';
 import tourneyImg4 from '../assets/images/tourney003.jpeg';
+import tourneyImg5 from '../assets/images/tourney5.jpeg';
 
 const Tournaments = () => {
   const navigate = useNavigate();
@@ -91,6 +92,7 @@ const Tournaments = () => {
 
   "🔥 BOOYAH! Good luck to all participants!"
     },
+    
     {
       id: 2,
       title: "UPCOMING E-FOOTBALL ESPORT TOURNAMENT",
@@ -158,6 +160,21 @@ const Tournaments = () => {
       categories: ["ALL", "MOBLIE", "DUO", "ONGOING"],
       link: "https://forms.gle/valorant-link",
       description: " Update...."
+    },
+    {
+      id: 5,
+      title: "UNBREAKABLE x XMEN BGMI TOURNAMENT",
+      subtitle: "Competitive Squad Tournament",
+      image: tourneyImg5, 
+      status: "ONGOING",
+      platform: "MOBILE",
+      prizePool: "₹900",
+      date: "26 July 2026 ",
+      entryFee: "₹50 / Team",
+      teamSize: "Squad", 
+      categories: ["ALL", "MOBILE", "SQUAD", "ONGOING"],
+      link: "https://chat.whatsapp.com/BkMWLZJQNvoAqypwlFUeiB?s=cl&p=a&ilr=4&amv=3",
+      description: "Total Prizepool: ₹900 | Entry Fee: ₹50.\n\n📅 Date & Schedule:\n• Starts on: 26/07/2026 (SUNDAY START)\n• IDP Timings: 3:30 PM | 4:22 PM | 5:02 PM\n\n🏆 Prize Distribution:\n• 1st Place: ₹330\n• 2nd Place: ₹120\n• 3rd Place: ₹80\n• 4th Place: ₹50\n\n🔥 Special Bonus:\n• Back-to-Back (B2B) Chicken Dinner with 55 Kills gets an extra ₹280.\n\n🗺️ Maps: Erangel, Miramar, Rondo.\n\n📜 Tournament Rules & Features:\n• 16 - 17 Teams Fixed.\n• Advance Room will be created.\n• Live Stream available.\n• Raw Screenshots (SS) must be provided.\n• Per Match Point (PT) system applies.\n• Overall Points & Prize Pool (PP) distribution within 30 minutes of completion.\n\nOrganized by: Unbreakable Esports & Xmen Esport."
     },
   ];
 

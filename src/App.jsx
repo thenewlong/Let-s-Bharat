@@ -17,6 +17,8 @@ import Profile from './pages/Profile';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 
+
+
 function App() {
   return (
     <AuthProvider>
@@ -38,8 +40,8 @@ function App() {
           <Route path="/profile" element={<Profile />} /> 
           
           {/* Naye Privacy Policy aur Terms of Service ke routes */}
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+          <Route path="/termsofservice" element={<TermsOfService />} />
         </Routes>
       </Router>
     </AuthProvider>

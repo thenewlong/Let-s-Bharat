@@ -15,6 +15,8 @@ import video2 from '../assets/videos/second.mp4';
 import video3 from '../assets/videos/h2.mp4';
 import video4 from '../assets/videos/hero2.mp4';
 
+import desktoplive from '../assets/videos/dlive.mp4';
+import mobilelive from '../assets/videos/mlive.mp4';
 //hackathons
 import desktopVideo from '../assets/videos/lap00.mp4';
 import mobileVideo from '../assets/videos/po.mp4';
@@ -165,6 +167,36 @@ const Home = () => {
   };
 
 
+/// ==========================================
+  // SECTION: LIVE UPDATES FULL SCREEN VIDEO
+  // ==========================================
+  const updatesSectionRef = useRef(null);
+  const updatesVideoRef = useRef(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    let ctx = gsap.context(() => {
+      const videoContainer = updatesVideoRef.current;
+
+      // Video Container ka Scroll Animation (Smooth Fade & Scale In)
+      gsap.fromTo(videoContainer,
+        { opacity: 0, scale: 0.95, y: 40 },
+        { 
+          opacity: 1, scale: 1, y: 0, 
+          duration: 1.2, ease: "power3.out",
+          scrollTrigger: {
+            trigger: updatesSectionRef.current,
+            start: "top 85%", 
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+    }, updatesSectionRef);
+
+    return () => ctx.revert();
+  }, []);
+  
 // ==========================================
   // SECTION 2: HACKATHONS VIDEO & INTERACTIVE BUTTON
   // ==========================================
@@ -520,8 +552,52 @@ const Home = () => {
         </div>
       </section>
       
+{/* ==========================================
+          LIVE UPDATES / ONGOING VIDEO SECTION (CLEAR)
+          ========================================== */}
+      <section ref={updatesSectionRef} className="w-full bg-[#fcfcfc] py-10 px-4 md:px-8">
+        <div className="max-w-[1400px] mx-auto">
+          
+          <div ref={updatesVideoRef} className="relative w-full rounded-[2rem] overflow-hidden shadow-2xl border border-gray-200 bg-black">
+            
+            {/* Premium Live Badge (Top Left) */}
+            <div className="absolute top-6 left-6 z-10 flex items-center gap-2 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shadow-lg">
+              <span className="w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse"></span>
+              <span className="text-white text-xs sm:text-sm font-bold tracking-widest uppercase">
+                Live on <span className="text-yellow-500">Letsbharat</span>
+              </span>
+            </div>
+            
+            {/* 💻 DESKTOP VIDEO (Horizontal) - Full size for PC */}
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="hidden md:block w-full h-[60vh] lg:h-[80vh] object-cover"
+            >
+              {/* Yahan {desktoplive} use kiya hai quotes ("") ke bina */}
+              <source src={desktoplive} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
 
-  
+            {/* 📱 MOBILE VIDEO (Vertical) - Full size for Phone */}
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="block md:hidden w-full h-[70vh] object-cover"
+            >
+              {/* Agar aapne mobile ke liye alag video import ki hai to uska variable daalna.
+                  Nahi to temporary usme bhi {desktoplive} daal sakte ho */}
+              <source src={mobilelive} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+
+          </div>
+        </div>
+      </section>
 
 
 {/* ========================================================= */}
