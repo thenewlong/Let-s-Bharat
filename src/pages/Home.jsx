@@ -15,6 +15,12 @@ import video2 from '../assets/videos/second.mp4';
 import video3 from '../assets/videos/h2.mp4';
 import video4 from '../assets/videos/hero2.mp4';
 
+
+// Institution ke liye videos (Apne folder ke hisaab se path aur naam theek kar lena)
+import desktopInstitutionVideo from '../assets/videos/inst1.mp4';
+import mobileInstitutionVideo from '../assets/videos/inst.mp4';
+
+
 import desktoplive from '../assets/videos/dlive.mp4';
 import mobilelive from '../assets/videos/mlive.mp4';
 //hackathons
@@ -48,12 +54,12 @@ const heroSlides = [
   {
     id: 1,
     videoSrc: video1,
-    title1: "NORTHEAST INDIA'S",
-    titleHighlight: "YOUTH TECH & START-UP",
-    title2: "COMMUNITY HUB",
-    subtitle: "CONNECT. COLLABORATE. CREATE IMPACT.",
-    desc: "Join thousands of students, developers and innovators building the future of Northeast India.",
-    btn1Text: "Startups ➔", btn1Link: "/startups",
+    title1: "INDIA'S STUDENTS ",
+    titleHighlight: "LEARNING & OPPORTUNITY ",
+    title2: "PLATFORM",
+    subtitle: "CONNECT.CREATE IMPACT. SUCCEED.",
+    desc: "Discover hackathons, institutions, internships, and learning opportunities. Learn new skills, share knowledge, and build your future with Letsbharat.",
+    btn1Text: "Institutions ➔", btn1Link: "/Institutions",
     btn2Text: "Hackathons ➔", btn2Link: "/hackathons"
   },
   {
@@ -166,6 +172,68 @@ const Home = () => {
     ));
   };
 
+
+// ==========================================
+  // SECTION: INSTITUTION VIDEO & INTERACTIVE BUTTON
+  // ==========================================
+  const institutionSectionRef = useRef(null);
+  const institutionButtonRef = useRef(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    let ctx = gsap.context(() => {
+      const btn = institutionButtonRef.current;
+
+      // 1. Scroll karke aane wali 3D Entry Animation (Niche se upar)
+      gsap.set(btn, { transformPerspective: 1000, transformStyle: "preserve-3d" });
+      
+      gsap.fromTo(btn,
+        { y: 80, opacity: 0, scale: 0.8, rotationX: -30 },
+        { 
+          y: 0, opacity: 1, scale: 1, rotationX: 0, 
+          duration: 1.2, 
+          ease: "expo.out",
+          scrollTrigger: {
+            trigger: institutionSectionRef.current,
+            start: "top 75%", 
+            end: "bottom 20%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      // 2. Premium Mouse & Touch Interaction (Gen Z Feel)
+      const onEnter = () => gsap.to(btn, { scale: 1.05, duration: 0.4, ease: "power3.out", boxShadow: "0px 10px 30px rgba(255, 255, 255, 0.2)" });
+      const onLeave = () => gsap.to(btn, { scale: 1, duration: 0.4, ease: "power3.out", boxShadow: "0px 0px 0px rgba(255, 255, 255, 0)" });
+      const onPress = () => gsap.to(btn, { scale: 0.95, duration: 0.1, ease: "power1.inOut" });
+      const onRelease = () => gsap.to(btn, { scale: 1.05, duration: 0.2, ease: "back.out(2)" });
+
+      // Add Listeners
+      if (btn) {
+        btn.addEventListener("mouseenter", onEnter);
+        btn.addEventListener("mouseleave", onLeave);
+        btn.addEventListener("mousedown", onPress);
+        btn.addEventListener("mouseup", onRelease);
+        btn.addEventListener("touchstart", onPress, { passive: true });
+        btn.addEventListener("touchend", onLeave, { passive: true });
+      }
+
+      // Cleanup
+      return () => {
+        if (btn) {
+          btn.removeEventListener("mouseenter", onEnter);
+          btn.removeEventListener("mouseleave", onLeave);
+          btn.removeEventListener("mousedown", onPress);
+          btn.removeEventListener("mouseup", onRelease);
+          btn.removeEventListener("touchstart", onPress);
+          btn.removeEventListener("touchend", onLeave);
+        }
+      };
+    }, institutionSectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
 
   
@@ -525,6 +593,57 @@ const Home = () => {
       </section>
       
 
+{/* ========================================================= */}
+      {/* SECTION: INSTITUTION (Gen-Z Premium Background)           */}
+      {/* ========================================================= */}
+      <section 
+        ref={institutionSectionRef}
+        id="institution"
+        className="relative w-full h-[70vh] md:h-screen bg-black overflow-hidden flex flex-col justify-end items-center pb-12 md:pb-20 border-t border-white/5"
+      >
+        {/* 📱 PHONE DEVICE VIDEO (Clear visibility) */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover block md:hidden filter brightness-[0.85]"
+          src={mobileInstitutionVideo} // Mobile video import variable yahan hai
+        />
+
+        {/* 💻 LAPTOP/DESKTOP VIDEO (Clear visibility) */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover hidden md:block filter brightness-[0.85]"
+          src={desktopInstitutionVideo} // Desktop video import variable yahan hai
+        />
+
+        {/* 🌑 BOTTOM GRADIENT ONLY (Taki video clear rahe, bas bottom me button pe focus aaye) */}
+        <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none z-10"></div>
+
+        {/* 🚀 SMALL, PREMIUM 3D BUTTON */}
+        <div className="relative z-20 w-full px-4 flex justify-center perspective-[1000px]">
+          
+          <button 
+            ref={institutionButtonRef}
+            onClick={() => navigate('/Institutions')} // Yahan apna institution route daal diya
+            className="group relative inline-flex items-center justify-center px-6 py-3.5 md:px-8 md:py-4 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full font-medium transition-colors duration-300 hover:bg-white hover:text-black overflow-hidden"
+          >
+            <span className="relative z-10 flex items-center gap-2.5 tracking-[0.15em] uppercase text-xs md:text-sm">
+             Explore Institution
+              <svg className="w-4 h-4 md:w-5 md:h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </span>
+            {/* Minimal Reflection Effect */}
+            <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out z-0"></div>
+          </button>
+
+        </div>
+      </section>
 
 
 {/* ========================================================= */}
@@ -864,8 +983,8 @@ const Home = () => {
   </p>
   <div className="flex gap-6">
     {/* a tag ko Link tag se replace kar diya aur correct path de diya */}
-    <Link to="/privacy-policy" className="hover:text-white transition-colors">PRIVACY POLICY</Link>
-    <Link to="/terms-of-service" className="hover:text-white transition-colors">TERMS OF SERVICE</Link>
+    <Link to="/privacypolicy" className="hover:text-white transition-colors">PRIVACY POLICY</Link>
+    <Link to="/termsofservice" className="hover:text-white transition-colors">TERMS OF SERVICE</Link>
   </div>
 </div>
           

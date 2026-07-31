@@ -15,7 +15,7 @@ const Navbar = () => {
   // 🚀 FUTURE SCALE: Bas yahan naye sections add karo, wo search mein aa jayenge
   const searchableItems = [
     { name: "Home", path: "/" },
-    { name: "AI Startups ", path: "/startups" },
+    { name: "Institutions ", path: "/institutions" },
     { name: "Hackathons", path: "/hackathons" },
     { name: "Internships", path: "/internships" },
     { name: "Jobs", path: "/jobs" },

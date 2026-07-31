@@ -7,7 +7,7 @@ import Auth from './pages/Auth';
 import Hackathons from './pages/Hackathons'; 
 import Internships from './pages/Internships'; 
 import Tournaments from './pages/Tournaments'; 
-import Startups from './pages/Startups'; 
+import Institutions from './pages/Institutions'; 
 import Resources from './pages/Resources';
 import Jobs from './pages/Jobs';
 import About from './pages/About';
@@ -33,15 +33,15 @@ function App() {
           <Route path="/hackathons" element={<Hackathons />} />
           <Route path="/internships" element={<Internships />} /> 
           <Route path="/tournaments" element={<Tournaments />} /> 
-          <Route path="/Startups" element={<Startups />} />
+          <Route path="/Institutions" element={<Institutions />} />
           <Route path="/Jobs" element={<Jobs />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/about" element={<About />} />
           <Route path="/profile" element={<Profile />} /> 
           
           {/* Naye Privacy Policy aur Terms of Service ke routes */}
-          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-          <Route path="/termsofservice" element={<TermsOfService />} />
+          <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
+          <Route path="/TermsOfService" element={<TermsOfService />} />
         </Routes>
       </Router>
     </AuthProvider>
