@@ -17,15 +17,13 @@ import video4 from '../assets/videos/hero2.mp4';
 
 
 // Institution ke liye videos (Apne folder ke hisaab se path aur naam theek kar lena)
-import desktopInstitutionVideo from '../assets/videos/inst1.mp4';
-import mobileInstitutionVideo from '../assets/videos/inst2.mp4';
+import desktopInstitutionVideo from '../assets/videos/inst4.mp4';
+import mobileInstitutionVideo from '../assets/videos/inst3.mp4';
 
 
-import desktoplive from '../assets/videos/dlive.mp4';
-import mobilelive from '../assets/videos/mlive.mp4';
 //hackathons
-import desktopVideo from '../assets/videos/lap00.mp4';
-import mobileVideo from '../assets/videos/po.mp4';
+import desktopVideo from '../assets/videos/hacka1.mp4';
+import mobileVideo from '../assets/videos/hacka01.mp4';
 
 
 //interships

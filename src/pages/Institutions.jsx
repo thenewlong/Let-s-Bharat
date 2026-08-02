@@ -3,9 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from "react-helmet-async";
 
 // ==========================================
-// 1. LOCAL BANNER IMAGES IMPORT (FILE EXPLORER)
+// 1. LOCAL BANNER IMAGES IMPORT
 // ==========================================
-// 👉 Apne local banner images ka path yahan check aur change kar lena
 import banner1 from '../assets/images/ban2.jpeg';
 import banner2 from '../assets/images/ban1.jpeg';
 import banner3 from '../assets/images/ban3.jpeg';
@@ -13,7 +12,7 @@ import banner3 from '../assets/images/ban3.jpeg';
 const bannerSlides = [banner1, banner2, banner3];
 
 // ==========================================
-// 2. MOCK DATA FOR INSTITUTIONS
+// 2. MOCK DATA FOR INSTITUTIONS (WITH FALLBACK IMAGES)
 // ==========================================
 const institutionsData = [
   {
@@ -25,7 +24,7 @@ const institutionsData = [
     district: 'Dhalai',
     location: 'Dhalai, Tripura',
     classes: 'Classes: 1 - 10',
-    image: '',
+    image: 'https://images.unsplash.com/photo-1580582932520aed937b7b?auto=format&fit=crop&w=800&q=80',
     description: 'Bairagikami J.b. School is a premier government institution dedicated to quality education, rural student empowerment, and holistic child development in Tripura.',
     established: '1998',
     totalStudents: '450+',
@@ -45,7 +44,7 @@ const institutionsData = [
     district: 'Dhalai',
     location: 'Dhalai, Tripura',
     classes: 'Classes: 1 - 12',
-    image: '',
+    image: 'https://images.unsplash.com/photo-154182907084a7d30dd3f3?auto=format&fit=crop&w=800&q=80',
     description: 'St. Thomas English Medium School offers world-class education, state-of-the-art computer labs, and focus on extracurricular activities for competitive excellence.',
     established: '2005',
     totalStudents: '1200+',
@@ -65,7 +64,7 @@ const institutionsData = [
     district: 'Dhalai',
     location: 'Dhalai, Tripura',
     classes: 'Classes: 6 - 12',
-    image: '',
+    image: 'https://images.unsplash.com/photo-15230508-8df90110c9f1?auto=format&fit=crop&w=800&q=80',
     description: 'Chandpur Higher Secondary School provides excellent secondary and higher secondary science and arts streams with experienced faculty.',
     established: '1985',
     totalStudents: '850+',
@@ -85,7 +84,7 @@ const institutionsData = [
     district: 'Dhalai',
     location: 'Dhalai, Tripura',
     classes: 'Classes: 1 - 8',
-    image: '',
+    image: 'https://images.unsplash.com/photo-1509062526-355977927d7?auto=format&fit=crop&w=800&q=80',
     description: 'Focusing on early child education, values, language mastery, and creative learning models in a secure environment.',
     established: '2012',
     totalStudents: '350+',
@@ -107,6 +106,27 @@ const categoryTabs = [
   { id: 'Higher Secondary', label: 'Higher Secondary', icon: '🎓' },
 ];
 
+// FRAMER MOTION STAGGER VARIANTS FOR CARDS
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const cardItemVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.4, ease: "easeOut" }
+  },
+};
+
 const Institution = () => {
   // STATE MANAGEMENT
   const [searchTerm, setSearchTerm] = useState('');
@@ -116,6 +136,9 @@ const Institution = () => {
   const [activeTab, setActiveTab] = useState('All');
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  // MOBILE FILTER EXPAND TOGGLE STATE
+  const [isMobileFilterExpanded, setIsMobileFilterExpanded] = useState(false);
+
   // VIEW DETAILS PAGE STATE
   const [selectedInstitution, setSelectedInstitution] = useState(null);
 
@@ -123,7 +146,7 @@ const Institution = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev === bannerSlides.length - 1 ? 0 : prev + 1));
-    }, 4000);
+    }, 4500);
     return () => clearInterval(timer);
   }, []);
 
@@ -158,43 +181,52 @@ const Institution = () => {
       {!selectedInstitution ? (
         <>
           {/* HEADER & HERO BANNER SLIDER */}
-          <div className="max-w-[1350px] mx-auto pt-6 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-[1350px] mx-auto pt-4 md:pt-6 px-4 sm:px-6 lg:px-8">
             <div className="mb-4">
               <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
                Next Months Are Available Institutions Directory
               </h1>
               <p className="text-slate-500 text-xs sm:text-sm font-medium mt-1">
-                Find and explore the best schools,colleges and Choching Centre across India
+                Find and explore the best schools, colleges and Coaching Centres across India
               </p>
             </div>
 
-            {/* SLIDER BANNER WITH OVERLAY FILTERS */}
-            <div className="relative w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-md bg-slate-900 min-h-[360px] md:min-h-[380px] flex flex-col justify-between p-4 sm:p-8 md:p-10">
-              {/* Background Images with Framer Motion */}
+            {/* SLIDER BANNER CONTAINER */}
+            <div className="relative w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-lg bg-slate-900 min-h-[220px] sm:min-h-[300px] md:min-h-[380px] flex flex-col justify-between p-4 sm:p-8 md:p-10 transition-all duration-300">
+              
+              {/* Background Images with Framer Motion Animation */}
               <AnimatePresence mode="wait">
                 <motion.img
                   key={currentSlide}
                   src={bannerSlides[currentSlide]}
                   alt="Banner"
-                  initial={{ opacity: 0, scale: 1.05 }}
+                  initial={{ opacity: 0, scale: 1.08 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.8 }}
-                  className="absolute inset-0 w-full h-full object-cover opacity-45 z-0"
+                  className="absolute inset-0 w-full h-full object-cover opacity-70 md:opacity-55 z-0"
                 />
               </AnimatePresence>
 
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/40 to-transparent z-0"></div>
+              {/* Dark Gradient Overlay for readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent z-0"></div>
 
-              <div className="relative z-10"></div>
+              {/* BANNER CONTENT CAPTION */}
+              <div className="relative z-10 max-w-md">
+                <span className="inline-block px-3 py-1 bg-yellow-400 text-slate-950 text-[10px] sm:text-xs font-black tracking-wider uppercase rounded-full mb-2 shadow-sm">
+                  Verified Directory
+                </span>
+                <h2 className="text-white text-xl sm:text-3xl font-black drop-shadow-md">
+                  Discover Top Institutions
+                </h2>
+              </div>
 
-              {/* SEARCH & FILTER BOX OVERLAY */}
-              <div className="relative z-10 w-full bg-white/95 backdrop-blur-md rounded-2xl p-3 sm:p-5 shadow-2xl border border-white/20 mt-8">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-center">
+              {/* 🖥️ DESKTOP FILTERS (Visible on Desktop / Tablet md:) */}
+              <div className="hidden md:block relative z-10 w-full bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-2xl border border-white/20 mt-6">
+                <div className="grid grid-cols-12 gap-3 items-center">
                   
                   {/* Search Input */}
-                  <div className="lg:col-span-4 relative flex items-center">
+                  <div className="col-span-4 relative flex items-center">
                     <svg className="w-5 h-5 absolute left-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 0114 0z" />
                     </svg>
@@ -208,7 +240,7 @@ const Institution = () => {
                   </div>
 
                   {/* State Select */}
-                  <div className="lg:col-span-2">
+                  <div className="col-span-2">
                     <select
                       value={selectedState}
                       onChange={(e) => setSelectedState(e.target.value)}
@@ -219,14 +251,14 @@ const Institution = () => {
                       <option value="Assam">Assam</option>
                       <option value="Nagaland">Nagaland</option>
                       <option value="Manipur">Manipur</option>
-                      <option value="Arunchal Pradesh">Arunachal Pradesh</option>
+                      <option value="Arunachal Pradesh">Arunachal Pradesh</option>
                       <option value="Meghalaya">Meghalaya</option>
                       <option value="Mizoram">Mizoram</option>
                     </select>
                   </div>
 
                   {/* District Select */}
-                  <div className="lg:col-span-2">
+                  <div className="col-span-2">
                     <select
                       value={selectedDistrict}
                       onChange={(e) => setSelectedDistrict(e.target.value)}
@@ -242,7 +274,7 @@ const Institution = () => {
                   </div>
 
                   {/* Type Select */}
-                  <div className="lg:col-span-2">
+                  <div className="col-span-2">
                     <select
                       value={selectedType}
                       onChange={(e) => setSelectedType(e.target.value)}
@@ -255,7 +287,7 @@ const Institution = () => {
                   </div>
 
                   {/* Search Button */}
-                  <div className="lg:col-span-2">
+                  <div className="col-span-2">
                     <button className="w-full py-2.5 bg-slate-900 hover:bg-yellow-500 text-white hover:text-black font-bold text-xs sm:text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 0114 0z" />
@@ -267,7 +299,7 @@ const Institution = () => {
                 </div>
 
                 {/* CATEGORY PILL TABS */}
-                <div className="flex items-center gap-2 overflow-x-auto pt-4 mt-2 border-t border-slate-100 scrollbar-hide">
+                <div className="flex items-center gap-2 overflow-x-auto pt-3 mt-2 border-t border-slate-100 scrollbar-hide">
                   {categoryTabs.map((tab) => (
                     <button
                       key={tab.id}
@@ -286,7 +318,7 @@ const Institution = () => {
               </div>
 
               {/* Slider Dots Indicator */}
-              <div className="relative z-10 flex justify-center gap-1.5 mt-4">
+              <div className="relative z-10 flex justify-center gap-1.5 mt-2">
                 {bannerSlides.map((_, idx) => (
                   <button
                     key={idx}
@@ -297,6 +329,156 @@ const Institution = () => {
                   />
                 ))}
               </div>
+            </div>
+
+            {/* 📱 MOBILE SEARCH & EXPANDABLE FILTER CONTAINER */}
+            <div className="block md:hidden mt-4">
+              
+              {/* TRIGGER SEARCH BAR FOR MOBILE */}
+              <div 
+                onClick={() => setIsMobileFilterExpanded(true)}
+                className="bg-white p-3 rounded-2xl border border-slate-200 shadow-md flex items-center justify-between gap-2 cursor-pointer active:scale-[0.99] transition-all"
+              >
+                <div className="flex items-center gap-3 flex-grow">
+                  <svg className="w-5 h-5 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 0114 0z" />
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="Search school name or keyword..."
+                    value={searchTerm}
+                    onChange={(e) => {
+                      setSearchTerm(e.target.value);
+                      setIsMobileFilterExpanded(true);
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsMobileFilterExpanded(true);
+                    }}
+                    className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none"
+                  />
+                </div>
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsMobileFilterExpanded(!isMobileFilterExpanded);
+                  }}
+                  className="px-3 py-1.5 bg-slate-900 text-yellow-400 rounded-xl text-xs font-bold flex items-center gap-1.5 flex-shrink-0"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                  </svg>
+                  {isMobileFilterExpanded ? 'Close' : 'Filter'}
+                </button>
+              </div>
+
+              {/* ANIMATED FILTER DROPDOWN TRAY FOR MOBILE */}
+              <AnimatePresence>
+                {isMobileFilterExpanded && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0, y: -10 }}
+                    animate={{ opacity: 1, height: 'auto', y: 0 }}
+                    exit={{ opacity: 0, height: 0, y: -10 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                    className="overflow-hidden bg-white mt-2 rounded-2xl border border-slate-200 shadow-xl p-4 space-y-3"
+                  >
+                    <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                      <span className="text-xs font-extrabold text-slate-800 uppercase tracking-wider">Filter Institutions</span>
+                      <button 
+                        onClick={() => setIsMobileFilterExpanded(false)}
+                        className="text-xs font-bold text-slate-400 hover:text-slate-800"
+                      >
+                        ✕ Close
+                      </button>
+                    </div>
+
+                    {/* State Selector */}
+                    <div>
+                      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 block">State</label>
+                      <select
+                        value={selectedState}
+                        onChange={(e) => setSelectedState(e.target.value)}
+                        className="w-full px-3 py-2 bg-slate-50 rounded-xl text-xs font-semibold text-slate-700 outline-none border border-slate-200"
+                      >
+                        <option value="All">All States</option>
+                        <option value="Tripura">Tripura</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Nagaland">Nagaland</option>
+                        <option value="Manipur">Manipur</option>
+                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                        <option value="Meghalaya">Meghalaya</option>
+                        <option value="Mizoram">Mizoram</option>
+                      </select>
+                    </div>
+
+                    {/* District Selector */}
+                    <div>
+                      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 block">District</label>
+                      <select
+                        value={selectedDistrict}
+                        onChange={(e) => setSelectedDistrict(e.target.value)}
+                        className="w-full px-3 py-2 bg-slate-50 rounded-xl text-xs font-semibold text-slate-700 outline-none border border-slate-200"
+                      >
+                        <option value="All">All Districts</option>
+                        <option value="Dhalai">Dhalai</option>
+                        <option value="West Tripura">West Tripura</option>
+                        <option value="Gomati">Gomati</option>
+                        <option value="Dimapur">Dimapur</option>
+                        <option value="Itanagar">Itanagar</option>
+                      </select>
+                    </div>
+
+                    {/* Type Selector */}
+                    <div>
+                      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 block">Institution Type</label>
+                      <select
+                        value={selectedType}
+                        onChange={(e) => setSelectedType(e.target.value)}
+                        className="w-full px-3 py-2 bg-slate-50 rounded-xl text-xs font-semibold text-slate-700 outline-none border border-slate-200"
+                      >
+                        <option value="All">All Types</option>
+                        <option value="Government">Government</option>
+                        <option value="Private">Private</option>
+                      </select>
+                    </div>
+
+                    {/* Category Pills Slider */}
+                    <div>
+                      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 block">Category</label>
+                      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
+                        {categoryTabs.map((tab) => (
+                          <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={`px-3 py-1.5 rounded-xl text-[11px] font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 ${
+                              activeTab === tab.id
+                                ? 'bg-slate-900 text-white shadow-sm'
+                                : 'bg-slate-100 text-slate-600'
+                            }`}
+                          >
+                            <span>{tab.icon}</span>
+                            {tab.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Reset Button */}
+                    <button
+                      onClick={() => {
+                        setSelectedState('All');
+                        setSelectedDistrict('All');
+                        setSelectedType('All');
+                        setActiveTab('All');
+                        setSearchTerm('');
+                      }}
+                      className="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all"
+                    >
+                      Reset Filters
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
 
@@ -334,7 +516,7 @@ const Institution = () => {
             </div>
           </div>
 
-          {/* INSTITUTIONS CARDS SECTION */}
+          {/* INSTITUTIONS CARDS SECTION WITH STAGGER ENTRY ANIMATIONS */}
           <div className="max-w-[1350px] mx-auto mt-8 px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between mb-5">
               <div>
@@ -344,12 +526,18 @@ const Institution = () => {
               <span className="text-xs font-semibold text-yellow-600 cursor-pointer hover:underline">View All →</span>
             </div>
 
-            {/* 💻 DESKTOP GRID CARDS (Visible on Desktop/Tablet) */}
-            <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-5">
+            {/* 💻 DESKTOP GRID CARDS (Staggered Animation Entry) */}
+            <motion.div 
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-5"
+            >
               {filteredInstitutions.map((item) => (
                 <motion.div
                   key={item.id}
-                  whileHover={{ y: -5 }}
+                  variants={cardItemVariants}
+                  whileHover={{ y: -6 }}
                   transition={{ duration: 0.2 }}
                   className="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
                 >
@@ -368,9 +556,17 @@ const Institution = () => {
                     <p className="text-xs font-medium text-slate-400 mb-3">{item.classes}</p>
                   </div>
 
-                  {/* Image */}
+                  {/* Image with fallback */}
                   <div className="w-full h-36 bg-slate-100 relative overflow-hidden">
-                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                    <img 
+                      src={item.image || 'https://images.unsplash.c/photo-15805829707-520aed937b7b?auto=format&fit=crop&w=800&q=80'} 
+                      alt={item.name} 
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = 'https://images.unsplash.-1580932707-520aed937b7b?auto=format&fit=crop&w=800&q=80';
+                      }}
+                      className="w-full h-full object-cover" 
+                    />
                   </div>
 
                   {/* Card Footer Button */}
@@ -387,18 +583,32 @@ const Institution = () => {
                   </div>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
 
-            {/* 📱 MOBILE HORIZONTAL LIST CARDS (Exact match to design mockup image) */}
-            <div className="flex md:hidden flex-col gap-3">
+            {/* 📱 MOBILE CARDS (Staggered Entry Animation) */}
+            <motion.div 
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="flex md:hidden flex-col gap-3"
+            >
               {filteredInstitutions.map((item) => (
-                <div
+                <motion.div
                   key={item.id}
+                  variants={cardItemVariants}
                   onClick={() => setSelectedInstitution(item)}
                   className="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between gap-3 active:scale-[0.98] transition-all cursor-pointer"
                 >
                   <div className="w-16 h-16 rounded-xl bg-slate-100 overflow-hidden flex-shrink-0">
-                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                    <img 
+                      src={item.image || 'https://images.unsplash.com/photo0582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80'} 
+                      alt={item.name} 
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = 'https://images.unsplash.com/phot-182932707-520aed937b7b?auto=format&fit=crop&w=800&q=80';
+                      }}
+                      className="w-full h-full object-cover" 
+                    />
                   </div>
 
                   <div className="flex-grow min-w-0">
@@ -417,9 +627,9 @@ const Institution = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
           </div>
         </>
@@ -446,7 +656,7 @@ const Institution = () => {
           <div className="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-lg">
             <div className="relative h-64 md:h-80 w-full bg-slate-900">
               <img
-                src={selectedInstitution.image}
+                src={selectedInstitution.image || 'https://images.unsplash.cm/photo-157-520aed937b7b?auto=format&fit=crop&w=800&q=80'}
                 alt={selectedInstitution.name}
                 className="w-full h-full object-cover opacity-60"
               />
@@ -489,7 +699,7 @@ const Institution = () => {
                 {/* Info Stats */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-100">
                   <div className="bg-slate-50 p-3.5 rounded-2xl">
-                    <p className="text-[10px] text-slate-400 font-bold uppercase">Classes Offerd</p>
+                    <p className="text-[10px] text-slate-400 font-bold uppercase">Classes Offered</p>
                     <p className="text-xs sm:text-sm font-bold text-slate-800 mt-1">{selectedInstitution.classes}</p>
                   </div>
                   <div className="bg-slate-50 p-3.5 rounded-2xl">
