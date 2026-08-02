@@ -38,6 +38,7 @@ function App() {
           <Route path="/resources" element={<Resources />} />
           <Route path="/about" element={<About />} />
           <Route path="/profile" element={<Profile />} /> 
+        
           
           {/* Naye Privacy Policy aur Terms of Service ke routes */}
           <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />

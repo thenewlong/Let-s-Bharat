@@ -98,12 +98,12 @@ const institutionsData = [
 ];
 
 const categoryTabs = [
-  { id: 'All', label: 'All Institutions', icon: '🏛️' },
-  { id: 'Government', label: 'Government', icon: '🏦' },
-  { id: 'Private', label: 'Private', icon: '🏫' },
-  { id: 'Primary', label: 'Primary', icon: '🎒' },
-  { id: 'High School', label: 'High School', icon: '📘' },
-  { id: 'Higher Secondary', label: 'Higher Secondary', icon: '🎓' },
+  { id: 'All', label: 'All Institutions', icon: '' },
+  { id: 'Government', label: 'Government', icon: '' },
+  { id: 'Private', label: 'Private', icon: '' },
+  { id: 'Primary', label: 'Primary', icon: '' },
+  { id: 'High School', label: 'High School', icon: '' },
+  { id: 'Higher Secondary', label: 'Higher Secondary', icon: '' },
 ];
 
 // FRAMER MOTION STAGGER VARIANTS FOR CARDS
@@ -172,7 +172,7 @@ const Institution = () => {
     <div className="min-h-screen bg-[#f8f9fc] font-sans pb-16">
       <Helmet>
         <title>Institutions & Schools Directory | Letsbharat</title>
-        <meta name="description" content="Find and explore top schools and institutions across India on Letsbharat." />
+        <meta name="description" content="Find and explore best schools and institutions across India on Letsbharat." />
       </Helmet>
 
       {/* =========================================================

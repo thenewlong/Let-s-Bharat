@@ -105,7 +105,7 @@ const Hackathons = () => {
       mode: "Online",
       teamSize: "1 - 4 Members",
       tags: ["AI/ML", "DESIGN", "WEB", "BEGINNER FRIENDLY"],
-      status: "ONGOING",
+      status: "FEATURED",
       statusColor: "bg-yellow-500",
       category: "ONLINE",
       addedOn: "2026-06-21",

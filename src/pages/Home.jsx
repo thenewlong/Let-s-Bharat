@@ -42,7 +42,7 @@ import mobileVeo from '../assets/videos/pooo.mp4';
 
 // Inko file ke sabse upar import karna (apne actual folder path ke hisaab se adjust kar lena)
 import letsBharatLogo from '../assets/images/logos3.jpeg'; 
-import founderProfile from '../assets/images/profile.jpeg';
+import founderProfile from '../assets/images/profile1.jpg';
 
 
 // 📂 DYNAMIC SLIDES DATA (Replace video variables with your actual imports)
@@ -98,9 +98,9 @@ const heroSlides = [
 // 🗂️ GLOBAL SEARCH DATA
 const globalSearchData = [
   { id: 1, title: "React Native App Development Hackathon", category: "Hackathon", link: "/hackathons/react-native" },
-  { id: 2, title: "Nomeo AI 2.0 API Integration", category: "Startup", link: "/startups/nomeo" },
+  { id: 2, title: "Nomeo AI 2.0 API Integration", category: "Institution", link: "/institutions/nomeo" },
   { id: 3, title: "BGMI Northeast Pro League", category: "Tournament", link: "/tournaments/bgmi" },
-  { id: 4, title: "Tipra Social Platform Showcase", category: "Startup", link: "/startups/tipra" },
+  { id: 4, title: "Tipra Social Platform Showcase", category: "Institution", link: "/institutions/tipra" },
   { id: 5, title: "Frontend Developer Internship", category: "Internship", link: "/internships/frontend" },
   { id: 6, title: "Free Fire Max Weekly Scrims", category: "Tournament", link: "/tournaments/freefire" },
 ];
@@ -382,17 +382,17 @@ const Home = () => {
       
       <Helmet>
         <title>
-          Letsbharat | India's Student Platform for Hackathons, Jobs & Internships
+          Letsbharat | India's Student Platform for Institutions, Hackathons, Internships, Jobs, Learning Hub & Resource.
         </title>
 
         <meta
           name="description"
-          content="Letsbharat helps students discover Hackathons, Jobs, Internships, AI Tools, Startup Opportunities and eSports Tournaments across India."
+          content="Letsbharat helps students discover Institutions, Hackathons, Jobs, Internships, Learning Hub & Resources across in India."
         />
 
         <meta
           name="keywords"
-          content="Letsbharat, Hackathons, Jobs, Internships, AI Tools, Startup, Free Fire Tournament, BGMI Tournament"
+          content="Letsbharat, Institutions, Hackathons, Jobs, Internships, Learning Hub, Resources, Student Platform, India, Opportunities, Career Growth, Skill Development"
         />
       
 
@@ -908,7 +908,7 @@ const Home = () => {
               <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-y-3 text-gray-400 text-xs font-medium uppercase tracking-wider">
                 <li><button onClick={() => navigate('/')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">⌂ Home</button></li>
                 <li><button onClick={() => navigate('/about')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">👤 About Us</button></li>
-                <li><button onClick={() => navigate('/startups')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">👥 Communities</button></li>
+                <li><button onClick={() => navigate('/institutions')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">👥 Institutions</button></li>
                 <li><button onClick={() => navigate('/hackathons')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">🏆 Hackathons</button></li>
                 <li><button onClick={() => navigate('/internships')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">💼 Internships</button></li>
                 <li><button onClick={() => navigate('/tournaments')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">🎮 Tournaments</button></li>
@@ -960,7 +960,7 @@ const Home = () => {
               {/* Direct Contact Details */}
               <div className="space-y-3 bg-[#121826] p-4 rounded-xl border border-gray-800">
                 <a href="mailto:HELLO@LETSBHARAT.COM" className="flex items-center gap-3 text-gray-400 hover:text-[#ffcc00] transition-colors text-xs font-medium tracking-wide">
-                  <span>✉</span> HELLO@LETSBHARAT.COM
+                  <span>✉</span> newlongdebbarma143@gmail.com
                 </a>
                 <a href="tel:+919876543210" className="flex items-center gap-3 text-gray-400 hover:text-[#ffcc00] transition-colors text-xs font-medium tracking-wide">
                   <span>📞</span> +91 7630808203
