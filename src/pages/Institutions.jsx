@@ -9,7 +9,6 @@ import banner3 from '../assets/images/ban3.jpeg';
 
 const bannerSlides = [banner1, banner2, banner3];
 
-// YAHAN SE 'export' HATA DIYA HAI TAAKI HMR ERROR NA AAYE
 const institutionsData = [
   {
     id: 1,
@@ -77,13 +76,14 @@ const institutionsData = [
   }
 ];
 
+// Added Emojis for mobile view matching the design reference
 const categoryTabs = [
-  { id: 'All', label: 'All Institutions', icon: '' },
-  { id: 'Government', label: 'Government', icon: '' },
-  { id: 'Private', label: 'Private', icon: '' },
-  { id: 'Primary', label: 'Primary', icon: '' },
-  { id: 'High School', label: 'High School', icon: '' },
-  { id: 'Higher Secondary', label: 'Higher Secondary', icon: '' },
+  { id: 'All', label: 'All Institutions', icon: '🏛️' },
+  { id: 'Government', label: 'Government', icon: '🏦' },
+  { id: 'Private', label: 'Private', icon: '🏫' },
+  { id: 'Primary', label: 'Primary', icon: '🎒' },
+  { id: 'High School', label: 'High School', icon: '🎓' },
+  { id: 'Higher Secondary', label: 'Higher Secondary', icon: '📚' },
 ];
 
 const containerVariants = {
@@ -105,6 +105,8 @@ const Institutions = () => {
   const [selectedType, setSelectedType] = useState('All');
   const [activeTab, setActiveTab] = useState('All');
   const [currentSlide, setCurrentSlide] = useState(0);
+  
+  // Controls the mobile filter drawer visibility
   const [isMobileFilterExpanded, setIsMobileFilterExpanded] = useState(false);
 
   useEffect(() => {
@@ -113,6 +115,14 @@ const Institutions = () => {
     }, 4500);
     return () => clearInterval(timer);
   }, []);
+
+  const resetFilters = () => {
+    setSearchTerm('');
+    setSelectedState('All');
+    setSelectedDistrict('All');
+    setSelectedType('All');
+    setActiveTab('All');
+  };
 
   const filteredInstitutions = institutionsData.filter((item) => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -132,7 +142,7 @@ const Institutions = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[#f8f9fc] font-sans pb-16">
+    <div className="min-h-screen bg-[#f8f9fc] font-sans pb-16 selection:bg-yellow-400">
       <Helmet>
         <title>Institutions & Schools Directory | Letsbharat</title>
         <meta name="description" content="Find and explore best schools and institutions across India on Letsbharat." />
@@ -141,7 +151,7 @@ const Institutions = () => {
       {/* HEADER & HERO BANNER SLIDER */}
       <div className="max-w-[1350px] mx-auto pt-4 md:pt-6 px-4 sm:px-6 lg:px-8">
         <div className="mb-4">
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight" style={{ fontFamily: "'Clicker Script', cursive, sans-serif" }}>
             Next Months Are Available Institutions Directory
           </h1>
           <p className="text-slate-500 text-xs sm:text-sm font-medium mt-1">
@@ -173,7 +183,7 @@ const Institutions = () => {
             </h2>
           </div>
 
-          {/* DESKTOP FILTERS */}
+          {/* DESKTOP FILTERS (Hidden on Mobile) */}
           <div className="hidden md:block relative z-10 w-full bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-2xl border border-white/20 mt-6">
             <div className="grid grid-cols-12 gap-3 items-center">
               <div className="col-span-4 relative flex items-center">
@@ -212,6 +222,90 @@ const Institutions = () => {
             </div>
           </div>
         </div>
+
+        {/* 📱 MOBILE SEARCH & FILTER BAR (Visible only on small screens) */}
+        <div className="md:hidden mt-4 bg-white rounded-2xl shadow-sm border border-slate-100 p-2 flex items-center justify-between gap-2 transition-all">
+          <div className="flex-1 relative flex items-center">
+            <svg className="w-5 h-5 absolute left-3 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 0114 0z" />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search school name or keyword..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-3 py-2.5 bg-transparent text-xs font-medium text-slate-800 outline-none placeholder:text-slate-400"
+            />
+          </div>
+          <button
+            onClick={() => setIsMobileFilterExpanded(!isMobileFilterExpanded)}
+            className="flex items-center gap-1.5 px-5 py-2.5 bg-slate-900 text-yellow-400 font-bold text-xs rounded-xl shadow-sm transition-all"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+            </svg>
+            {isMobileFilterExpanded ? 'Close' : 'Filter'}
+          </button>
+        </div>
+
+        {/* 📱 MOBILE FILTER EXPANDED DRAWER */}
+        <AnimatePresence>
+          {isMobileFilterExpanded && (
+            <motion.div
+              initial={{ opacity: 0, height: 0, y: -10 }}
+              animate={{ opacity: 1, height: 'auto', y: 0 }}
+              exit={{ opacity: 0, height: 0, y: -10 }}
+              className="md:hidden mt-3 bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
+            >
+              <div className="p-4 space-y-5">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                  <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wide">Filter Institutions</h3>
+                  <button onClick={() => setIsMobileFilterExpanded(false)} className="text-xs font-semibold text-slate-400 hover:text-slate-700 flex items-center gap-1">
+                    ✕ Close
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5 tracking-wider">State</label>
+                    <select value={selectedState} onChange={(e) => setSelectedState(e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-xl text-sm font-medium text-slate-700 outline-none border border-slate-200 focus:border-yellow-400 appearance-none">
+                      <option value="All">All States</option><option value="Tripura">Tripura</option><option value="Assam">Assam</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5 tracking-wider">District</label>
+                    <select value={selectedDistrict} onChange={(e) => setSelectedDistrict(e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-xl text-sm font-medium text-slate-700 outline-none border border-slate-200 focus:border-yellow-400 appearance-none">
+                      <option value="All">All Districts</option><option value="Dhalai">Dhalai</option><option value="West Tripura">West Tripura</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5 tracking-wider">Institution Type</label>
+                    <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-xl text-sm font-medium text-slate-700 outline-none border border-slate-200 focus:border-yellow-400 appearance-none">
+                      <option value="All">All Types</option><option value="Government">Government</option><option value="Private">Private</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase mb-2.5 tracking-wider">Category</label>
+                  <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
+                    {categoryTabs.map((tab) => (
+                      <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border flex items-center gap-1.5 ${ activeTab === tab.id ? 'bg-slate-900 text-white border-slate-900 shadow-md' : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100' }`}>
+                        <span className="text-sm">{tab.icon}</span> {tab.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <button onClick={resetFilters} className="w-full py-3 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold text-xs rounded-xl border border-slate-200 transition-all">
+                    Reset Filters
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* STATS SUMMARY ROW */}
@@ -256,7 +350,6 @@ const Institutions = () => {
                 <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
               </div>
               <div className="p-3 bg-slate-50 border-t border-slate-100">
-                {/* YAHAN CLICK HONE PAR NAVIGATION HOGA */}
                 <button
                   onClick={() => navigate(`/institution/${item.id}`)}
                   className="w-full py-2 bg-white hover:bg-slate-900 text-slate-800 hover:text-white border border-slate-200 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2"
