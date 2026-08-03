@@ -8,6 +8,7 @@ import Hackathons from './pages/Hackathons';
 import Internships from './pages/Internships'; 
 import Tournaments from './pages/Tournaments'; 
 import Institutions from './pages/Institutions'; 
+import InstitutionsPages from './pages/InstitutionsPages';
 import Resources from './pages/Resources';
 import Jobs from './pages/Jobs';
 import About from './pages/About';
@@ -16,8 +17,6 @@ import Profile from './pages/Profile';
 // Naye Pages ke Imports
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
-
-
 
 function App() {
   return (
@@ -33,16 +32,19 @@ function App() {
           <Route path="/hackathons" element={<Hackathons />} />
           <Route path="/internships" element={<Internships />} /> 
           <Route path="/tournaments" element={<Tournaments />} /> 
-          <Route path="/Institutions" element={<Institutions />} />
-          <Route path="/Jobs" element={<Jobs />} />
+          
+          {/* 👇 Yahan lowercase aur exact match kar diya hai */}
+          <Route path="/institutions" element={<Institutions />} />
+          <Route path="/institution/:id" element={<InstitutionsPages />} />
+          
+          <Route path="/jobs" element={<Jobs />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/about" element={<About />} />
           <Route path="/profile" element={<Profile />} /> 
         
-          
           {/* Naye Privacy Policy aur Terms of Service ke routes */}
-          <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
-          <Route path="/TermsOfService" element={<TermsOfService />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
         </Routes>
       </Router>
     </AuthProvider>
