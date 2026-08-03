@@ -7,25 +7,41 @@ import banner1 from '../assets/images/ban2.jpeg';
 import banner2 from '../assets/images/ban1.jpeg';
 import banner3 from '../assets/images/ban3.jpeg';
 
+//cards images
+import nielit from '../assets/images/nielit.jpeg';
+
 const bannerSlides = [banner1, banner2, banner3];
 
 const institutionsData = [
-  {
-    id: 1,
-    name: 'Bairagikami J.b. School',
-    type: 'Government',
-    badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-    state: 'Tripura',
-    district: 'Dhalai',
-    location: 'Dhalai, Tripura',
-    classes: 'Classes: 1 - 10',
-    image: 'https://images.unsplash.com/photo-1580582932520aed937b7b?auto=format&fit=crop&w=800&q=80',
-    description: 'Bairagikami J.b. School is a premier government institution dedicated to quality education, rural student empowerment, and holistic child development in Tripura.',
-    established: '1998',
-    totalStudents: '450+',
-    facilities: ['Digital Classrooms', 'Sports Ground', 'Science Lab', 'Library', 'Free Mid-day Meals'],
-    contact: { phone: '+91 98765 43210', email: 'contact@bairagikamischool.edu.in', address: 'Bairagikami Village, Dhalai District, Tripura - 799278' }
-  },
+ {
+  id: 1,
+  name: 'National Institute of Electronics & Information Technology (NIELIT), Agartala',
+  type: 'Government',
+  badgeColor: 'bg-blue-100 text-blue-800 border-blue-200',
+  state: 'Tripura',
+  district: 'West Tripura',
+  location: 'R.K. Nagar, Khayerpur, Agartala, Tripura',
+  classes: 'Diploma, B.Tech, M.Tech & Skill Development Courses',
+  image: nielit,
+  description: 'NIELIT Agartala is an autonomous institute under the Ministry of Electronics and Information Technology (MeitY), Government of India. Established in 2009, the institute offers quality education, professional training, research, and skill development programs in Electronics, Computer Science, Information Technology, Cyber Security, Artificial Intelligence, Data Science, and related fields.',
+  established: '2009',
+  totalStudents: '1000+',
+  facilities: [
+    'Smart Classrooms',
+    'Computer Laboratories',
+    'AI & Cyber Security Labs',
+    'Digital Library',
+    'Seminar Hall',
+    'Wi-Fi Campus',
+    'Hostel',
+    'Training & Placement Cell'
+  ],
+  contact: {
+    phone: '+91 8794822459',
+    email: 'agartala@nielit.gov.in',
+    address: 'NIELIT Agartala Centre, R.K. Nagar (Opposite NEEPCO), Khayerpur, Agartala, West Tripura - 799008'
+  }
+},
   {
     id: 2,
     name: 'St. Thomas Eng. Med. School',
@@ -78,12 +94,12 @@ const institutionsData = [
 
 // Added Emojis for mobile view matching the design reference
 const categoryTabs = [
-  { id: 'All', label: 'All Institutions', icon: '🏛️' },
-  { id: 'Government', label: 'Government', icon: '🏦' },
-  { id: 'Private', label: 'Private', icon: '🏫' },
-  { id: 'Primary', label: 'Primary', icon: '🎒' },
-  { id: 'High School', label: 'High School', icon: '🎓' },
-  { id: 'Higher Secondary', label: 'Higher Secondary', icon: '📚' },
+  { id: 'All', label: 'All Institutions', icon: '' },
+  { id: 'Government', label: 'Government', icon: '' },
+  { id: 'Private', label: 'Private', icon: '' },
+  { id: 'Primary', label: 'Primary', icon: '' },
+  { id: 'High School', label: 'High School', icon: '' },
+  { id: 'Higher Secondary', label: 'Higher Secondary', icon: '' },
 ];
 
 const containerVariants = {
@@ -152,7 +168,7 @@ const Institutions = () => {
       <div className="max-w-[1350px] mx-auto pt-4 md:pt-6 px-4 sm:px-6 lg:px-8">
         <div className="mb-4">
           <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight" style={{ fontFamily: "'Clicker Script', cursive, sans-serif" }}>
-            Next Months Are Available Institutions Directory
+            NEXT MONTHS ARE AVAILABLE INSTITUTIONS DIRECTORY
           </h1>
           <p className="text-slate-500 text-xs sm:text-sm font-medium mt-1">
             Find and explore the best schools, colleges and Coaching Centres across India
@@ -194,12 +210,70 @@ const Institutions = () => {
               </div>
               <div className="col-span-2">
                 <select value={selectedState} onChange={(e) => setSelectedState(e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-xl text-xs sm:text-sm font-medium text-slate-700 outline-none border border-slate-200 focus:border-yellow-500 transition-all cursor-pointer">
-                  <option value="All">All States</option><option value="Tripura">Tripura</option><option value="Assam">Assam</option>
+                  <option value="All">All States</option>
+                  <option value="Tripura">Tripura</option>
+                  <option value="Assam">Assam</option>
+                  <option value ="Arunachal Pradesh">Arunachal Pradesh</option>
+                  <option value ="Bihar">Bihar</option>
+                  <option value ="Chhattisgarh">Chhattisgarh</option>
+                  <option value ="Goa">Goa</option>
+                  <option value ="Gujarat">Gujarat</option>
+                  <option value ="Haryana">Haryana</option>
+                  <option value ="Himachal Pradesh">Himachal Pradesh</option>
+                  <option value ="Jharkhand">Jharkhand</option>
+                  <option value ="Karnataka">Karnataka</option>
+                  <option value ="Kerala">Kerala</option>
+                  <option value ="Madhya Pradesh">Madhya Pradesh</option>
+                  <option value ="Maharashtra">Maharashtra</option>
+                  <option value ="Manipur">Manipur</option>
+                  <option value ="Meghalaya">Meghalaya</option>
+                  <option value ="Mizoram">Mizoram</option>
+                  <option value ="Nagaland">Nagaland</option>
+                  <option value ="Odisha">Odisha</option>
+                  <option value ="Punjab">Punjab</option>
+                  <option value ="Rajasthan">Rajasthan</option>
+                  <option value ="Sikkim">Sikkim</option>
+                  <option value ="Tamil Nadu">Tamil Nadu</option>
+                  <option value ="Telangana">Telangana</option>
+        
+                  <option value ="Uttar Pradesh">Uttar Pradesh</option>
+                  <option value ="Uttarakhand">Uttarakhand</option>
+                  <option value ="West Bengal">West Bengal</option>
+                  
+
                 </select>
               </div>
               <div className="col-span-2">
                 <select value={selectedDistrict} onChange={(e) => setSelectedDistrict(e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-xl text-xs sm:text-sm font-medium text-slate-700 outline-none border border-slate-200 focus:border-yellow-500 transition-all cursor-pointer">
-                  <option value="All">All Districts</option><option value="Dhalai">Dhalai</option><option value="West Tripura">West Tripura</option>
+                  <option value="All">All Districts</option>
+                  <option value="West Tripura">West Tripura</option>
+                  <option value="Dhalai">Dhalai</option>
+                  <option value="South Tripura">South Tripura</option>
+                  <option value="North Tripura">North Tripura</option>
+                  <option value="Khowai">Khowai</option>
+                  <option value="Sepahijala">Sepahijala</option>
+                  <option value="Gomati">Gomati</option>
+                  <option value="Unakoti">Unakoti</option>
+                  <option value="Itanagar">Itanagar</option>
+                  <option value="Aizawl">Aizawl</option>
+                  <option value="Kohima">Kohima</option>
+                  <option value="Imphal">Imphal</option>
+                  <option value="Shillong">Shillong</option>
+                  < option value="Agartala">Agartala</option>
+                  < option value="Gangtok">Gangtok</option>
+                  < option value="Dispur">Dispur</option>
+                  < option value="Patna">Patna</option>
+                  < option value="Raipur">Raipur</option>
+                  < option value="Panaji">Panaji</option>
+                  < option value="Gandhinagar">Gandhinagar</option>
+                  < option value="Chandigarh">Chandigarh</option>
+                  < option value="Shimla">Shimla</option>
+                  < option value="Ranchi">Ranchi</option>
+                  < option value="Bengaluru">Bengaluru</option>
+                  < option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                  < option value="Bhopal">Bhopal</option>
+                  < option value="Mumbai">Mumbai</option>
+            
                 </select>
               </div>
               <div className="col-span-2">
@@ -269,13 +343,52 @@ const Institutions = () => {
                   <div>
                     <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5 tracking-wider">State</label>
                     <select value={selectedState} onChange={(e) => setSelectedState(e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-xl text-sm font-medium text-slate-700 outline-none border border-slate-200 focus:border-yellow-400 appearance-none">
-                      <option value="All">All States</option><option value="Tripura">Tripura</option><option value="Assam">Assam</option>
+                      <option value="All">All States</option>
+                      <option value="Tripura">Tripura</option>
+                      <option value="Assam">Assam</option>
+                      < option value ="Arunachal Pradesh">Arunachal Pradesh</option>
+                      <option value ="Bihar">Bihar</option>
+                      <option value ="Chhattisgarh">Chhattisgarh</option>
+                      < option value ="Goa">Goa</option>
+                      <option value ="Gujarat">Gujarat</option>
+                      <option value ="Haryana">Haryana</option>
+                      < option value ="Himachal Pradesh">Himachal Pradesh</option>
+                      <option value ="Jharkhand">Jharkhand</option>
+                      < option value ="Karnataka">Karnataka</option>
+                      < option value ="Kerala">Kerala</option>
+                      < option value ="Madhya Pradesh">Madhya Pradesh</option>
+                      < option value ="Maharashtra">Maharashtra</option>
+                      < option value ="Manipur">Manipur</option>
+                      < option value ="Meghalaya">Meghalaya</option>
+                      < option value ="Mizoram">Mizoram</option>
+                      < option value ="Nagaland">Nagaland</option>
+                      < option value ="Odisha">Odisha</option>
+                      < option value ="Punjab">Punjab</option>
+                      < option value ="Rajasthan">Rajasthan</option>
+                      < option value ="Sikkim">Sikkim</option>
+                      < option value ="Tamil Nadu">Tamil Nadu</option>
+                      < option value ="Telangana">Telangana</option>
+
                     </select>
                   </div>
                   <div>
                     <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5 tracking-wider">District</label>
                     <select value={selectedDistrict} onChange={(e) => setSelectedDistrict(e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-xl text-sm font-medium text-slate-700 outline-none border border-slate-200 focus:border-yellow-400 appearance-none">
-                      <option value="All">All Districts</option><option value="Dhalai">Dhalai</option><option value="West Tripura">West Tripura</option>
+                      <option value="All">All Districts</option>
+                   <option value="West Tripura">West Tripura</option>
+                   < option value="Dhalai">Dhalai</option>
+                   < option value="South Tripura">South Tripura</option>
+                   < option value="North Tripura">North Tripura</option>
+                   < option value="Khowai">Khowai</option>
+                   < option value="Sepahijala">Sepahijala</option>
+                   < option value="Gomati">Gomati</option>
+                   < option value="Unakoti">Unakoti</option>
+                   < option value="Itanagar">Itanagar</option>
+                   < option value="Aizawl">Aizawl</option>
+                   < option value="Kohima">Kohima</option>
+                   < option value="Imphal">Imphal</option>
+                   <  option value="Shillong">Shillong</option>
+                   < option value="Agartala">Agartala</option>
                     </select>
                   </div>
                   <div>
