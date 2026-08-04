@@ -365,42 +365,65 @@ const Hackathons = () => {
         /* 🔵 ORIGINAL HACKATHONS LIST VIEW (Rendered by default)    */
         /* ========================================================= */
         <>
-          {/* 1. HERO BANNER SECTION */}
-          <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-            <div className="relative w-full aspect-[4/3] md:aspect-auto md:h-[450px] rounded-3xl overflow-hidden bg-gray-900 shadow-xl group perspective-[1000px]">
-              {banners.map((img, index) => (
-                <div
-                  key={index}
-                  className={`absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
-                    index === currentSlide ? "opacity-50" : "opacity-0"
-                  }`}
-                  style={{ backgroundImage: `url(${img})` }}
-                />
-              ))}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent flex flex-col justify-center px-6 md:px-16">
-               
-                <h1 className="text-3xl md:text-6xl font-black text-white leading-tight mb-4 flex flex-wrap gap-x-4">
-                  <span className="animate-text-3d" style={{ animationDelay: '0.1s' }}>EXPLORE</span>
-                  <span className="animate-text-3d" style={{ animationDelay: '0.3s' }}>THE</span>
-                  <span className="animate-text-3d" style={{ animationDelay: '0.5s' }}>BEST</span>
-                  <span className="animate-text-3d text-[#f5a623] w-full mt-1" style={{ animationDelay: '0.7s' }}>HACKATHONS</span>
-                </h1>
-                <p className="text-gray-300 max-w-lg text-sm md:text-lg mb-8 font-medium animate-text-3d" style={{ animationDelay: '0.9s' }}>
-                  Find hackathons across the globe. Build solutions, win prizes and create impact with your ideas.
-                </p>
-                <div className="animate-text-3d" style={{ animationDelay: '1.1s' }}>
-                  <button className="bg-[#f5a623] hover:bg-yellow-500 text-black font-bold py-3 px-8 rounded-lg shadow-lg shadow-yellow-500/20 transition-transform active:scale-95 flex items-center gap-2 text-sm md:text-base">
-                    EXPLORE HACKATHONS <span>→</span>
-                  </button>
-                </div>
-              </div>
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-                {banners.map((_, i) => (
-                  <div key={i} className={`h-1.5 rounded-full transition-all ${i === currentSlide ? "w-8 bg-[#f5a623]" : "w-2 bg-white/40"}`} />
-                ))}
-              </div>
-            </div>
-          </div>
+         
+         {/* 1. HERO BANNER SECTION */}
+<div className="max-w-[1440px] mx-auto p-4 lg:p-6">
+  {/* Smooth Animation CSS - Isko code me hi rehne do, config me add karne ki jarurat nahi */}
+  <style>
+    {`
+      @keyframes smoothFadeUp {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+      .animate-word {
+        opacity: 0;
+        animation: smoothFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+    `}
+  </style>
+
+  <div className="relative w-full h-[240px] sm:h-[320px] md:h-[400px] rounded-[24px] md:rounded-[30px] overflow-hidden shadow-2xl group perspective-[1000px]">
+    {banners.map((img, index) => (
+      <div
+        key={index}
+        // FIX 1: "opacity-50" ko "opacity-100" kar diya hai taaki image ekdum clear dikhe
+        className={`absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
+          index === currentSlide ? "opacity-100" : "opacity-0"
+        }`}
+        style={{ backgroundImage: `url(${img})` }}
+      />
+    ))}
+    
+    {/* Gradient ko thoda light kiya center se (via-black/40) taaki banner image aur chamke */}
+    <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent flex flex-col justify-center px-6 md:px-16">
+      
+      {/* FIX 2: Smooth word-by-word animation timings (0.1s, 0.2s, 0.3s...) */}
+      <h1 className="text-3xl md:text-6xl font-black text-white leading-tight mb-4 flex flex-wrap gap-x-3 overflow-hidden">
+        <span className="animate-word" style={{ animationDelay: '0.1s' }}>EXPLORE</span>
+        <span className="animate-word" style={{ animationDelay: '0.2s' }}>THE</span>
+        <span className="animate-word" style={{ animationDelay: '0.3s' }}>BEST</span>
+        <span className="animate-word text-[#f5a623] w-full mt-1" style={{ animationDelay: '0.4s' }}>HACKATHONS</span>
+      </h1>
+      
+      <p className="text-gray-200 max-w-lg text-sm md:text-lg mb-8 font-medium animate-word" style={{ animationDelay: '0.6s' }}>
+        Find hackathons across the globe. Build solutions, win prizes and create impact with your ideas.
+      </p>
+      
+      <div className="animate-word" style={{ animationDelay: '0.8s' }}>
+        <button className="bg-[#f5a623] hover:bg-yellow-500 text-black font-bold py-3 px-8 rounded-lg shadow-lg shadow-yellow-500/30 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2 text-sm md:text-base group">
+          EXPLORE HACKATHONS <span className="group-hover:translate-x-1 transition-transform">→</span>
+        </button>
+      </div>
+    </div>
+
+    {/* Dots Indicator */}
+    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+      {banners.map((_, i) => (
+        <div key={i} className={`h-1.5 rounded-full transition-all duration-300 ${i === currentSlide ? "w-8 bg-[#f5a623]" : "w-2 bg-white/50 hover:bg-white/80"}`} />
+      ))}
+    </div>
+  </div>
+</div>
 
           {/* 2. SEARCH & TABS SECTION */}
           <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mt-10">

@@ -15,6 +15,7 @@ const Navbar = () => {
   // 🚀 FUTURE SCALE: Yahan naye sections/institutions add karo, search mein automatic aa jayenge
   const searchableItems = [
     { name: "Home", path: "/", type: "Page" },
+    { name: "Institutions", path: "/institutions", type: "Page" },
     { name: "NIELIT Agartala", path: "/institutions", type: "Institution" },
     { name: "Techno College of Engineering Agartala", path: "/institutions", type: "Institution" },
     { name: "NIT Agartala", path: "/institutions", type: "Institution" },

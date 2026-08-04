@@ -403,13 +403,13 @@ const InstitutionsPages = () => {
     <div className="min-h-screen bg-[#F9FAFB] font-sans text-gray-900 pb-20 overflow-x-hidden selection:bg-yellow-300">
       
       {/* 1. HERO SECTION (Banner Slider) */}
-      <div className="max-w-[1350px] mx-auto pt-4 md:pt-6 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto p-4 lg:p-6">
         <motion.div 
           key={institution.id}
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full h-[55vh] md:h-[70vh] rounded-[2rem] overflow-hidden shadow-2xl group"
+          className="relative w-full h-[240px] sm:h-[320px] md:h-[400px] rounded-[24px] md:rounded-[30px] overflow-hidden shadow-2xl group perspective-[1000px]"
         >
           {/* Back Button */}
           <button 
