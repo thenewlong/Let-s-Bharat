@@ -16,7 +16,7 @@ import galleryImg4 from '../assets/images/campus1.jpeg';
 import galleryImg5 from '../assets/images/student.jpeg';
 import galleryImg6 from '../assets/images/campus.jpeg';
 
-import principalImg from '../assets/images/profile.jpeg';
+import principalImg from '../assets/images/nielit-D.jpg';
 
 import startup1 from '../assets/images/startup1.jpeg';
 import startup2 from '../assets/images/startup2.jpeg';
@@ -383,7 +383,7 @@ const InstitutionsPages = () => {
     if (!institution?.bannerImages || institution.bannerImages.length <= 1) return;
     const interval = setInterval(() => {
       setCurrentBannerIndex((prev) => (prev + 1) % institution.bannerImages.length);
-    }, 4000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [institution]);
 
@@ -403,7 +403,7 @@ const InstitutionsPages = () => {
     <div className="min-h-screen bg-[#F9FAFB] font-sans text-gray-900 pb-20 overflow-x-hidden selection:bg-yellow-300">
       
       {/* 1. HERO SECTION (Banner Slider) */}
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <div className="max-w-[1350px] mx-auto pt-4 md:pt-6 px-4 sm:px-6 lg:px-8">
         <motion.div 
           key={institution.id}
           initial={{ opacity: 0, scale: 0.98 }}
@@ -456,7 +456,7 @@ const InstitutionsPages = () => {
                 Follow
               </button>
               <button className="px-8 py-3 rounded-full bg-[#FFB800] text-black hover:bg-[#e5a600] transition-colors font-bold shadow-lg">
-                Contact School
+                Contact Us
               </button>
             </div>
           </div>
@@ -464,62 +464,156 @@ const InstitutionsPages = () => {
       </div>
 
       <div className="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 mt-12 space-y-16">
+
+
+       {/* 2. STUDENT & FACULTY STATISTICS (GRAPH + CARDS) */}
+       <motion.section 
+       variants={fadeUp} 
+       initial="hidden" 
+       whileInView="visible" 
+       viewport={{ once: true, amount: 0.1 }}
+       className="relative"
+>
+  {/* Section Header */}
+  <div className="flex items-center justify-between mb-8">
+    <h2 className="text-xl md:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+      <span className="w-1.5 h-7 bg-gradient-to-b from-amber-400 to-amber-500 rounded-full shadow-sm"></span> 
+      Student & Faculty Analytics
+    </h2>
+    <span className="hidden sm:inline-block px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-600 border border-slate-200">
+      Live Metrics
+    </span>
+  </div>
+  
+  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    
+    {/* Left Side: Graphs (7 Columns) */}
+    <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      {/* 🎓 Student Graph Card */}
+      <div className="bg-white rounded-3xl p-6 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.05)] border border-slate-100 flex flex-col justify-between hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden group">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-all"></div>
         
-        {/* 2. STUDENT & FACULTY STATISTICS (GRAPH + CARDS) */}
-        <motion.section variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-          <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
-            <span className="w-1 h-6 bg-yellow-400 rounded-full"></span> Student & Faculty Statistics
-          </h2>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            {/* Left Side: Graphs */}
-            <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Student Graph Card */}
-              <div className="bg-white rounded-[1.5rem] p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-slate-100">
-                <p className="text-sm text-slate-500 font-bold uppercase mb-1 flex items-center gap-2"><span className="text-xl"></span> TOTAL STUDENTS</p>
-                <h3 className="text-4xl font-extrabold text-slate-900 mb-6">{institution.totalStudents}</h3>
-                <div className="flex justify-between text-sm font-semibold text-slate-700 mb-2">
-                  <span>Boys: {institution.stats.boys}</span>
-                  <span>Girls: {institution.stats.girls}</span>
-                </div>
-                {/* Visual Bar */}
-                <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden flex mb-2">
-                  <div className="bg-gray-500 h-full transition-all duration-700" style={{ width: `${boyPct}%` }}></div>
-                  <div className="bg-yellow-500 h-full transition-all duration-700" style={{ width: `${girlPct}%` }}></div>
-                </div>
-                <div className="text-center text-xs font-semibold text-slate-500">
-                  {boyPct}% Boys · {girlPct}% Girls
-                </div>
-              </div>
-
-              {/* Faculty Graph Card */}
-              <div className="bg-white rounded-[1.5rem] p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-slate-100">
-                <p className="text-sm text-slate-500 font-bold uppercase mb-1 flex items-center gap-2"><span className="text-xl"></span> TOTAL FACULTY</p>
-                <h3 className="text-4xl font-extrabold text-slate-900 mb-6">{institution.facultyCount}</h3>
-                <div className="flex justify-between text-sm font-semibold text-slate-700 mb-2">
-                  <span>Male: {institution.stats.maleFaculty}</span>
-                  <span>Female: {institution.stats.femaleFaculty}</span>
-                </div>
-                {/* Visual Bar */}
-                <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden flex mb-2">
-                  <div className="bg-gray-500 h-full transition-all duration-700" style={{ width: `${maleFacPct}%` }}></div>
-                  <div className="bg-yellow-500 h-full transition-all duration-700" style={{ width: `${femaleFacPct}%` }}></div>
-                </div>
-                <div className="text-center text-xs font-semibold text-slate-500">
-                  {maleFacPct}% Male · {femaleFacPct}% Female
-                </div>
-              </div>
-            </div>
-
-            {/* Right Side: 4 Stats Cards Grid */}
-            <div className="lg:col-span-5 grid grid-cols-2 gap-4">
-              <StatCard icon="" title="CLASSES OFFERED" value={institution.classes} />
-              <StatCard icon="" title="ESTABLISHED" value={institution.established} />
-              <StatCard icon="" title="TOTAL STUDENTS" value={`${institution.totalStudents}+`} />
-              <StatCard icon="" title="FACULTY MEMBERS" value={`${institution.facultyCount}+`} />
-            </div>
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+              <span></span> Total Enrolled
+            </p>
+            <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-100">
+              Students
+            </span>
           </div>
-        </motion.section>
+
+          <h3 className="text-4xl font-black text-slate-900 mb-6 tracking-tight">
+            {institution.totalStudents?.toLocaleString()}
+          </h3>
+          
+          <div className="flex justify-between items-center text-xs font-bold text-slate-600 mb-2">
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
+              Boys: <strong className="text-slate-900">{institution.stats.boys}</strong>
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+              Girls: <strong className="text-slate-900">{institution.stats.girls}</strong>
+            </span>
+          </div>
+        </div>
+        
+        {/* Animated Progress Bar */}
+        <div className="mt-2">
+          <div className="w-full h-3.5 bg-slate-100 rounded-full p-0.5 flex overflow-hidden shadow-inner">
+            <motion.div 
+              className="bg-gradient-to-r from-indigo-500 to-indigo-600 h-full rounded-l-full" 
+              initial={{ width: 0 }}
+              whileInView={{ width: `${boyPct}%` }}
+              viewport={{ once: true }}
+              transition={{ duration: 3.2, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+            />
+            <motion.div 
+              className="bg-gradient-to-r from-rose-400 to-rose-500 h-full rounded-r-full" 
+              initial={{ width: 0 }}
+              whileInView={{ width: `${girlPct}%` }}
+              viewport={{ once: true }}
+              transition={{ duration: 4.2, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+            />
+          </div>
+
+          <div className="flex justify-between items-center mt-2.5 text-[11px] font-extrabold text-slate-500">
+            <span className="text-indigo-600">{boyPct}% Male Ratio</span>
+            <span className="text-rose-500">{girlPct}% Female Ratio</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 👨‍🏫 Faculty Graph Card */}
+      <div className="bg-white rounded-3xl p-6 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.05)] border border-slate-100 flex flex-col justify-between hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden group">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl group-hover:bg-amber-500/10 transition-all"></div>
+        
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+              <span></span> Academic Staff
+            </p>
+            <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+              Faculty
+            </span>
+          </div>
+
+          <h3 className="text-4xl font-black text-slate-900 mb-6 tracking-tight">
+            {institution.facultyCount}
+          </h3>
+          
+          <div className="flex justify-between items-center text-xs font-bold text-slate-600 mb-2">
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-slate-700"></span>
+              Male: <strong className="text-slate-900">{institution.stats.maleFaculty}</strong>
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+              Female: <strong className="text-slate-900">{institution.stats.femaleFaculty}</strong>
+            </span>
+          </div>
+        </div>
+        
+        {/* Animated Progress Bar */}
+        <div className="mt-2">
+          <div className="w-full h-3.5 bg-slate-100 rounded-full p-0.5 flex overflow-hidden shadow-inner">
+            <motion.div 
+              className="bg-gradient-to-r from-slate-700 to-slate-800 h-full rounded-l-full" 
+              initial={{ width: 0 }}
+              whileInView={{ width: `${maleFacPct}%` }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+            />
+            <motion.div 
+              className="bg-gradient-to-r from-amber-400 to-amber-500 h-full rounded-r-full" 
+              initial={{ width: 0 }}
+              whileInView={{ width: `${femaleFacPct}%` }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+            />
+          </div>
+
+          <div className="flex justify-between items-center mt-2.5 text-[11px] font-extrabold text-slate-500">
+            <span className="text-slate-700">{maleFacPct}% Male</span>
+            <span className="text-amber-600">{femaleFacPct}% Female</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    {/* Right Side: 4 Stats Cards Grid (5 Columns) */}
+    <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <StatCard icon="📚" title="CLASSES OFFERED" value={institution.classes} />
+      <StatCard icon="🏛️" title="ESTABLISHED" value={institution.established} />
+      <StatCard icon="👨‍🎓" title="TOTAL STUDENTS" value={`${institution.totalStudents}+`} />
+      <StatCard icon="👨‍🏫" title="FACULTY MEMBERS" value={`${institution.facultyCount}+`} />
+    </div>
+
+  </div>
+</motion.section>
 
         {/* 3. ABOUT INSTITUTION */}
         <motion.section variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="border-t border-slate-200 pt-10">
@@ -712,16 +806,43 @@ const InstitutionsPages = () => {
 };
 
 // Helper Component for the 4 Right-Side Stats Cards
-const StatCard = ({ icon, title, value }) => (
-  <div className="bg-white border border-slate-100 p-5 rounded-[1.5rem] flex items-center gap-4 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)]">
-    <div className="w-12 h-12 rounded-full bg-[#FFF9E5] flex items-center justify-center text-2xl shrink-0">
-      {icon}
+// 🌟 ULTRA-PREMIUM STAT CARD COMPONENT WITH AUTO-TAGS FOR LONG TEXT
+const StatCard = ({ icon, title, value }) => {
+  // Check if value is comma-separated string (e.g., courses list)
+  const isList = typeof value === 'string' && value.includes(',');
+
+  return (
+    <div className="bg-white/80 backdrop-blur-md rounded-2xl p-4 md:p-5 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.05)] border border-slate-100 hover:border-slate-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+      <div>
+        <div className="flex items-center gap-2.5 mb-2.5">
+          <div className="w-8 h-8 md:w-9 md:h-9 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-lg shrink-0 group-hover:scale-110 transition-transform">
+            {icon}
+          </div>
+          <p className="text-[10px] md:text-xs font-extrabold tracking-wider text-slate-400 uppercase leading-none">
+            {title}
+          </p>
+        </div>
+
+        {/* If comma separated list (like Classes/Courses), render as dynamic badges */}
+        {isList ? (
+          <div className="flex flex-wrap gap-1.5 mt-1 max-h-[85px] overflow-y-auto pr-1">
+            {value.split(',').map((item, i) => (
+              <span 
+                key={i} 
+                className="px-2 py-0.5 text-[11px] font-bold bg-slate-100 text-slate-700 rounded-lg border border-slate-200/80 tracking-tight leading-snug hover:bg-slate-900 hover:text-white transition-colors"
+              >
+                {item.trim()}
+              </span>
+            ))}
+          </div>
+        ) : (
+          <p className="text-lg md:text-2xl font-black text-slate-900 tracking-tight break-words">
+            {value}
+          </p>
+        )}
+      </div>
     </div>
-    <div>
-      <p className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wide mb-0.5">{title}</p>
-      <h4 className="text-base sm:text-lg font-extrabold text-slate-900">{value}</h4>
-    </div>
-  </div>
-);
+  );
+};
 
 export default InstitutionsPages;

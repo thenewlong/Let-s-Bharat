@@ -167,7 +167,7 @@ const Institutions = () => {
       {/* HEADER & HERO BANNER SLIDER */}
       <div className="max-w-[1350px] mx-auto pt-4 md:pt-6 px-4 sm:px-6 lg:px-8">
         <div className="mb-4">
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight" style={{ fontFamily: "'Clicker Script', cursive, sans-serif" }}>
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             NEXT MONTHS ARE AVAILABLE INSTITUTIONS DIRECTORY
           </h1>
           <p className="text-slate-500 text-xs sm:text-sm font-medium mt-1">
