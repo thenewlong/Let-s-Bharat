@@ -416,7 +416,7 @@ const InstitutionsPages = () => {
             onClick={() => navigate(-1)} 
             className="absolute top-6 left-6 z-20 flex items-center gap-2 bg-black/40 hover:bg-black/70 backdrop-blur-md text-white px-4 py-1.5 rounded-full font-bold text-sm transition-all border border-white/20 shadow-lg"
           >
-            <svg className="w-2 h-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            <svg className="w-1 h-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
             Back
           </button>
 

@@ -100,7 +100,7 @@ const Internships = () => {
           </div>
           
           <h2 className="text-3xl font-black text-gray-900 mb-4 uppercase tracking-tight">
-            Internships Coming Soon!
+            Internships Coming Soon 
           </h2>
           
           <p className="text-gray-500 font-medium mb-10 max-w-lg mx-auto">
