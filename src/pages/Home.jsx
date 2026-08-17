@@ -798,7 +798,7 @@ const Home = () => {
           
           <button 
             ref={tournamentButtonRef}
-            onClick={() => navigate('/tournaments')}
+            onClick={() => navigate('/learninghub')}
             // React Event Handlers (Error Free Logic)
             onMouseEnter={tournaEnter}
             onMouseLeave={tournaLeave}
@@ -809,7 +809,7 @@ const Home = () => {
             className="group relative inline-flex items-center justify-center px-6 py-3.5 md:px-8 md:py-4 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full font-medium transition-colors duration-300 hover:bg-white hover:text-black overflow-hidden"
           >
             <span className="relative z-10 flex items-center gap-2.5 tracking-[0.15em] uppercase text-xs md:text-sm">
-              Explore Tournaments
+              Explore Learning Hub
               <svg className="w-4 h-4 md:w-5 md:h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
@@ -963,7 +963,7 @@ const Home = () => {
                   <span>✉</span> newlongdebbarma143@gmail.com
                 </a>
                 <a href="tel:+919876543210" className="flex items-center gap-3 text-gray-400 hover:text-[#ffcc00] transition-colors text-xs font-medium tracking-wide">
-                  <span>📞</span> +91 7630808203
+                  <span>📞</span> +91 XXXX203
                 </a>
                 <div className="flex items-center gap-3 text-gray-400 text-xs font-medium tracking-wide uppercase">
                   <span>📍</span>India

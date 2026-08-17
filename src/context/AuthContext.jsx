@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
   const signup = async (fullName, email, password) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(userCredential.user, { displayName: fullName });
-    // State update kar rahe hain taaki naam turant dikhe
+   
     setUser({ ...userCredential.user, displayName: fullName });
     return userCredential.user;
   };

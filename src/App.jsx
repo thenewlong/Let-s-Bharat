@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import Auth from './pages/Auth'; 
 import Hackathons from './pages/Hackathons'; 
 import Internships from './pages/Internships'; 
-import Tournaments from './pages/Tournaments'; 
+import Learninghub from './pages/Learninghub'; 
 import Institutions from './pages/Institutions'; 
 import InstitutionsPages from './pages/InstitutionsPages';
 import Resources from './pages/Resources';
@@ -31,7 +31,7 @@ function App() {
           <Route path="/auth" element={<Auth />} />
           <Route path="/hackathons" element={<Hackathons />} />
           <Route path="/internships" element={<Internships />} /> 
-          <Route path="/tournaments" element={<Tournaments />} /> 
+          <Route path="/learninghub" element={<Learninghub />} /> 
           
           {/* 👇 Yahan lowercase aur exact match kar diya hai */}
           <Route path="/institutions" element={<Institutions />} />
@@ -43,8 +43,8 @@ function App() {
           <Route path="/profile" element={<Profile />} /> 
         
           {/* Naye Privacy Policy aur Terms of Service ke routes */}
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+          <Route path="/termsofservice" element={<TermsOfService />} />
         </Routes>
       </Router>
     </AuthProvider>
