@@ -33,8 +33,8 @@ import mobileVio from '../assets/videos/poo.mp4';
 
 
 //tournaments
-import desktopVeo from '../assets/videos/lap0000.mp4';
-import mobileVeo from '../assets/videos/pooo.mp4';
+import desktopVeo from '../assets/videos/learn001.mp4';
+import mobileVeo from '../assets/videos/learn002.mp4';
 
 
 
