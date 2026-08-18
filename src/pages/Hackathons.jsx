@@ -167,9 +167,9 @@ const Hackathons = () => {
       mode: "Online",
       teamSize: "2 - 5 Members",
       tags: ["Productivity", "Education", "Machine Langauage"],
-      status: "ONGOING",
-      statusColor: "bg-purple-500",
-      category: "ONGOING",
+      status: "FEATURED",
+      statusColor: "bg-yellow-500",
+      category: "FEATURED",
       addedOn: "2026-07-22",
       image: hack3,
       link: "https://xprize.devpost.com/?ref_feature=challenge&ref_medium=homepage-recommended-hackathons",
@@ -189,7 +189,7 @@ const Hackathons = () => {
       teamSize: "1 - 4 Members",
       tags: ["MARKETPLACE", "AI API", "PROBLEM SLOVING"],
       status: "UPCOMING",
-      statusColor: "bg-emerald-500",
+      statusColor: "bg-purple-500",
       category: "UPCOMING",
       addedOn: "2026-06-14",
       image: hack4,
@@ -399,10 +399,10 @@ const Hackathons = () => {
       
       {/* FIX 2: Smooth word-by-word animation timings (0.1s, 0.2s, 0.3s...) */}
       <h1 className="text-3xl md:text-6xl font-black text-white leading-tight mb-4 flex flex-wrap gap-x-3 overflow-hidden">
-        <span className="animate-word" style={{ animationDelay: '0.1s' }}>EXPLORE</span>
-        <span className="animate-word" style={{ animationDelay: '0.2s' }}>THE</span>
-        <span className="animate-word" style={{ animationDelay: '0.3s' }}>BEST</span>
-        <span className="animate-word text-[#f5a623] w-full mt-1" style={{ animationDelay: '0.4s' }}>HACKATHONS</span>
+        <span className="animate-word" style={{ animationDelay: '0.1s' }}>Explore</span>
+        <span className="animate-word" style={{ animationDelay: '0.2s' }}>The</span>
+        <span className="animate-word" style={{ animationDelay: '0.3s' }}>Best</span>
+        <span className="animate-word text-[#f5a623] w-full mt-1" style={{ animationDelay: '0.4s' }}>Hackathons</span>
       </h1>
       
       <p className="text-gray-200 max-w-lg text-sm md:text-lg mb-8 font-medium animate-word" style={{ animationDelay: '0.6s' }}>
@@ -410,7 +410,7 @@ const Hackathons = () => {
       </p>
       
       <div className="animate-word" style={{ animationDelay: '0.8s' }}>
-        <button className="bg-[#f5a623] hover:bg-yellow-500 text-black font-bold py-3 px-8 rounded-lg shadow-lg shadow-yellow-500/30 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2 text-sm md:text-base group">
+        <button className="bg-[#f5a623] hover:bg-yellow-500 text-black font-bold py-2 px-5 rounded-lg shadow-lg shadow-yellow-500/30 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2 text-sm md:text-base group">
           EXPLORE HACKATHONS <span className="group-hover:translate-x-1 transition-transform">→</span>
         </button>
       </div>

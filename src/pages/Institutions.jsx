@@ -9,7 +9,7 @@ import banner3 from '../assets/images/ban3.jpeg';
 
 //cards images
 import nielit from '../assets/images/nielit.jpeg';
-
+import igj from '../assets/images/igj.webp';
 const bannerSlides = [banner1, banner2, banner3];
 
 const institutionsData = [
@@ -43,21 +43,31 @@ const institutionsData = [
   }
 },
   {
-    id: 2,
-    name: 'St. Thomas Eng. Med. School',
-    type: 'Private',
-    badgeColor: 'bg-purple-100 text-purple-800 border-purple-200',
-    state: 'Tripura',
-    district: 'Dhalai',
-    location: 'Dhalai, Tripura',
-    classes: 'Classes: 1 - 12',
-    image: 'https://images.unsplash.com/photo-154182907084a7d30dd3f3?auto=format&fit=crop&w=800&q=80',
-    description: 'St. Thomas English Medium School offers world-class education, state-of-the-art computer labs, and focus on extracurricular activities for competitive excellence.',
-    established: '2005',
-    totalStudents: '1200+',
-    facilities: ['AC Computer Labs', 'Robotics Club', 'Indoor Sports Complex', 'Auditorium', 'School Bus Service'],
-    contact: { phone: '+91 91234 56789', email: 'info@stthomasschool.ac.in', address: 'Main Road, Dhalai, Tripura - 799275' }
-  },
+  id: 2,
+  name: 'Independent Golden Jubilee Government Higher Secondary School, Pasighat',
+  type: 'Government',
+  badgeColor: 'bg-green-100 text-green-800 border-green-200',
+  state: 'Arunachal Pradesh',
+  district: 'East Siang',
+  location: 'Pasighat, East Siang, Arunachal Pradesh',
+  classes: 'Classes: 1 - 12',
+  image: igj,
+  description: 'Independent Golden Jubilee Government Higher Secondary School, Pasighat is one of the oldest schools in Arunachal Pradesh. The school is recognised by CBSE, New Delhi, and offers Humanities, Commerce, and Science streams with a focus on learning and service.',
+  established: '1947',
+  totalStudents: '1,760+',
+  facilities: [
+    'Science Stream',
+    'Commerce Stream',
+    'Humanities Stream',
+    'Higher Secondary Education',
+    'CBSE Recognised'
+  ],
+  contact: {
+    phone: '',
+    email: '',
+    address: 'Pasighat, East Siang District, Arunachal Pradesh, India'
+  }
+},
   {
     id: 3,
     name: 'Chandpur Hs School',
@@ -426,11 +436,11 @@ const Institutions = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-black text-lg">🏫</div>
-            <div><h4 className="text-base sm:text-xl font-bold text-slate-900">00+</h4><p className="text-[10px] sm:text-xs font-medium text-slate-400 uppercase tracking-wide">Total Institutions</p></div>
+            <div><h4 className="text-base sm:text-xl font-bold text-slate-900">02+</h4><p className="text-[10px] sm:text-xs font-medium text-slate-400 uppercase tracking-wide">Total Institutions</p></div>
           </div>
           <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-black text-lg">🏦</div>
-            <div><h4 className="text-base sm:text-xl font-bold text-slate-900">00+</h4><p className="text-[10px] sm:text-xs font-medium text-slate-400 uppercase tracking-wide">Government</p></div>
+            <div><h4 className="text-base sm:text-xl font-bold text-slate-900">02+</h4><p className="text-[10px] sm:text-xs font-medium text-slate-400 uppercase tracking-wide">Government</p></div>
           </div>
           <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-black text-lg">🎓</div>
