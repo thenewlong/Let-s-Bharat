@@ -18,7 +18,7 @@ import video4 from '../assets/videos/hero2.mp4';
 
 // Institution ke liye videos (Apne folder ke hisaab se path aur naam theek kar lena)
 import desktopInstitutionVideo from '../assets/videos/inst4.mp4';
-import mobileInstitutionVideo from '../assets/videos/inst3.mp4';
+import mobileInstitutionVideo from '../assets/videos/inst001.mp4';
 
 
 //hackathons
