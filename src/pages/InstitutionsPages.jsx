@@ -9,6 +9,10 @@ import ne from '../assets/images/ne.jpeg';
 import n1 from '../assets/images/n1.jpeg';
 import n2 from '../assets/images/n2.jpeg';
 
+import igl from '../assets/images/gate.webp';
+import igl1 from '../assets/images/igl01.webp';
+import igl2 from '../assets/images/igl02.webp';
+
 import galleryImg1 from '../assets/images/lab.jpeg';
 import galleryImg2 from '../assets/images/play.jpeg';
 import galleryImg3 from '../assets/images/e.jpeg';
@@ -16,7 +20,19 @@ import galleryImg4 from '../assets/images/campus1.jpeg';
 import galleryImg5 from '../assets/images/student.jpeg';
 import galleryImg6 from '../assets/images/campus.jpeg';
 
+
+
+import iglgalleryImg1 from '../assets/images/gate.webp';
+import iglgalleryImg2 from '../assets/images/students.webp';
+import iglgalleryImg3 from '../assets/images/iglcampus.webp';
+import iglgalleryImg4 from '../assets/images/class.webp';
+import iglgalleryImg5 from '../assets/images/igl01.webp';
+import iglgalleryImg6 from '../assets/images/igl02.webp';
+
+
 import principalImg from '../assets/images/nielit-D.jpg';
+
+import iglprincipalImg from '../assets/images/igl-d.jpeg';
 
 import startup1 from '../assets/images/startup1.jpeg';
 import startup2 from '../assets/images/startup2.jpeg';
@@ -128,19 +144,19 @@ const institutionsData = [
     facultyCount: 56,
     description:
       'Independent Golden Jubilee Government Higher Secondary School, Pasighat is a historic government higher secondary school located in Pasighat, East Siang district of Arunachal Pradesh. The school is recognised by CBSE, New Delhi, and offers Humanities, Commerce, and Science streams. With a long educational heritage and the motto "Come to learn, go to serve", the institution focuses on academic development, student growth, discipline, and service to society.',
-    bannerImages: [ne, n1, n2], // Added fallback banner images for the map function
+    bannerImages: [igl, igl1, igl2], // Added fallback banner images for the map function
     gallery: [
-      { id: 1, type: 'photo', url: galleryImg1, title: 'School Campus' },
-      { id: 2, type: 'photo', url: galleryImg2, title: 'School Building' },
-      { id: 3, type: 'photo', url: galleryImg3, title: 'School Entrance' },
-      { id: 4, type: 'photo', url: galleryImg4, title: 'Campus View' },
-      { id: 5, type: 'photo', url: galleryImg5, title: 'Students' },
-      { id: 6, type: 'photo', url: galleryImg6, title: 'School Activities' }
+      { id: 1, type: 'photo', url: iglgalleryImg1, title: 'School Campus' },
+      { id: 2, type: 'photo', url: iglgalleryImg2, title: 'School Classroom' },
+      { id: 3, type: 'photo', url: iglgalleryImg3, title: 'Group Photo' },
+      { id: 4, type: 'photo', url: iglgalleryImg4, title: 'Classroom View' },
+      { id: 5, type: 'photo', url: iglgalleryImg5, title: 'Students' },
+      { id: 6, type: 'photo', url: iglgalleryImg6, title: 'School Activities' }
     ],
     principal: {
       name: 'Taloh Sir',
       role: 'Principal',
-      image: principalImg,
+      image: iglprincipalImg,
       quote:
         'Come to learn, go to serve — inspiring students through quality education, discipline, knowledge, and a spirit of service to society.',
       features: [
@@ -195,10 +211,10 @@ const institutionsData = [
       { title: 'Come to Learn, Go to Serve', desc: 'The school motto reflects its emphasis on learning, character, and service to society.', icon: '🤝' }
     ],
     alumni: [
-      { name: 'Alumni', role: 'Former Student', quote: 'The institution has provided generations of students with an educational foundation and a strong sense of service.', image: startup1 },
-      { name: 'Alumni', role: 'Former Student', quote: 'The school remains an important part of the educational heritage of Pasighat.', image: startup2 },
-      { name: 'Alumni', role: 'Former Student', quote: 'Its long academic tradition continues to inspire students across generations.', image: startup3 },
-      { name: 'Alumni', role: 'Former Student', quote: 'The motto "Come to learn, go to serve" represents the values of learning and community service.', image: startup4 }
+      { name: 'Uknown', role: 'Former Student', quote: 'The institution has provided generations of students with an educational foundation and a strong sense of service.', image: startup1 },
+      { name: 'Uknown', role: 'Former Student', quote: 'The school remains an important part of the educational heritage of Pasighat.', image: startup2 },
+      { name: 'Uknown', role: 'Former Student', quote: 'Its long academic tradition continues to inspire students across generations.', image: startup3 },
+      { name: 'Uknown', role: 'Former Student', quote: 'The motto "Come to learn, go to serve" represents the values of learning and community service.', image: startup4 }
     ]
   }
 ];
@@ -271,14 +287,7 @@ const InstitutionsPages = () => {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="relative w-full h-[260px] sm:h-[320px] md:h-[400px] rounded-[20px] md:rounded-[30px] overflow-hidden shadow-2xl group perspective-[1000px]"
         >
-          {/* Back Button */}
-          <button 
-            onClick={() => navigate(-1)} 
-            className="absolute top-4 left-4 md:top-6 md:left-6 z-20 flex items-center gap-2 bg-black/40 hover:bg-black/70 backdrop-blur-md text-white px-3 md:px-4 py-1.5 md:py-2 rounded-full font-bold text-xs md:text-sm transition-all border border-white/20 shadow-lg"
-          >
-            <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-            Back
-          </button>
+          
 
           {/* ADDED OPTIONAL CHAINING HERE (?) */}
           {institution?.bannerImages?.map((imgUrl, idx) => (
@@ -313,10 +322,10 @@ const InstitutionsPages = () => {
             
             <div className="flex items-center gap-2.5 md:gap-3">
               <button className="flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-white/50 text-white hover:bg-white hover:text-black transition-colors text-xs md:text-sm font-semibold backdrop-blur-sm">
-                <svg className="w-3 h-3 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                <svg className="w-2 h-2 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
                 Follow
               </button>
-              <button className="px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-[#FFB800] text-black hover:bg-[#e5a600] transition-colors text-xs md:text-sm font-bold shadow-lg">
+              <button className="px-3 py-1.5 md:px-5 md:py-2.5 rounded-full bg-[#FFB800] text-black hover:bg-[#e5a600] transition-colors text-xs md:text-sm font-bold shadow-lg">
                 Contact Us
               </button>
             </div>
