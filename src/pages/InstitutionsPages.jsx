@@ -13,6 +13,10 @@ import igl from '../assets/images/gate.webp';
 import igl1 from '../assets/images/igl01.webp';
 import igl2 from '../assets/images/igl02.webp';
 
+import kvlibary from '../assets/images/kvlibary.jpeg';
+import kvcampus from '../assets/images/kvcampus.webp';
+import kvart from '../assets/images/kvart.jpeg';
+
 import galleryImg1 from '../assets/images/lab.jpeg';
 import galleryImg2 from '../assets/images/play.jpeg';
 import galleryImg3 from '../assets/images/e.jpeg';
@@ -29,10 +33,18 @@ import iglgalleryImg4 from '../assets/images/class.webp';
 import iglgalleryImg5 from '../assets/images/igl01.webp';
 import iglgalleryImg6 from '../assets/images/igl02.webp';
 
+import kvgalleryImg1 from '../assets/images/kvlibary.jpeg';
+import kvgalleryImg2 from '../assets/images/kvcampus.webp';
+import kvgalleryImg3 from '../assets/images/kvact.webp';
+import kvgalleryImg4 from '../assets/images/kvsport.webp';
+import kvgalleryImg5 from '../assets/images/kvacts.webp';
+import kvgalleryImg6 from '../assets/images/kv.webp';
 
 import principalImg from '../assets/images/nielit-D.jpg';
 
-import iglprincipalImg from '../assets/images/igl-d.jpeg';
+import iglprincipalImg from '../assets/images/dp.jpg';
+
+import kvprincipalImg from '../assets/images/dp.jpg';
 
 import startup1 from '../assets/images/startup1.jpeg';
 import startup2 from '../assets/images/startup2.jpeg';
@@ -216,7 +228,145 @@ const institutionsData = [
       { name: 'Uknown', role: 'Former Student', quote: 'Its long academic tradition continues to inspire students across generations.', image: startup3 },
       { name: 'Uknown', role: 'Former Student', quote: 'The motto "Come to learn, go to serve" represents the values of learning and community service.', image: startup4 }
     ]
-  }
+  },
+
+  {
+  id: 3,
+  name: 'Kendriya Vidyalaya NHPC Loktak',
+  type: 'Government',
+  badgeColor: 'bg-blue-100 text-blue-700',
+  state: 'Manipur',
+  district: 'Bishnupur',
+  location: 'NHPC Loktak, Manipur - 795124',
+  classes: 'Balvatika, Classes 1 - 12',
+  established: '1979',
+  totalStudents: 538,
+  facultyCount: 19,
+  description:
+    'Kendriya Vidyalaya NHPC Loktak is a Government CBSE-affiliated school under Kendriya Vidyalaya Sangathan, Ministry of Education, Government of India. Established in 1979, the school provides quality education with a focus on academic excellence, creativity, values, innovation, sports, co-curricular activities, and the overall development of students.',
+
+  bannerImages: [kvlibary, kvcampus, kvart],
+
+  gallery: [
+    { id: 1, type: 'photo', url: kvgalleryImg1, title: 'School Library' },
+    { id: 2, type: 'photo', url: kvgalleryImg2, title: 'School Building' },
+    { id: 3, type: 'photo', url: kvgalleryImg3, title: 'Sports Activities' },
+    { id: 4, type: 'photo', url: kvgalleryImg4, title: 'School Events' },
+    { id: 5, type: 'photo', url: kvgalleryImg5, title: 'Students' },
+    { id: 6, type: 'photo', url: kvgalleryImg6, title: 'Campus View' }
+  ],
+
+  principal: {
+    name: 'Mr. Wahengbam Kumarjit Singh',
+    role: 'I/C Principal',
+    image: kvprincipalImg,
+    quote:
+      'Education plays an important role in every person’s personality development. The Vidyalaya provides students with opportunities for academic learning, personal growth, creativity, and overall development.',
+    features: [
+      'Academic Excellence',
+      'Holistic Development',
+      'Student Development'
+    ]
+  },
+
+  facilities: [
+    {
+      title: 'Science Laboratories',
+      desc: 'Laboratory-based learning facilities supporting science education and practical activities.',
+      icon: 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z',
+      color: 'text-purple-500'
+    },
+    {
+      title: 'Computer Education',
+      desc: 'Computer Science and Informatics Practices education for senior secondary students.',
+      icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+      color: 'text-blue-500'
+    },
+    {
+      title: 'Library',
+      desc: 'Library resources supporting students in their academic learning and reading activities.',
+      icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
+      color: 'text-teal-500'
+    },
+    {
+      title: 'Sports & Games',
+      desc: 'Sports and physical activities including inter-house competitions and student participation.',
+      icon: 'M3 3h18v18H3z',
+      color: 'text-green-500'
+    },
+    {
+      title: 'Little Open Library',
+      desc: 'A school innovation promoting reading habits and easy access to books for students.',
+      icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253',
+      color: 'text-orange-500'
+    },
+    {
+      title: 'Student Council',
+      desc: 'Student leadership and participation opportunities through the Vidyalaya Student Council.',
+      icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857',
+      color: 'text-blue-600'
+    }
+  ],
+
+  achievements: [
+    {
+      title: 'CBSE Affiliated School',
+      desc: 'CBSE Affiliation No. 1200002 and School Code 39348',
+      icon: '🏛️'
+    },
+    {
+      title: '100% Class X Result',
+      desc: '100% pass result reported for the 2025-26 academic year',
+      icon: '🎓'
+    },
+    {
+      title: 'Academic Excellence',
+      desc: 'Class X and XII students have achieved high board examination scores',
+      icon: '🏆'
+    },
+    {
+      title: 'Sports Achievements',
+      desc: 'Students participate in Taekwondo, Volleyball and other activities',
+      icon: '🥇'
+    },
+    {
+      title: 'Student Development',
+      desc: 'Focus on academics, creativity, values, innovation and co-curricular development',
+      icon: '🚀'
+    }
+  ],
+
+  alumni: [
+    {
+      name: 'Yoiraj Laishram',
+      role: 'Student',
+      quote:
+        'KV Loktak provides all-round development of students under the guidance of expert teachers and mentors.',
+      image: startup1
+    },
+    {
+      name: 'Aman Ranjan',
+      role: 'Class X Topper',
+      quote:
+        'Achieved 96.40% in the Class X board examination.',
+      image: startup2
+    },
+    {
+      name: 'Gurumayum Bidyaluxmi Devi',
+      role: 'Class XII Humanities Topper',
+      quote:
+        'Achieved 96.00% in the Class XII board examination.',
+      image: startup3
+    },
+    {
+      name: 'Khundrakpam Margaret Devi',
+      role: 'Class XII Science Topper',
+      quote:
+        'Achieved 94.00% in the Class XII board examination.',
+      image: startup4
+    }
+  ]
+},
 ];
 
 // ==========================================

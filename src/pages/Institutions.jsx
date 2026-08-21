@@ -10,6 +10,8 @@ import banner3 from '../assets/images/ban3.jpeg';
 //cards images
 import nielit from '../assets/images/nielit.jpeg';
 import igj from '../assets/images/igj.webp';
+import kv from '../assets/images/kv.webp';
+
 const bannerSlides = [banner1, banner2, banner3];
 
 const institutionsData = [
@@ -68,22 +70,22 @@ const institutionsData = [
     address: 'Pasighat, East Siang District, Arunachal Pradesh, India'
   }
 },
-  {
-    id: 3,
-    name: 'Chandpur Hs School',
-    type: 'Government',
-    badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-    state: 'Tripura',
-    district: 'Dhalai',
-    location: 'Dhalai, Tripura',
-    classes: 'Classes: 6 - 12',
-    image: 'https://images.unsplash.com/photo-15230508-8df90110c9f1?auto=format&fit=crop&w=800&q=80',
-    description: 'Chandpur Higher Secondary School provides excellent secondary and higher secondary science and arts streams with experienced faculty.',
-    established: '1985',
-    totalStudents: '850+',
-    facilities: ['Physics & Chemistry Labs', 'NCC Cadets', 'Playground', 'Library'],
-    contact: { phone: '+91 94361 00000', email: 'chandpurhsschool@gmail.com', address: 'Chandpur, Dhalai District, Tripura - 799279' }
-  },
+ {
+  id: 3,
+  name: 'Kendriya Vidyalaya NHPC Loktak',
+  type: 'Government',
+  badgeColor: 'bg-blue-100 text-blue-800 border-blue-200',
+  state: 'Manipur',
+  district: 'Bishnupur',
+  location: 'NHPC Loktak, Manipur',
+  classes: 'Classes: Balvatika - 12',
+  image: kv,
+  description: 'Kendriya Vidyalaya NHPC Loktak is a CBSE-affiliated Government school providing quality education with a focus on academic excellence, creativity and overall student development.',
+  established: '1979',
+  totalStudents: '538+',
+  facilities: ['Science Labs', 'Computer Science', 'Library', 'Sports & Games'],
+  contact: { phone: 'Not Available', email: 'Not Available', address: 'NHPC Loktak, Manipur, India' }
+},
   {
     id: 4,
     name: 'Radha Krishna K.p J.b School',
