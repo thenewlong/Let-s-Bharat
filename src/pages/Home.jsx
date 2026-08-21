@@ -13,10 +13,10 @@ gsap.registerPlugin(ScrollTrigger);
 import video1 from '../assets/videos/s00.mp4';
 import video2 from '../assets/videos/second.mp4';
 import video3 from '../assets/videos/h2.mp4';
-import video4 from '../assets/videos/hero2.mp4';
+import video4 from '../assets/videos/learn-banner.mp4';
 
 
-// Institution ke liye videos (Apne folder ke hisaab se path aur naam theek kar lena)
+// Institution ke liye videos (Apne folde-bannerr ke hisaab se path aur naam theek kar lena)
 import desktopInstitutionVideo from '../assets/videos/inst4.mp4';
 import mobileInstitutionVideo from '../assets/videos/inst001.mp4';
 
@@ -83,26 +83,55 @@ const heroSlides = [
     btn2Text: "Past Events ➔", btn2Link: "/events"
   },
   {
-    id: 4,
-    videoSrc: video4,
-    title1: "COMPETE IN THE ULTIMATE",
-    titleHighlight: "ESPORTS TOURNAMENTS",
-    title2: "& GAMING ARENA",
-    subtitle: "PLAY. COMPETE. WIN.",
-    desc: "Join BGMI, Free Fire, and MLBB tournaments. Compete with the best squads.",
-    btn1Text: "Join Squad ➔", btn1Link: "/tournaments",
-    btn2Text: "Leaderboard ➔", btn2Link: "/tournaments"
-  }
+  id: 4,
+  videoSrc: video4,
+  title1: "LEARN. CREATE. SHARE.",
+  titleHighlight: "BUILD YOUR OWN COURSE",
+  title2: "& GROW TOGETHER",
+  subtitle: "LEARN. CREATE. GROW.",
+  desc: "Explore courses created by students, educators, and creators — or create and share your own course with the Learning Hub community.",
+  btn1Text: "Explore Courses ➔",
+  btn1Link: "/learninghub",
+  btn2Text: "Create a Course ➔",
+  btn2Link: "/learninghub/create"
+}
 ];
 
 // 🗂️ GLOBAL SEARCH DATA
 const globalSearchData = [
-  { id: 1, title: "React Native App Development Hackathon", category: "Hackathon", link: "/hackathons/react-native" },
-  { id: 2, title: "Nomeo AI 2.0 API Integration", category: "Institution", link: "/institutions/nomeo" },
-  { id: 3, title: "BGMI Northeast Pro League", category: "Tournament", link: "/tournaments/bgmi" },
-  { id: 4, title: "Tipra Social Platform Showcase", category: "Institution", link: "/institutions/tipra" },
-  { id: 5, title: "Frontend Developer Internship", category: "Internship", link: "/internships/frontend" },
-  { id: 6, title: "Free Fire Max Weekly Scrims", category: "Tournament", link: "/tournaments/freefire" },
+
+  //institutions
+  { id: 1, title: "Nomeo AI 2.0 API Integration", category: "Institution", link: "/institutions/nomeo" },
+  { id: 2, title: "Tipra Social Platform Showcase", category: "Institution", link: "/institutions/tipra" },
+  { id: 3, title: "NIELIT Agartala Campus & Courses", category: "Institution", link: "/institutions/nielit-agartala" },
+  { id: 4, title: "Techno College of Engineering Agartala (TCEA)", category: "Institution", link: "/institutions/tcea" },
+  { id: 5, title: "Independent Golden Jubilee Govt Higher Secondary School", category: "Institution", link: "/institutions/golden-jubilee-pasighat" },
+
+  // Hackathons
+  { id: 6, title: "React Native App Development Hackathon", category: "Hackathon", link: "/hackathons/react-native" },
+  { id: 7, title: "Ignitia / Prayukti 2026 Poster Expo", category: "Hackathon", link: "/hackathons/ignitia-prayukti" },
+  { id: 8, title: "Smart India Hackathon (SIH) 2026", category: "Hackathon", link: "/hackathons/sih-2026" },
+  { id: 9, title: "Tripura State Tech Innovation Challenge", category: "Hackathon", link: "/hackathons/tripura-innovation" },
+
+  // LearningHub
+  { id: 10, title: "Full Stack React Native & Firebase Development", category: "LearningHub", link: "/learninghub/react-native-firebase" },
+  { id: 11, title: "NOMEO STUDZ Study Materials & PDF Notes", category: "LearningHub", link: "/learninghub/nomeo-studz" },
+  { id: 12, title: "Gemini API Chatbot & Image Analysis Tutorial", category: "LearningHub", link: "/learninghub/gemini-api" },
+  { id: 13, title: "AI for Young Minds - Computer Syllabus", category: "LearningHub", link: "/learninghub/ai-young-minds" },
+  { id: 14, title: "The Newlong Hub E-commerce Training", category: "LearningHub", link: "/learninghub/newlong-hub" },
+
+  // Internships
+  { id: 15, title: "Frontend Developer Internship", category: "Internship", link: "/internships/frontend" },
+  { id: 16, title: "UI/UX Design Internship (Figma & Adobe XD)", category: "Internship", link: "/internships/ui-ux-design" },
+  { id: 17, title: "Data Science & Machine Learning Internship", category: "Internship", link: "/internships/data-science" },
+
+  // Jobs
+  { id: 18, title: "Backend Node.js Developer", category: "Jobs", link: "/jobs/backend-developer" },
+  { id: 19, title: "React Developer Job Opportunities", category: "Jobs", link: "/jobs/react-developer" },
+
+  // Resources
+  { id: 20, title: "Open Source Contribution & GitHub Guidelines", category: "Resources", link: "/resources/open-source" }
+
 ];
 
 const Home = () => {
