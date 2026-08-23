@@ -11,6 +11,7 @@ import banner3 from '../assets/images/ban3.jpeg';
 import nielit from '../assets/images/nielit.jpeg';
 import igj from '../assets/images/igj.webp';
 import kv from '../assets/images/kv.webp';
+import holygat from '../assets/images/holygat.jpeg';
 
 const bannerSlides = [banner1, banner2, banner3];
 
@@ -48,7 +49,7 @@ const institutionsData = [
   id: 2,
   name: 'Independent Golden Jubilee Government Higher Secondary School, Pasighat',
   type: 'Government',
-  badgeColor: 'bg-green-100 text-green-800 border-green-200',
+  badgeColor: 'bg-blue-100 text-blue-800 border-blue-200',
   state: 'Arunachal Pradesh',
   district: 'East Siang',
   location: 'Pasighat, East Siang, Arunachal Pradesh',
@@ -87,21 +88,25 @@ const institutionsData = [
   contact: { phone: 'Not Available', email: 'Not Available', address: 'NHPC Loktak, Manipur, India' }
 },
   {
-    id: 4,
-    name: 'Radha Krishna K.p J.b School',
-    type: 'Private',
-    badgeColor: 'bg-purple-100 text-purple-800 border-purple-200',
-    state: 'Tripura',
-    district: 'Dhalai',
-    location: 'Dhalai, Tripura',
-    classes: 'Classes: 1 - 8',
-    image: 'https://images.unsplash.com/photo-1509062526-355977927d7?auto=format&fit=crop&w=800&q=80',
-    description: 'Focusing on early child education, values, language mastery, and creative learning models in a secure environment.',
-    established: '2012',
-    totalStudents: '350+',
-    facilities: ['Smart Classes', 'Activity Room', 'Play Area', 'CCTV Campus'],
-    contact: { phone: '+91 98620 11223', email: 'radhakrishnaschool@outlook.com', address: 'Radhakrishna Nagar, Dhalai, Tripura - 799277' }
+  id: 4,
+  name: 'Holy Angels School',
+  type: 'Private',
+  badgeColor: 'bg-green-100 text-green-800 border-green-200',
+  state: 'Tripura',
+  district: 'West Tripura',
+  location: 'Sat Para, Mandwi, West Tripura, Tripura - 799045',
+  classes: 'Classes: Nursery - 5',
+  image: holygat,
+  description: 'Holy Angels School is an educational institution located at Sat Para, Mandwi, West Tripura, Tripura. The school was established in 2021 and has UDISE Code 16011101610.',
+  established: '2021',
+  totalStudents: 'Not Available',
+  facilities: ['Not Available'],
+  contact: {
+    phone: 'Not Available',
+    email: 'Not Available',
+    address: 'Sat Para, Mandwi, West Tripura, Tripura - 799045'
   }
+},
 ];
 
 // Added Emojis for mobile view matching the design reference
@@ -180,7 +185,7 @@ const Institutions = () => {
       <div className="max-w-[1350px] mx-auto pt-4 md:pt-6 px-4 sm:px-6 lg:px-8">
         <div className="mb-4">
           <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            NEXT MONTHS ARE AVAILABLE INSTITUTIONS DIRECTORY
+            YOUR INSTITUTIONS DIRECTORY
           </h1>
           <p className="text-slate-500 text-xs sm:text-sm font-medium mt-1">
             Find and explore the best schools, colleges and Coaching Centres across India
@@ -207,7 +212,7 @@ const Institutions = () => {
               Verified Directory
             </span>
             <h2 className="text-white text-xl sm:text-3xl font-black drop-shadow-md">
-              Discover Top Institutions
+              Discover Listed Institutions
             </h2>
           </div>
 
@@ -438,15 +443,15 @@ const Institutions = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-black text-lg">🏫</div>
-            <div><h4 className="text-base sm:text-xl font-bold text-slate-900">02+</h4><p className="text-[10px] sm:text-xs font-medium text-slate-400 uppercase tracking-wide">Total Institutions</p></div>
+            <div><h4 className="text-base sm:text-xl font-bold text-slate-900">04+</h4><p className="text-[10px] sm:text-xs font-medium text-slate-400 uppercase tracking-wide">Total Institutions</p></div>
           </div>
           <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-black text-lg">🏦</div>
-            <div><h4 className="text-base sm:text-xl font-bold text-slate-900">02+</h4><p className="text-[10px] sm:text-xs font-medium text-slate-400 uppercase tracking-wide">Government</p></div>
+            <div><h4 className="text-base sm:text-xl font-bold text-slate-900">03+</h4><p className="text-[10px] sm:text-xs font-medium text-slate-400 uppercase tracking-wide">Government</p></div>
           </div>
           <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-black text-lg">🎓</div>
-            <div><h4 className="text-base sm:text-xl font-bold text-slate-900">00+</h4><p className="text-[10px] sm:text-xs font-medium text-slate-400 uppercase tracking-wide">Private</p></div>
+            <div><h4 className="text-base sm:text-xl font-bold text-slate-900">01+</h4><p className="text-[10px] sm:text-xs font-medium text-slate-400 uppercase tracking-wide">Private</p></div>
           </div>
           <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-black text-lg">📍</div>

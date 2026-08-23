@@ -17,6 +17,10 @@ import kvlibary from '../assets/images/kvlibary.jpeg';
 import kvcampus from '../assets/images/kvcampus.webp';
 import kvart from '../assets/images/kvart.jpeg';
 
+import holyfarewell from '../assets/images/holyfarewell.jpeg';
+import holyexam from '../assets/images/holyexam.jpeg';
+import holypicnicss from '../assets/images/holypicnicss.jpeg';
+
 import galleryImg1 from '../assets/images/lab.jpeg';
 import galleryImg2 from '../assets/images/play.jpeg';
 import galleryImg3 from '../assets/images/e.jpeg';
@@ -40,11 +44,23 @@ import kvgalleryImg4 from '../assets/images/kvsport.webp';
 import kvgalleryImg5 from '../assets/images/kvacts.webp';
 import kvgalleryImg6 from '../assets/images/kv.webp';
 
+import holygalleryImg1 from '../assets/images/holyclass.jpeg';
+import holygalleryImg2 from '../assets/images/holystudents.jpeg';
+import holygalleryImg3 from '../assets/images/holystd.jpeg';
+import holygalleryImg4 from '../assets/images/holysafe.jpeg';
+import holygalleryImg5 from '../assets/images/holysport.jpeg';
+import holygalleryImg6 from '../assets/images/holysewa.jpeg';
+import holygalleryImg7 from '../assets/images/holypicnic.jpeg';
+import holygalleryImg8 from '../assets/images/holyyoga.jpeg';
+
+
 import principalImg from '../assets/images/nielit-D.jpg';
 
 import iglprincipalImg from '../assets/images/dp.jpg';
 
 import kvprincipalImg from '../assets/images/dp.jpg';
+
+import holyprincipalImg from '../assets/images/dp.jpg';
 
 import startup1 from '../assets/images/startup1.jpeg';
 import startup2 from '../assets/images/startup2.jpeg';
@@ -363,6 +379,134 @@ const institutionsData = [
       role: 'Class XII Science Topper',
       quote:
         'Achieved 94.00% in the Class XII board examination.',
+      image: startup4
+    }
+  ]
+},
+
+{
+  id: 4,
+  name: 'Holy Angels School',
+  type: 'Private',
+  badgeColor: 'bg-purple-100 text-purple-700',
+  state: 'Tripura',
+  district: 'West Tripura',
+  location: 'Sat Para, Mandwi, West Tripura, Tripura - 799045',
+  classes: 'Classes Nursery - 5',
+  established: '2021',
+  totalStudents: 'Not Available',
+  facultyCount: 'Not Available',
+  description:
+    'Holy Angels School is an educational institution located at Sat Para, Mandwi, West Tripura, Tripura. Established in 2021, the school has UDISE Code 16011101610 and maintains an official online presence through its social media and YouTube channel.',
+
+  bannerImages: [holyfarewell, holyexam, holypicnicss],
+
+  gallery: [
+    { id: 1, type: 'photo', url: holygalleryImg1, title: 'School Classroom' },
+    { id: 2, type: 'photo', url: holygalleryImg2, title: ' Groups Picture' },
+    { id: 3, type: 'photo', url: holygalleryImg3, title: 'Students' },
+    { id: 4, type: 'photo', url: holygalleryImg4, title: 'School Safety Rules' },
+    { id: 5, type: 'photo', url: holygalleryImg5, title: 'Sports Activities' },
+    { id: 6, type: 'photo', url: holygalleryImg6, title: 'Swachh Bharat Abhiyan' },
+    { id: 7, type: 'photo', url: holygalleryImg7, title: 'Picnics' },
+    { id: 8, type: 'photo', url: holygalleryImg8, title: 'Yoga Session' },
+  ],
+
+  principal: {
+    name: 'Not Available',
+    role: 'School Administration',
+    image: holyprincipalImg,
+    quote:
+      'Holy Angels School is committed to providing students with a supportive learning environment and opportunities for academic and overall development.',
+    features: [
+      'Academic Development',
+      'Student Development',
+      'Learning Environment'
+    ]
+  },
+
+  facilities: [
+    {
+      title: 'Academic Learning',
+      desc: 'Learning environment focused on the academic development of students.',
+      icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253',
+      color: 'text-blue-500'
+    },
+    {
+      title: 'Student Activities',
+      desc: 'School-based activities supporting student participation and development.',
+      icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857',
+      color: 'text-purple-500'
+    },
+    {
+      title: 'School Campus',
+      desc: 'School campus located at Sat Para, Mandwi, West Tripura.',
+      icon: 'M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6',
+      color: 'text-green-500'
+    },
+    {
+      title: 'Digital Presence',
+      desc: 'The school maintains an online presence through its official social media and YouTube channel.',
+      icon: 'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z',
+      color: 'text-red-500'
+    }
+  ],
+
+  achievements: [
+    {
+      title: 'Established in 2021',
+      desc: 'Holy Angels School was established in 2021.',
+      icon: '🏫'
+    },
+    {
+      title: 'UDISE Registered',
+      desc: 'UDISE Code: 16011101610',
+      icon: '🎓'
+    },
+    {
+      title: 'West Tripura Institution',
+      desc: 'Located at Sat Para, Mandwi, West Tripura, Tripura.',
+      icon: '📍'
+    },
+    {
+      title: 'Official YouTube Channel',
+      desc: 'The school maintains an official YouTube presence.',
+      icon: '▶️'
+    },
+    {
+      title: 'Student Development',
+      desc: 'Focus on providing students with an educational and learning environment.',
+      icon: '🚀'
+    }
+  ],
+
+  alumni: [
+    {
+      name: 'Not Available',
+      role: 'Student',
+      quote:
+        'Student achievement and alumni information is not publicly available in the provided source.',
+      image: startup1
+    },
+    {
+      name: 'Not Available',
+      role: 'Student',
+      quote:
+        'Student achievement information is currently not available.',
+      image: startup2
+    },
+    {
+      name: 'Not Available',
+      role: 'Alumni',
+      quote:
+        'Alumni information is currently not available.',
+      image: startup3
+    },
+    {
+      name: 'Not Available',
+      role: 'Alumni',
+      quote:
+        'Alumni achievement information is currently not available.',
       image: startup4
     }
   ]
