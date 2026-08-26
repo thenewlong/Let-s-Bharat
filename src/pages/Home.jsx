@@ -901,13 +901,13 @@ const Home = () => {
                   <span className="w-8 h-0.5 bg-[#ffcc00] mt-1"></span>
                 </h3>
                 <p className="text-gray-400 text-xs leading-relaxed uppercase">
-                  Let's Bharat is a platform dedicated to empowering students and innovators by connecting them with opportunities, communities and resources.
+                  Letsbharat is a platform dedicated to empowering students and innovators by connecting them with opportunities, communities and resources.
                 </p>
               </div>
 
               <div>
                 <h3 className="text-white text-sm font-bold tracking-widest uppercase mb-4 flex flex-col">
-                  Founder of Let's <span className="text-[#ffcc00]">Bharat</span>
+                  Founder of Lets <span className="text-[#ffcc00]">bharat</span>
                   <span className="w-8 h-0.5 bg-[#ffcc00] mt-1"></span>
                 </h3>
                 <div className="flex items-center gap-4">
@@ -940,7 +940,7 @@ const Home = () => {
                 <li><button onClick={() => navigate('/institutions')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">👥 Institutions</button></li>
                 <li><button onClick={() => navigate('/hackathons')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">🏆 Hackathons</button></li>
                 <li><button onClick={() => navigate('/internships')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">💼 Internships</button></li>
-                <li><button onClick={() => navigate('/tournaments')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">🎮 Tournaments</button></li>
+                <li><button onClick={() => navigate('/learninghub')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">🎮 Learning Hub</button></li>
                 <li><button onClick={() => navigate('/resources')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">📚 Free Resources</button></li>
                 <li><button onClick={() => navigate('/about')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">📢About Us </button></li>
                 <li><button onClick={() => navigate('/contact')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">✉ Contact Us</button></li>
