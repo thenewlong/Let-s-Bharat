@@ -164,7 +164,7 @@ const Navbar = () => {
       {/* Background Overlay */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 lg:hidden transition-opacity" 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 lg:hidden transition-opacity text-xs font-bold tracking-widest uppercase" 
           onClick={closeMenu}
         ></div>
       )}
