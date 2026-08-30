@@ -24,8 +24,8 @@ const Auth = () => {
   // Carousel Slides matching the provided image concept
   const slides = [
     {
-      title: "AI Startups",
-      desc: "Discover innovative AI startups shaping India.",
+      title: "Institutions",
+      desc: "Discover institutions in India.",
       icon: (
         <svg className="w-5 h-5 text-[#f5a623]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />

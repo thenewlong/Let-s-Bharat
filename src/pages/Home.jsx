@@ -55,10 +55,10 @@ const heroSlides = [
     title1: "INDIA'S STUDENTS ",
     titleHighlight: "LEARNING & OPPORTUNITY ",
     title2: "PLATFORM",
-    subtitle: "CONNECT.CREATE IMPACT. SUCCEED.",
+    subtitle: "CONNECT. CREATE IMPACT. SUCCEED.",
     desc: "Discover hackathons, institutions, internships, and learning opportunities. Learn new skills, share knowledge, and build your future with Letsbharat.",
-    btn1Text: "Institutions ➔", btn1Link: "/Institutions",
-    btn2Text: "Hackathons ➔", btn2Link: "/hackathons"
+    btn1Text: "Institutions", btn1Link: "/Institutions",
+    btn2Text: "Hackathons", btn2Link: "/hackathons"
   },
   {
     id: 2,
@@ -68,8 +68,8 @@ const heroSlides = [
     title2: "& OPEN ROLES",
     subtitle: "LEARN. BUILD. GROW.",
     desc: "Get real-world experience. Apply for remote and onsite internships at top tech companies.",
-    btn1Text: "Apply Now ➔", btn1Link: "/internships",
-    btn2Text: "View All ➔", btn2Link: "/internships"
+    btn1Text: "Apply Now", btn1Link: "/internships",
+    btn2Text: "View All", btn2Link: "/internships"
   },
   {
     id: 3,
@@ -79,59 +79,50 @@ const heroSlides = [
     title2: "AROUND THE REGION",
     subtitle: "CODE. CREATE. CONQUER.",
     desc: "Participate in intense coding battles. Solve real-world problems and win massive prizes.",
-    btn1Text: "Register Now ➔", btn1Link: "/hackathons",
-    btn2Text: "Past Events ➔", btn2Link: "/events"
+    btn1Text: "Register Now", btn1Link: "/hackathons",
+    btn2Text: "Past Events", btn2Link: "/events"
   },
   {
-  id: 4,
-  videoSrc: video4,
-  title1: "LEARN. CREATE. SHARE.",
-  titleHighlight: "BUILD YOUR OWN COURSE",
-  title2: "& GROW TOGETHER",
-  subtitle: "LEARN. CREATE. GROW.",
-  desc: "Explore courses created by students, educators, and creators — or create and share your own course with the Learning Hub community.",
-  btn1Text: "Explore Courses ➔",
-  btn1Link: "/learninghub",
-  btn2Text: "Create a Course ➔",
-  btn2Link: "/learninghub/create"
-}
+    id: 4,
+    videoSrc: video4,
+    title1: "LEARN. CREATE. SHARE.",
+    titleHighlight: "BUILD YOUR OWN COURSE",
+    title2: "& GROW TOGETHER",
+    subtitle: "LEARN. CREATE. GROW.",
+    desc: "Explore courses created by students, educators, and creators — or create and share your own course with the Learning Hub community.",
+    btn1Text: "Explore Courses", btn1Link: "/learninghub",
+    btn2Text: "Create a Course", btn2Link: "/learninghub/create"
+  }
 ];
 
 // 🗂️ GLOBAL SEARCH DATA
 const globalSearchData = [
-
-  //institutions
+  // Institutions
   { id: 1, title: "Nomeo AI 2.0 API Integration", category: "Institution", link: "/institutions/nomeo" },
   { id: 2, title: "Tipra Social Platform Showcase", category: "Institution", link: "/institutions/tipra" },
   { id: 3, title: "NIELIT Agartala Campus & Courses", category: "Institution", link: "/institutions/nielit-agartala" },
   { id: 4, title: "Techno College of Engineering Agartala (TCEA)", category: "Institution", link: "/institutions/tcea" },
   { id: 5, title: "Independent Golden Jubilee Govt Higher Secondary School", category: "Institution", link: "/institutions/golden-jubilee-pasighat" },
-
   // Hackathons
   { id: 6, title: "React Native App Development Hackathon", category: "Hackathon", link: "/hackathons/react-native" },
   { id: 7, title: "Ignitia / Prayukti 2026 Poster Expo", category: "Hackathon", link: "/hackathons/ignitia-prayukti" },
   { id: 8, title: "Smart India Hackathon (SIH) 2026", category: "Hackathon", link: "/hackathons/sih-2026" },
   { id: 9, title: "Tripura State Tech Innovation Challenge", category: "Hackathon", link: "/hackathons/tripura-innovation" },
-
   // LearningHub
   { id: 10, title: "Full Stack React Native & Firebase Development", category: "LearningHub", link: "/learninghub/react-native-firebase" },
   { id: 11, title: "NOMEO STUDZ Study Materials & PDF Notes", category: "LearningHub", link: "/learninghub/nomeo-studz" },
   { id: 12, title: "Gemini API Chatbot & Image Analysis Tutorial", category: "LearningHub", link: "/learninghub/gemini-api" },
   { id: 13, title: "AI for Young Minds - Computer Syllabus", category: "LearningHub", link: "/learninghub/ai-young-minds" },
   { id: 14, title: "The Newlong Hub E-commerce Training", category: "LearningHub", link: "/learninghub/newlong-hub" },
-
   // Internships
   { id: 15, title: "Frontend Developer Internship", category: "Internship", link: "/internships/frontend" },
   { id: 16, title: "UI/UX Design Internship (Figma & Adobe XD)", category: "Internship", link: "/internships/ui-ux-design" },
   { id: 17, title: "Data Science & Machine Learning Internship", category: "Internship", link: "/internships/data-science" },
-
   // Jobs
   { id: 18, title: "Backend Node.js Developer", category: "Jobs", link: "/jobs/backend-developer" },
   { id: 19, title: "React Developer Job Opportunities", category: "Jobs", link: "/jobs/react-developer" },
-
   // Resources
   { id: 20, title: "Open Source Contribution & GitHub Guidelines", category: "Resources", link: "/resources/open-source" }
-
 ];
 
 const Home = () => {
@@ -148,16 +139,16 @@ const Home = () => {
 
   const currentSlide = heroSlides[currentIndex];
 
-  // Jab slide change ho, toh text animation wapas re-trigger ho
+  // Animation trigger logic
   useEffect(() => {
     setIsAnimating(false);
     const timer = setTimeout(() => {
       setIsAnimating(true);
-    }, 50); // Short delay to re-trigger CSS animations
+    }, 50); 
     return () => clearTimeout(timer);
   }, [currentIndex]);
 
-  // 🔄 Video slider automatic loop function
+  // Video slider automatic loop function
   const handleVideoEnd = () => {
     setIsAnimating(false); 
     setTimeout(() => {
@@ -165,13 +156,13 @@ const Home = () => {
     }, 190); 
   };
 
-  // 🔎 Search Filter Logic
+  // Search Filter Logic
   const filteredResults = globalSearchData.filter((item) =>
     item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     item.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // 🖱️ Click outside logic to close dropdown
+  // Click outside logic to close dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -188,10 +179,10 @@ const Home = () => {
     return text.split("").map((char, index) => (
       <span
         key={index}
-        className={`letter-3d ${isActive ? 'animate-3d-pop' : 'opacity-0'}`}
+        className={`inline-block transition-all duration-500 ease-out font-black ${isActive ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-90'}`}
         style={{ 
-          animationDelay: isActive ? `${baseDelay + index * 15}ms` : '0ms',
-          marginRight: char === " " ? "0.25em" : "0" // Preserve spaces
+          transitionDelay: `${baseDelay + index * 20}ms`,
+          marginRight: char === " " ? "0.25em" : "0"
         }}
       >
         {char}
@@ -492,9 +483,9 @@ const Home = () => {
       `}</style>
 
       {/* ========================================================= */}
-      {/* SECTION 1: COMPACT CINEMATIC HERO SECTION                 */}
+      {/* SECTION 1: CENTERED CINEMATIC HERO SECTION                */}
       {/* ========================================================= */}
-      <section className="relative w-full aspect-square min-h-[400px] lg:aspect-auto lg:h-[100vh] lg:max-h-[850px] flex flex-col justify-center bg-[#070b14] pt-16 md:pt-24 pb-6 overflow-hidden perspective-container">
+      <section className="relative w-full h-[100dvh] min-h-[600px] flex flex-col justify-center items-center bg-[#111111] overflow-hidden">
         
         {/* 🎥 DYNAMIC BACKGROUND VIDEO */}
         <video 
@@ -508,114 +499,140 @@ const Home = () => {
           <source src={currentSlide?.videoSrc} type="video/mp4" />
         </video>
 
-        {/* 🌑 Deep Clean Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#070b14]/90 via-[#070b14]/50 to-transparent z-0"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#070b14] via-transparent to-transparent z-0"></div>
+        {/* 🌑 Deep Clean Overlay */}
+        <div className="absolute inset-0 bg-black/60 mix-blend-multiply z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80 z-0"></div>
 
-        {/* 📝 MAIN HERO CONTENT */}
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-10 w-full flex-grow flex flex-col justify-center mt-4">
-          <div className="flex flex-col items-start w-full">
+        {/* 🎨 FLOATING BACKGROUND ICONS (Hidden on Mobile, Visible on PC) */}
+        <div className="absolute inset-0 pointer-events-none z-0 hidden lg:block">
+          {/* Left Top */}
+          <div className="absolute top-[20%] left-[8%] animate-float-slow opacity-40 flex flex-col items-center">
+            <svg className="w-14 h-14 text-white mb-2" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path strokeLinecap="round" strokeLinejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>
+            <p className="text-white font-bold tracking-wide text-md text-outline transform -rotate-6">Skill Diversification</p>
+          </div>
+          {/* Left Bottom */}
+          <div className="absolute bottom-[20%] left-[12%] animate-float-slow delay-1 opacity-40 flex flex-col items-center">
+            <svg className="w-14 h-14 text-white mb-2" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+            <p className="text-white font-bold tracking-wide text-md text-outline transform rotate-6">Verified Institutions</p>
+          </div>
+          {/* Right Top */}
+          <div className="absolute top-[15%] right-[12%] animate-float-slow delay-2 opacity-40 flex flex-col items-center">
+            <svg className="w-14 h-14 text-white mb-2" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
+            <p className="text-white font-bold tracking-wide text-md text-outline transform rotate-3">Opportunities</p>
+          </div>
+          {/* Right Bottom */}
+          <div className="absolute bottom-[25%] right-[8%] animate-float-slow delay-3 opacity-40 flex flex-col items-center">
+            <svg className="w-14 h-14 text-white mb-2" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>
+            <p className="text-white font-bold tracking-wide text-md text-outline transform -rotate-3">Career Growth</p>
+          </div>
+        </div>
+
+        {/* 🔍 TOP SEARCH BAR (Desktop & Mobile) */}
+        <div className="absolute top-20 md:top-24 left-1/2 transform -translate-x-1/2 w-[92%] max-w-2xl z-50" ref={searchRef}>
+          <div className={`relative transition-all duration-700 ease-out ${isAnimating ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}>
+            <svg className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => setIsSearchFocused(true)}
+              placeholder="Search hackathons, institutions, internships..."
+              className="w-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm md:text-base rounded-full py-3.5 pl-12 pr-6 focus:outline-none focus:ring-2 focus:ring-[#f5a623] focus:bg-white/20 transition-all placeholder-gray-300 shadow-xl"
+            />
             
-            {/* 🔍 MOBILE ONLY SEARCH BAR (TOP PAR MOVE KIYA HAI) */}
-            <div className={`block lg:hidden w-full mb-6 relative z-50 transition-all duration-700 ease-out ${
-              isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`} style={{ transitionDelay: '100ms' }} ref={searchRef}>
-              <div className="relative w-[95%]">
-                <svg className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={() => setIsSearchFocused(true)}
-                  placeholder="Search opportunities..."
-                  className="w-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[11px] rounded-md py-2.5 pl-9 pr-4 focus:outline-none focus:ring-1 focus:ring-[#f5a623] focus:bg-white/20 transition-all placeholder-gray-400 shadow-lg"
-                />
+            {/* Search Dropdown */}
+            {isSearchFocused && searchQuery && (
+              <div className="absolute top-full mt-2 w-full bg-black/90 backdrop-blur-xl border border-white/10 shadow-2xl rounded-xl py-2 px-2 z-[60] max-h-60 overflow-y-auto">
+                {filteredResults.length > 0 ? (
+                  filteredResults.map((item, index) => (
+                    <div 
+                      key={index}
+                      onClick={() => {
+                        setIsSearchFocused(false);
+                        setSearchQuery("");
+                        navigate(item.link || '/'); 
+                      }}
+                      className="block px-4 py-3 text-sm font-semibold text-gray-200 hover:bg-white/10 hover:text-[#f5a623] rounded-lg transition-colors cursor-pointer"
+                    >
+                      <span className="text-[#f5a623] text-[10px] md:text-xs mr-2 uppercase border border-[#f5a623]/30 px-2 py-0.5 rounded-full">{item.category}</span>
+                      {item.title}
+                    </div>
+                  ))
+                ) : (
+                  <p className="px-4 py-3 text-sm text-gray-400 text-center">No results found...</p>
+                )}
               </div>
+            )}
+          </div>
+        </div>
 
-              {/* Mobile Search Dropdown */}
-              {isSearchFocused && searchQuery && (
-                <div className="absolute top-full mt-1.5 w-[95%] bg-[#0f1523] border border-gray-700 shadow-2xl rounded-md py-1.5 px-1.5 z-[60] max-h-40 overflow-y-auto">
-                  {filteredResults.length > 0 ? (
-                    filteredResults.map((item, index) => (
-                      <div 
-                        key={index}
-                        onClick={() => {
-                          setIsSearchFocused(false);
-                          setSearchQuery("");
-                          navigate(item.path || '/'); 
-                        }}
-                        className="block px-3 py-2.5 text-[11px] font-semibold text-gray-300 hover:bg-white/10 hover:text-[#f5a623] rounded transition-colors cursor-pointer"
-                      >
-                        {item.title}
-                      </div>
-                    ))
-                  ) : (
-                    <p className="px-3 py-2 text-[11px] text-gray-500">No results found...</p>
-                  )}
-                </div>
-              )}
+        {/* 📝 MAIN HERO CONTENT (CENTERED ALIGNMENT) */}
+        <div className="relative z-10 w-full flex-grow flex flex-col items-center justify-center text-center px-4 mt-20 md:mt-16">
+          
+          {/* Main Title (Responsive White + Yellow 3D Text) */}
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white uppercase drop-shadow-2xl tracking-tight flex flex-col items-center gap-1 sm:gap-2 w-full">
+            <div className="flex flex-wrap justify-center overflow-hidden">
+              {renderAnimatedLetters(currentSlide?.title1 || "", isAnimating, 0)}
             </div>
-
-            {/* Subtitle */}
-            <div className="overflow-hidden mb-1 sm:mb-3">
-              <p className={`text-[#f5a623] font-sans text-[9px] sm:text-xs font-black tracking-[0.2em] sm:tracking-[0.25em] uppercase transition-all duration-700 ease-out ${
-                isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              }`} style={{ transitionDelay: '300ms' }}>
-                {currentSlide?.subtitle}
-              </p>
+            {/* 🟡 YELLOW HIGHLIGHT TEXT */}
+            <div className="flex flex-wrap justify-center overflow-hidden text-[#f5a623] drop-shadow-[0_0_10px_rgba(245,166,35,0.3)]">
+              {renderAnimatedLetters(currentSlide?.titleHighlight || "", isAnimating, 300)}
             </div>
+            <div className="flex flex-wrap justify-center overflow-hidden">
+              {renderAnimatedLetters(currentSlide?.title2 || "", isAnimating, 600)}
+            </div>
+          </h1>
 
-            {/* Main Title (3D Letter Animation & Compact Mobile Font Size) */}
-            <h1 className="text-[24px] leading-tight sm:text-4xl md:text-5xl lg:text-6xl font-black text-white font-sans sm:leading-[1.1] tracking-tight uppercase select-none relative z-10 flex flex-col gap-0.5 sm:gap-1">
-              <div className="block overflow-hidden">
-                {renderAnimatedLetters(currentSlide?.title1 || "", isAnimating, 0)}
-              </div>
-              <div className="block overflow-hidden text-[#f5a623]">
-                {renderAnimatedLetters(currentSlide?.titleHighlight || "", isAnimating, 300)}
-              </div>
-              <div className="block overflow-hidden">
-                {renderAnimatedLetters(currentSlide?.title2 || "", isAnimating, 600)}
-              </div>
-            </h1>
+          {/* Subtitle / Description (Responsive Size) */}
+          <p className={`text-neutral-200 font-sans text-xs sm:text-sm md:text-lg max-w-[95%] sm:max-w-2xl mt-4 md:mt-8 font-medium leading-relaxed drop-shadow-md transition-all duration-700 ease-out px-2 ${
+            isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`} style={{ transitionDelay: '900ms' }}>
+            {currentSlide?.desc}
+          </p>
+          
+          {/* Buttons (Responsive Stack on Mobile, Row on PC) */}
+          <div className={`flex flex-col sm:flex-row justify-center w-[90%] sm:w-auto gap-3 sm:gap-4 mt-8 md:mt-10 transition-all duration-700 ease-out ${
+            isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`} style={{ transitionDelay: '1100ms' }}>
             
-            {/* Description Text (Reduced size for mobile UX) */}
-            <p className={`text-neutral-300 font-sans text-[10px] sm:text-sm md:text-base max-w-[90%] sm:max-w-lg mt-2.5 sm:mt-4 font-medium leading-relaxed transition-all duration-700 ease-out relative z-10 ${
-              isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`} style={{ transitionDelay: '900ms' }}>
-              {currentSlide?.desc}
-            </p>
-            
-            {/* Buttons (Tightened padding for mobile) */}
-            <div className={`flex flex-row w-full sm:w-auto gap-2.5 sm:gap-4 mt-4 sm:mt-8 transition-all duration-700 ease-out relative z-10 ${
-              isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`} style={{ transitionDelay: '1100ms' }}>
-              <button 
-                onClick={() => navigate(currentSlide?.btn1Link)} 
-                className="flex-1 sm:flex-none bg-[#f5a623] hover:bg-[#e0961c] text-black px-4 sm:px-8 py-2.5 sm:py-3.5 rounded-md sm:rounded-xl font-sans font-black tracking-wide transition-colors active:scale-95 uppercase text-[10px] sm:text-sm whitespace-nowrap text-center"
-              >
-                {currentSlide?.btn1Text}
-              </button>
+            {/* 🟡 PRIMARY YELLOW BUTTON */}
+            <button 
+              onClick={() => navigate(currentSlide?.btn1Link)} 
+              className="w-full sm:w-auto bg-[#f5a623] hover:bg-[#e0961c] text-black px-8 py-3.5 md:py-4 rounded-lg font-black tracking-widest transition-all active:scale-95 uppercase text-xs md:text-sm shadow-xl"
+            >
+              {currentSlide?.btn1Text}
+            </button>
+
+            {/* ⚪ SECONDARY WHITE BUTTON */}
+            {currentSlide?.btn2Text && (
               <button 
                 onClick={() => navigate(currentSlide?.btn2Link)} 
-                className="flex-1 sm:flex-none border border-white/80 hover:border-white bg-transparent hover:bg-white/10 px-4 sm:px-8 py-2.5 sm:py-3.5 rounded-md sm:rounded-xl font-sans font-bold tracking-wide transition-colors active:scale-95 text-white uppercase text-[10px] sm:text-sm whitespace-nowrap text-center"
+                className="w-full sm:w-auto bg-transparent hover:bg-white/10 backdrop-blur-sm border border-white/50 text-white px-8 py-3.5 md:py-4 rounded-lg font-bold tracking-widest transition-all active:scale-95 uppercase text-xs md:text-sm shadow-xl"
               >
                 {currentSlide?.btn2Text}
               </button>
-            </div>
-
-            {/* Video Progress Indicators */}
-            <div className="flex gap-1.5 sm:gap-2 mt-5 sm:mt-10 relative z-10">
-              {heroSlides.map((_, index) => (
-                <div 
-                  key={index} 
-                  className={`h-1 sm:h-1.5 rounded-full transition-all duration-500 ${
-                    index === currentIndex ? "w-6 sm:w-8 bg-[#f5a623]" : "w-1.5 sm:w-2 bg-white/30"
-                  }`}
-                />
-              ))}
-            </div>
-
+            )}
+            
           </div>
+
+          {/* Video Progress Indicators */}
+          <div className="flex justify-center gap-2 mt-12 absolute bottom-6 md:bottom-10">
+            {heroSlides.map((_, index) => (
+              <button 
+                key={index} 
+                onClick={() => {
+                  setIsAnimating(false);
+                  setTimeout(() => setCurrentIndex(index), 190);
+                }}
+                className={`h-1.5 rounded-full transition-all duration-500 ${
+                  index === currentIndex ? "w-10 bg-[#f5a623]" : "w-3 bg-white/30 hover:bg-white/60"
+                }`}
+              />
+            ))}
+          </div>
+
         </div>
       </section>
       
@@ -989,7 +1006,7 @@ const Home = () => {
               {/* Direct Contact Details */}
               <div className="space-y-3 bg-[#121826] p-4 rounded-xl border border-gray-800">
                 <a href="mailto:HELLO@LETSBHARAT.COM" className="flex items-center gap-3 text-gray-400 hover:text-[#ffcc00] transition-colors text-xs font-medium tracking-wide">
-                  <span>✉</span> newlongdebbarma143@gmail.com
+                  <span>✉</span> letsbharatofficial@gmail.com
                 </a>
                 <a href="tel:+919876543210" className="flex items-center gap-3 text-gray-400 hover:text-[#ffcc00] transition-colors text-xs font-medium tracking-wide">
                   <span>📞</span> +91 XXXX203
