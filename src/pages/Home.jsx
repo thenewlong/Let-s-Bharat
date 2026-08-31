@@ -99,33 +99,16 @@ const globalSearchData = [
   { id: 1, title: "Nomeo AI 2.0 API Integration", category: "Institution", link: "/institutions/nomeo" },
   { id: 2, title: "Tipra Social Platform Showcase", category: "Institution", link: "/institutions/tipra" },
   { id: 3, title: "NIELIT Agartala Campus & Courses", category: "Institution", link: "/institutions/nielit-agartala" },
-  { id: 4, title: "Techno College of Engineering Agartala (TCEA)", category: "Institution", link: "/institutions/tcea" },
-  { id: 5, title: "Independent Golden Jubilee Govt Higher Secondary School", category: "Institution", link: "/institutions/golden-jubilee-pasighat" },
   { id: 6, title: "React Native App Development Hackathon", category: "Hackathon", link: "/hackathons/react-native" },
-  { id: 7, title: "Ignitia / Prayukti 2026 Poster Expo", category: "Hackathon", link: "/hackathons/ignitia-prayukti" },
-  { id: 8, title: "Smart India Hackathon (SIH) 2026", category: "Hackathon", link: "/hackathons/sih-2026" },
-  { id: 9, title: "Tripura State Tech Innovation Challenge", category: "Hackathon", link: "/hackathons/tripura-innovation" },
-  { id: 10, title: "Full Stack React Native & Firebase Development", category: "LearningHub", link: "/learninghub/react-native-firebase" },
-  { id: 11, title: "NOMEO STUDZ Study Materials & PDF Notes", category: "LearningHub", link: "/learninghub/nomeo-studz" },
-  { id: 12, title: "Gemini API Chatbot & Image Analysis Tutorial", category: "LearningHub", link: "/learninghub/gemini-api" },
-  { id: 13, title: "AI for Young Minds - Computer Syllabus", category: "LearningHub", link: "/learninghub/ai-young-minds" },
-  { id: 14, title: "The Newlong Hub E-commerce Training", category: "LearningHub", link: "/learninghub/newlong-hub" },
-  { id: 15, title: "Frontend Developer Internship", category: "Internship", link: "/internships/frontend" },
-  { id: 16, title: "UI/UX Design Internship (Figma & Adobe XD)", category: "Internship", link: "/internships/ui-ux-design" },
-  { id: 17, title: "Data Science & Machine Learning Internship", category: "Internship", link: "/internships/data-science" },
-  { id: 18, title: "Backend Node.js Developer", category: "Jobs", link: "/jobs/backend-developer" },
-  { id: 19, title: "React Developer Job Opportunities", category: "Jobs", link: "/jobs/react-developer" },
-  { id: 20, title: "Open Source Contribution & GitHub Guidelines", category: "Resources", link: "/resources/open-source" }
+  { id: 7, title: "Ignitia / Prayukti 2026 Poster Expo", category: "Hackathon", link: "/hackathons/ignitia-prayukti" }
 ];
 
 const Home = () => {
   const navigate = useNavigate();
   
-  // ⏱️ State for Slide Index and Animation
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  // 🔍 Search Bar States
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchRef = useRef(null);
@@ -144,7 +127,7 @@ const Home = () => {
     setIsAnimating(false); 
     setTimeout(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % heroSlides.length);
-    }, 190); 
+    }, 300); // Smoother transition delay
   };
 
   const filteredResults = globalSearchData.filter((item) =>
@@ -162,15 +145,17 @@ const Home = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // ✨ PREMIUM 3D LETTER-BY-LETTER ANIMATION
+  // ✨ PREMIUM 3D BLUR & REVEAL LETTER ANIMATION (International Typography Style)
   const renderAnimatedLetters = (text, isActive, baseDelay = 0) => {
     if (!text) return null; 
     return text.split("").map((char, index) => (
       <span
         key={index}
-        className={`inline-block transition-all duration-500 ease-out font-black ${isActive ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-90'}`}
+        className={`inline-block transition-all duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] font-extrabold tracking-tight ${
+          isActive ? 'opacity-100 translate-y-0 scale-100 blur-0' : 'opacity-0 translate-y-6 scale-95 blur-[4px]'
+        }`}
         style={{ 
-          transitionDelay: `${baseDelay + index * 20}ms`,
+          transitionDelay: `${baseDelay + index * 12}ms`, // Faster letter sequence
           marginRight: char === " " ? "0.25em" : "0"
         }}
       >
@@ -178,6 +163,7 @@ const Home = () => {
       </span>
     ));
   };
+
 
 // ==========================================
   // SECTION: INSTITUTION VIDEO & INTERACTIVE BUTTON
@@ -471,49 +457,29 @@ const Home = () => {
       `}</style>
 
       {/* ========================================================= */}
-      {/* SECTION 1: CENTERED CINEMATIC HERO SECTION                */}
+      {/* SECTION 1: COMPACT HERO SECTION (60vh for Mobile)         */}
       {/* ========================================================= */}
-      <section className="relative w-full h-[80vh] md:h-[100dvh] min-h-[500px] md:min-h-[600px] flex flex-col justify-center items-center bg-[#111111] overflow-hidden">
+      {/* HEIGHT CHANGED: h-[60vh] on mobile will let the bottom section show 40% */}
+      <section className="relative w-full h-[60vh] md:h-[85vh] min-h-[380px] md:min-h-[600px] flex flex-col justify-center items-center bg-[#0a0a0a] overflow-hidden">
         
-        {/* 🎥 DYNAMIC BACKGROUND VIDEO */}
+        {/* 🎥 CINEMATIC ZOOM BACKGROUND VIDEO */}
         <video 
           key={currentSlide?.id}
           autoPlay 
           muted 
           playsInline
           onEnded={handleVideoEnd}
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 transition-opacity duration-1000"
+          className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 transition-opacity duration-1000 animate-cinematic-zoom"
         >
           <source src={currentSlide?.videoSrc} type="video/mp4" />
         </video>
 
-        {/* 🌑 Deep Clean Overlay */}
-        <div className="absolute inset-0 bg-black/60 mix-blend-multiply z-0"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80 z-0"></div>
+        <div className="absolute inset-0 bg-black/50 mix-blend-multiply z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-[#0a0a0a] z-0"></div>
 
-        {/* 🎨 FLOATING BACKGROUND ICONS (Hidden on Mobile, Visible on PC) */}
-        <div className="absolute inset-0 pointer-events-none z-0 hidden lg:block">
-          <div className="absolute top-[20%] left-[8%] animate-float-slow opacity-40 flex flex-col items-center">
-            <svg className="w-14 h-14 text-white mb-2" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path strokeLinecap="round" strokeLinejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>
-            <p className="text-white font-bold tracking-wide text-md text-outline transform -rotate-6">Skill Diversification</p>
-          </div>
-          <div className="absolute bottom-[20%] left-[12%] animate-float-slow delay-1 opacity-40 flex flex-col items-center">
-            <svg className="w-14 h-14 text-white mb-2" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-            <p className="text-white font-bold tracking-wide text-md text-outline transform rotate-6">Verified Institutions</p>
-          </div>
-          <div className="absolute top-[15%] right-[12%] animate-float-slow delay-2 opacity-40 flex flex-col items-center">
-            <svg className="w-14 h-14 text-white mb-2" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
-            <p className="text-white font-bold tracking-wide text-md text-outline transform rotate-3">Opportunities</p>
-          </div>
-          <div className="absolute bottom-[25%] right-[8%] animate-float-slow delay-3 opacity-40 flex flex-col items-center">
-            <svg className="w-14 h-14 text-white mb-2" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>
-            <p className="text-white font-bold tracking-wide text-md text-outline transform -rotate-3">Career Growth</p>
-          </div>
-        </div>
-
-        {/* 🔍 TOP SEARCH BAR (Mobile ONLY - hidden on md and larger devices) */}
-        <div className="md:hidden absolute top-20 left-1/2 transform -translate-x-1/2 w-[92%] z-50" ref={searchRef}>
-          <div className={`relative transition-all duration-700 ease-out ${isAnimating ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}>
+        {/* 🔍 TOP SEARCH BAR (Mobile ONLY - compact position) */}
+        <div className="md:hidden absolute top-12 left-1/2 transform -translate-x-1/2 w-[92%] z-50" ref={searchRef}>
+          <div className={`relative transition-all duration-[800ms] ease-out ${isAnimating ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}>
             <svg className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
@@ -523,68 +489,44 @@ const Home = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setIsSearchFocused(true)}
               placeholder="Search hackathons, institutions..."
-              className="w-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm rounded-full py-3 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-[#f5a623] focus:bg-white/20 transition-all placeholder-gray-300 shadow-xl"
+              className="w-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[13px] rounded-full py-2.5 pl-10 pr-4 focus:outline-none focus:ring-1 focus:ring-[#f5a623] transition-all placeholder-gray-300 shadow-lg"
             />
-            
-            {/* Search Dropdown */}
-            {isSearchFocused && searchQuery && (
-              <div className="absolute top-full mt-2 w-full bg-black/95 backdrop-blur-xl border border-white/10 shadow-2xl rounded-xl py-2 px-2 z-[60] max-h-60 overflow-y-auto">
-                {filteredResults.length > 0 ? (
-                  filteredResults.map((item, index) => (
-                    <div 
-                      key={index}
-                      onClick={() => {
-                        setIsSearchFocused(false);
-                        setSearchQuery("");
-                        navigate(item.link || '/'); 
-                      }}
-                      className="block px-4 py-3 text-sm font-semibold text-gray-200 hover:bg-white/10 hover:text-[#f5a623] rounded-lg transition-colors cursor-pointer"
-                    >
-                      <span className="text-[#f5a623] text-xs mr-2 uppercase border border-[#f5a623]/30 px-2 py-0.5 rounded-full">{item.category}</span>
-                      {item.title}
-                    </div>
-                  ))
-                ) : (
-                  <p className="px-4 py-3 text-sm text-gray-400 text-center">No results found...</p>
-                )}
-              </div>
-            )}
           </div>
         </div>
 
-        {/* 📝 MAIN HERO CONTENT (CENTERED ALIGNMENT) */}
+        {/* 📝 MAIN HERO CONTENT (Compact & International Typography) */}
         <div className="relative z-10 w-full flex-grow flex flex-col items-center justify-center text-center px-4 mt-8 md:mt-0">
           
-          {/* Main Title - Responsive sizing fixed */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black text-white uppercase drop-shadow-2xl tracking-tight flex flex-col items-center gap-1 md:gap-3 w-full">
+          {/* Main Title - Smaller, Sleeker, Extrabold */}
+          <h1 className="text-[20px] sm:text-2xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white uppercase drop-shadow-2xl tracking-tight flex flex-col items-center gap-0.5 md:gap-2 w-full leading-tight">
             <div className="flex flex-wrap justify-center overflow-hidden">
               {renderAnimatedLetters(currentSlide?.title1 || "", isAnimating, 0)}
             </div>
             {/* 🟡 YELLOW HIGHLIGHT TEXT */}
-            <div className="flex flex-wrap justify-center overflow-hidden text-[#f5a623] drop-shadow-[0_0_10px_rgba(245,166,35,0.3)]">
-              {renderAnimatedLetters(currentSlide?.titleHighlight || "", isAnimating, 300)}
+            <div className="flex flex-wrap justify-center overflow-hidden text-[#EAB308] drop-shadow-[0_0_12px_rgba(234,179,8,0.3)]">
+              {renderAnimatedLetters(currentSlide?.titleHighlight || "", isAnimating, 200)}
             </div>
             <div className="flex flex-wrap justify-center overflow-hidden">
-              {renderAnimatedLetters(currentSlide?.title2 || "", isAnimating, 600)}
+              {renderAnimatedLetters(currentSlide?.title2 || "", isAnimating, 400)}
             </div>
           </h1>
 
-          {/* Subtitle / Description */}
-          <p className={`text-neutral-200 font-sans text-xs sm:text-sm md:text-lg lg:text-xl max-w-[95%] sm:max-w-2xl lg:max-w-3xl mt-4 md:mt-6 font-medium leading-relaxed drop-shadow-md transition-all duration-700 ease-out px-2 ${
-            isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`} style={{ transitionDelay: '900ms' }}>
+          {/* Subtitle / Description - Reduced Size & Opacity for clean look */}
+          <p className={`text-neutral-300 font-sans text-[11px] sm:text-xs md:text-base max-w-[95%] sm:max-w-xl lg:max-w-2xl mt-3 md:mt-6 font-normal leading-relaxed drop-shadow-md transition-all duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] px-2 ${
+            isAnimating ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
+          }`} style={{ transitionDelay: '600ms' }}>
             {currentSlide?.desc}
           </p>
           
-          {/* Buttons Group */}
-          <div className={`flex flex-row justify-center items-center w-[96%] sm:w-auto gap-3 md:gap-5 mt-6 md:mt-10 transition-all duration-700 ease-out ${
-            isAnimating ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`} style={{ transitionDelay: '1100ms' }}>
+          {/* Buttons Group - Rounded Full (Pill shape) for Modern look */}
+          <div className={`flex flex-row justify-center items-center w-full sm:w-auto gap-3 md:gap-4 mt-5 md:mt-8 transition-all duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            isAnimating ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
+          }`} style={{ transitionDelay: '800ms' }}>
             
             {/* 🟡 PRIMARY YELLOW BUTTON */}
             <button 
               onClick={() => navigate(currentSlide?.btn1Link)} 
-              className="flex-1 sm:flex-none bg-[#f5a623] hover:bg-[#e0961c] text-black px-4 py-3 md:px-8 md:py-4 rounded-lg md:rounded-xl font-black tracking-widest transition-all active:scale-95 uppercase text-xs md:text-sm shadow-xl whitespace-nowrap"
+              className="flex-1 sm:flex-none bg-[#EAB308] hover:bg-[#ca9a07] text-black px-5 py-2.5 md:px-8 md:py-3.5 rounded-full font-bold tracking-wide transition-all active:scale-95 uppercase text-[10px] md:text-sm shadow-[0_4px_14px_0_rgba(234,179,8,0.39)] whitespace-nowrap"
             >
               {currentSlide?.btn1Text}
             </button>
@@ -593,7 +535,7 @@ const Home = () => {
             {currentSlide?.btn2Text && (
               <button 
                 onClick={() => navigate(currentSlide?.btn2Link)} 
-                className="flex-1 sm:flex-none bg-transparent hover:bg-white/10 backdrop-blur-sm border border-white/50 text-white px-4 py-3 md:px-8 md:py-4 rounded-lg md:rounded-xl font-bold tracking-widest transition-all active:scale-95 uppercase text-xs md:text-sm shadow-xl whitespace-nowrap"
+                className="flex-1 sm:flex-none bg-transparent hover:bg-white/5 backdrop-blur-sm border border-white/40 text-white px-5 py-2.5 md:px-8 md:py-3.5 rounded-full font-bold tracking-wide transition-all active:scale-95 uppercase text-[10px] md:text-sm shadow-xl whitespace-nowrap"
               >
                 {currentSlide?.btn2Text}
               </button>
@@ -601,17 +543,17 @@ const Home = () => {
             
           </div>
 
-          {/* Video Progress Indicators */}
-          <div className="flex justify-center gap-2 md:gap-3 absolute bottom-6 md:bottom-12">
+          {/* Video Progress Indicators - Sleek Thin lines */}
+          <div className="flex justify-center gap-1.5 md:gap-2 absolute bottom-4 md:bottom-8 z-20">
             {heroSlides.map((_, index) => (
               <button 
                 key={index} 
                 onClick={() => {
                   setIsAnimating(false);
-                  setTimeout(() => setCurrentIndex(index), 190);
+                  setTimeout(() => setCurrentIndex(index), 200);
                 }}
-                className={`h-1.5 md:h-2 rounded-full transition-all duration-500 ${
-                  index === currentIndex ? "w-8 md:w-12 bg-[#f5a623]" : "w-3 md:w-4 bg-white/30 hover:bg-white/60"
+                className={`h-1 md:h-1.5 rounded-full transition-all duration-500 ease-out ${
+                  index === currentIndex ? "w-8 md:w-12 bg-[#EAB308]" : "w-3 md:w-4 bg-white/30 hover:bg-white/60"
                 }`}
               />
             ))}
