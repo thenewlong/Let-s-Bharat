@@ -44,53 +44,51 @@ import mobileVeo from '../assets/videos/learn002.mp4';
 import letsBharatLogo from '../assets/images/logos3.jpeg'; 
 import founderProfile from '../assets/images/profile1.jpg';
 
-
-// 📂 DYNAMIC SLIDES DATA (Replace video variables with your actual imports)
-
+// 📂 DYNAMIC SLIDES DATA (With Category Badges)
 const heroSlides = [
   {
     id: 1,
-    videoSrc: video1,
+    videoSrc: video1, // Place 'video1' here
+    badge: "✦ INSTITUTIONS & HACKATHONS",
     title1: "INDIA'S STUDENTS",
     titleHighlight: "LEARNING & OPPORTUNITY",
     title2: "PLATFORM",
-    subtitle: "CONNECT. CREATE IMPACT. SUCCEED.",
     desc: "Discover hackathons, institutions, internships, and learning opportunities. Learn new skills, share knowledge, and build your future with Letsbharat.",
-    btn1Text: "Institutions", btn1Link: "/Institutions",
-    btn2Text: "Hackathons", btn2Link: "/hackathons"
+    btn1Text: "INSTITUTIONS", btn1Link: "/Institutions",
+    btn2Text: "HACKATHONS", btn2Link: "/hackathons"
   },
   {
     id: 2,
-    videoSrc: video2,
+    videoSrc: video2, // Place 'video2' here
+    badge: "✦ CAREER & INTERNSHIPS",
     title1: "KICKSTART YOUR CAREER WITH",
     titleHighlight: "TOP INTERNSHIPS",
     title2: "& OPEN ROLES",
-    subtitle: "LEARN. BUILD. GROW.",
     desc: "Get real-world experience. Apply for remote and onsite internships at top tech companies.",
-    btn1Text: "Apply Now", btn1Link: "/internships",
-    btn2Text: "View All", btn2Link: "/internships"
+    btn1Text: "APPLY NOW", btn1Link: "/internships",
+    btn2Text: "VIEW ALL", btn2Link: "/internships"
   },
   {
     id: 3,
-    videoSrc: video3,
+    videoSrc: video3, // Place 'video3' here
+    badge: "✦ INNOVATION & COMPETITIONS",
     title1: "BUILD INNOVATIVE SOLUTIONS",
     titleHighlight: "MEGA HACKATHONS",
     title2: "AROUND THE REGION",
-    subtitle: "CODE. CREATE. CONQUER.",
     desc: "Participate in intense coding battles. Solve real-world problems and win massive prizes.",
-    btn1Text: "Register Now", btn1Link: "/hackathons",
-    btn2Text: "Past Events", btn2Link: "/events"
+    btn1Text: "REGISTER NOW", btn1Link: "/hackathons",
+    btn2Text: "PAST EVENTS", btn2Link: "/events"
   },
   {
     id: 4,
-    videoSrc: video4,
+    videoSrc: video4, // Place 'video4' here
+    badge: "✦ LEARNING HUB & COURSES",
     title1: "LEARN. CREATE. SHARE.",
     titleHighlight: "BUILD YOUR OWN COURSE",
     title2: "& GROW TOGETHER",
-    subtitle: "LEARN. CREATE. GROW.",
     desc: "Explore courses created by students, educators, and creators — or create and share your own course with the Learning Hub community.",
-    btn1Text: "Explore Courses", btn1Link: "/learninghub",
-    btn2Text: "Create a Course", btn2Link: "/learninghub/create"
+    btn1Text: "EXPLORE COURSES", btn1Link: "/learninghub",
+    btn2Text: "CREATE COURSE", btn2Link: "/learninghub/create"
   }
 ];
 
@@ -99,11 +97,11 @@ const globalSearchData = [
   { id: 1, title: "Nomeo AI 2.0 API Integration", category: "Institution", link: "/institutions/nomeo" },
   { id: 2, title: "Tipra Social Platform Showcase", category: "Institution", link: "/institutions/tipra" },
   { id: 3, title: "NIELIT Agartala Campus & Courses", category: "Institution", link: "/institutions/nielit-agartala" },
-  { id: 6, title: "React Native App Development Hackathon", category: "Hackathon", link: "/hackathons/react-native" },
-  { id: 7, title: "Ignitia / Prayukti 2026 Poster Expo", category: "Hackathon", link: "/hackathons/ignitia-prayukti" }
+  { id: 4, title: "React Native App Development Hackathon", category: "Hackathon", link: "/hackathons/react-native" },
+  { id: 5, title: "Ignitia / Prayukti 2026 Poster Expo", category: "Hackathon", link: "/hackathons/ignitia-prayukti" }
 ];
 
-const Home = () => {
+const Home = ({ isMobileMenuOpen = false }) => {
   const navigate = useNavigate();
   
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -115,21 +113,24 @@ const Home = () => {
 
   const currentSlide = heroSlides[currentIndex];
 
+  // 🔄 Trigger Motion Graphic Animation on Slide Change
   useEffect(() => {
     setIsAnimating(false);
     const timer = setTimeout(() => {
       setIsAnimating(true);
-    }, 50); 
+    }, 60); 
     return () => clearTimeout(timer);
   }, [currentIndex]);
 
+  // 🎥 Smooth Video End & Auto Loop Logic
   const handleVideoEnd = () => {
     setIsAnimating(false); 
     setTimeout(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % heroSlides.length);
-    }, 300); // Smoother transition delay
+    }, 300);
   };
 
+  // 🔍 Filtered Search Results
   const filteredResults = globalSearchData.filter((item) =>
     item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     item.category.toLowerCase().includes(searchQuery.toLowerCase())
@@ -145,25 +146,26 @@ const Home = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // ✨ PREMIUM 3D BLUR & REVEAL LETTER ANIMATION (International Typography Style)
+  // ✨ MOTION GRAPHIC TYPOGRAPHY ANIMATION (Video Intro Style)
   const renderAnimatedLetters = (text, isActive, baseDelay = 0) => {
     if (!text) return null; 
     return text.split("").map((char, index) => (
       <span
         key={index}
-        className={`inline-block transition-all duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] font-extrabold tracking-tight ${
-          isActive ? 'opacity-100 translate-y-0 scale-100 blur-0' : 'opacity-0 translate-y-6 scale-95 blur-[4px]'
+        className={`inline-block transition-all duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isActive 
+            ? 'opacity-100 translate-y-0 scale-100 blur-0' 
+            : 'opacity-0 translate-y-8 scale-125 blur-[10px]'
         }`}
         style={{ 
-          transitionDelay: `${baseDelay + index * 12}ms`, // Faster letter sequence
-          marginRight: char === " " ? "0.25em" : "0"
+          transitionDelay: `${baseDelay + index * 14}ms`, 
+          marginRight: char === " " ? "0.28em" : "0"
         }}
       >
         {char}
       </span>
     ));
   };
-
 
 // ==========================================
   // SECTION: INSTITUTION VIDEO & INTERACTIVE BUTTON
@@ -456,86 +458,126 @@ const Home = () => {
         }
       `}</style>
 
+    {/* ========================================================= */}
+      {/* SECTION: HERO SECTION (Mobile Optimized & Desktop Fixed)   */}
       {/* ========================================================= */}
-      {/* SECTION 1: COMPACT HERO SECTION (60vh for Mobile)         */}
-      {/* ========================================================= */}
-      {/* HEIGHT CHANGED: h-[60vh] on mobile will let the bottom section show 40% */}
-      <section className="relative w-full h-[60vh] md:h-[85vh] min-h-[380px] md:min-h-[600px] flex flex-col justify-center items-center bg-[#0a0a0a] overflow-hidden">
+      <section className="relative w-full h-[88vh] md:h-screen min-h-[580px] md:min-h-[680px] flex flex-col justify-center items-center bg-[#0a0a0a] overflow-hidden">
         
-        {/* 🎥 CINEMATIC ZOOM BACKGROUND VIDEO */}
+        {/* 🎥 BACKGROUND CONTINUOUS RUNNING VIDEO */}
         <video 
           key={currentSlide?.id}
           autoPlay 
           muted 
           playsInline
           onEnded={handleVideoEnd}
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 transition-opacity duration-1000 animate-cinematic-zoom"
+          className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 transition-opacity duration-1000 scale-105"
         >
-          <source src={currentSlide?.videoSrc} type="video/mp4" />
+          {currentSlide?.videoSrc && <source src={currentSlide?.videoSrc} type="video/mp4" />}
         </video>
 
-        <div className="absolute inset-0 bg-black/50 mix-blend-multiply z-0"></div>
+        {/* CINEMATIC OVERLAYS */}
+        <div className="absolute inset-0 bg-black/55 mix-blend-multiply z-0"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-[#0a0a0a] z-0"></div>
 
-        {/* 🔍 TOP SEARCH BAR (Mobile ONLY - compact position) */}
-        <div className="md:hidden absolute top-12 left-1/2 transform -translate-x-1/2 w-[92%] z-50" ref={searchRef}>
-          <div className={`relative transition-all duration-[800ms] ease-out ${isAnimating ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}>
-            <svg className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onFocus={() => setIsSearchFocused(true)}
-              placeholder="Search hackathons, institutions..."
-              className="w-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[13px] rounded-full py-2.5 pl-10 pr-4 focus:outline-none focus:ring-1 focus:ring-[#f5a623] transition-all placeholder-gray-300 shadow-lg"
-            />
-          </div>
-        </div>
+        {/* 🔍 INTERNATIONAL SEARCH BAR (MOBILE ONLY - Hides when menu drawer is active) */}
+        {!isMobileMenuOpen && (
+          <div 
+            className="md:hidden absolute top-12 left-1/2 transform -translate-x-1/2 w-[90%] z-50 transition-all duration-300" 
+            ref={searchRef}
+          >
+            <div className={`relative transition-all duration-700 ${isAnimating ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}>
+              <svg className="w-4 h-4 text-gray-300 absolute left-4 top-1/2 transform -translate-y-1/2 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setIsSearchFocused(true)}
+                placeholder="Search hackathons, institutions..."
+                className="w-full bg-[#1e1e1e]/80 backdrop-blur-xl border border-white/20 text-white text-[13px] font-medium rounded-full py-3 pl-11 pr-4 focus:outline-none focus:border-[#EAB308] focus:ring-1 focus:ring-[#EAB308] transition-all placeholder-gray-400 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]"
+              />
 
-        {/* 📝 MAIN HERO CONTENT (Compact & International Typography) */}
-        <div className="relative z-10 w-full flex-grow flex flex-col items-center justify-center text-center px-4 mt-8 md:mt-0">
+              {/* Mobile Search Dropdown */}
+              {isSearchFocused && searchQuery && (
+                <div className="absolute top-14 left-0 w-full bg-[#121212]/95 backdrop-blur-2xl border border-white/15 rounded-2xl overflow-hidden shadow-2xl z-50 max-h-[220px] overflow-y-auto">
+                  {filteredResults.length > 0 ? (
+                    filteredResults.map((item) => (
+                      <div 
+                        key={item.id} 
+                        onClick={() => {
+                          navigate(item.link);
+                          setIsSearchFocused(false);
+                        }} 
+                        className="px-4 py-3 hover:bg-white/10 border-b border-white/5 last:border-0 cursor-pointer text-white flex justify-between items-center transition-colors"
+                      >
+                        <span className="text-[12px] font-medium truncate pr-2">{item.title}</span>
+                        <span className="text-[10px] bg-white/10 text-[#EAB308] px-2 py-0.5 rounded-full uppercase tracking-wider">{item.category}</span>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="px-4 py-3 text-gray-400 text-xs text-center">No matching results found</div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* 📝 HERO CONTENT CONTAINER */}
+        <div className="relative z-10 w-full flex-grow flex flex-col items-center justify-center text-center px-4 mt-12 md:mt-0">
           
-          {/* Main Title - Smaller, Sleeker, Extrabold */}
-          <h1 className="text-[20px] sm:text-2xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white uppercase drop-shadow-2xl tracking-tight flex flex-col items-center gap-0.5 md:gap-2 w-full leading-tight">
+          {/* 🏷️ MOTION BADGE / SECTION CATEGORY (Replaces Old Stats Cards) */}
+          <div className={`mb-3 md:mb-5 transition-all duration-700 ease-out ${
+            isAnimating ? "opacity-100 translate-y-0 scale-100" : "opacity-0 -translate-y-4 scale-90"
+          }`}>
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 md:px-5 md:py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#EAB308] text-[10px] md:text-xs font-extrabold tracking-widest uppercase shadow-lg">
+              {currentSlide?.badge}
+            </span>
+          </div>
+
+          {/* 🔤 MOTION GRAPHIC MAIN TITLE (Italic Bold Typography) */}
+          <h1 className="text-[23px] sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black italic uppercase tracking-tight flex flex-col items-center gap-0.5 md:gap-1.5 w-full leading-[1.08] text-white drop-shadow-2xl">
+            
             <div className="flex flex-wrap justify-center overflow-hidden">
               {renderAnimatedLetters(currentSlide?.title1 || "", isAnimating, 0)}
             </div>
-            {/* 🟡 YELLOW HIGHLIGHT TEXT */}
-            <div className="flex flex-wrap justify-center overflow-hidden text-[#EAB308] drop-shadow-[0_0_12px_rgba(234,179,8,0.3)]">
+            
+            {/* 🟡 HIGHLIGHTED TEXT */}
+            <div className="flex flex-wrap justify-center overflow-hidden text-[#EAB308] drop-shadow-[0_0_15px_rgba(234,179,8,0.35)]">
               {renderAnimatedLetters(currentSlide?.titleHighlight || "", isAnimating, 200)}
             </div>
+
             <div className="flex flex-wrap justify-center overflow-hidden">
               {renderAnimatedLetters(currentSlide?.title2 || "", isAnimating, 400)}
             </div>
           </h1>
 
-          {/* Subtitle / Description - Reduced Size & Opacity for clean look */}
-          <p className={`text-neutral-300 font-sans text-[11px] sm:text-xs md:text-base max-w-[95%] sm:max-w-xl lg:max-w-2xl mt-3 md:mt-6 font-normal leading-relaxed drop-shadow-md transition-all duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] px-2 ${
+          {/* 📄 SUBTITLE / DESCRIPTION */}
+          <p className={`text-neutral-300 font-sans text-[11px] sm:text-xs md:text-base max-w-[92%] sm:max-w-xl lg:max-w-2xl mt-3 md:mt-6 font-normal leading-relaxed transition-all duration-700 ease-out px-2 ${
             isAnimating ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
-          }`} style={{ transitionDelay: '600ms' }}>
+          }`} style={{ transitionDelay: '550ms' }}>
             {currentSlide?.desc}
           </p>
           
-          {/* Buttons Group - Rounded Full (Pill shape) for Modern look */}
-          <div className={`flex flex-row justify-center items-center w-full sm:w-auto gap-3 md:gap-4 mt-5 md:mt-8 transition-all duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            isAnimating ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
-          }`} style={{ transitionDelay: '800ms' }}>
+          {/* 🎯 BUTTONS GROUP (Exact Design Match) */}
+          <div className={`flex flex-row justify-center items-center w-full gap-3 md:gap-4 mt-6 md:mt-8 transition-all duration-700 ease-out ${
+            isAnimating ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-6 scale-95"
+          }`} style={{ transitionDelay: '700ms' }}>
             
-            {/* 🟡 PRIMARY YELLOW BUTTON */}
+            {/* 🟡 PRIMARY BUTTON */}
             <button 
               onClick={() => navigate(currentSlide?.btn1Link)} 
-              className="flex-1 sm:flex-none bg-[#EAB308] hover:bg-[#ca9a07] text-black px-5 py-2.5 md:px-8 md:py-3.5 rounded-full font-bold tracking-wide transition-all active:scale-95 uppercase text-[10px] md:text-sm shadow-[0_4px_14px_0_rgba(234,179,8,0.39)] whitespace-nowrap"
+              className="bg-[#EAB308] hover:bg-[#ca9a07] text-black w-[140px] sm:w-[160px] md:w-[190px] py-3 md:py-3.5 rounded-full font-black tracking-wider transition-all active:scale-95 uppercase text-[11px] md:text-xs shadow-[0_4px_20px_rgba(234,179,8,0.4)]"
             >
               {currentSlide?.btn1Text}
             </button>
 
-            {/* ⚪ SECONDARY WHITE BUTTON */}
+            {/* ⚪ SECONDARY BUTTON */}
             {currentSlide?.btn2Text && (
               <button 
                 onClick={() => navigate(currentSlide?.btn2Link)} 
-                className="flex-1 sm:flex-none bg-transparent hover:bg-white/5 backdrop-blur-sm border border-white/40 text-white px-5 py-2.5 md:px-8 md:py-3.5 rounded-full font-bold tracking-wide transition-all active:scale-95 uppercase text-[10px] md:text-sm shadow-xl whitespace-nowrap"
+                className="bg-black/80 hover:bg-white/10 backdrop-blur-md border border-white text-white w-[140px] sm:w-[160px] md:w-[190px] py-3 md:py-3.5 rounded-full font-black tracking-wider transition-all active:scale-95 uppercase text-[11px] md:text-xs shadow-xl"
               >
                 {currentSlide?.btn2Text}
               </button>
@@ -543,25 +585,25 @@ const Home = () => {
             
           </div>
 
-          {/* Video Progress Indicators - Sleek Thin lines */}
-          <div className="flex justify-center gap-1.5 md:gap-2 absolute bottom-4 md:bottom-8 z-20">
+          {/* ⏸️ SLIDE INDICATORS (Sleek Bottom Dots/Lines) */}
+          <div className="flex justify-center gap-1.5 md:gap-2 absolute bottom-6 md:bottom-8 z-20">
             {heroSlides.map((_, index) => (
               <button 
                 key={index} 
                 onClick={() => {
                   setIsAnimating(false);
-                  setTimeout(() => setCurrentIndex(index), 200);
+                  setTimeout(() => setCurrentIndex(index), 150);
                 }}
-                className={`h-1 md:h-1.5 rounded-full transition-all duration-500 ease-out ${
-                  index === currentIndex ? "w-8 md:w-12 bg-[#EAB308]" : "w-3 md:w-4 bg-white/30 hover:bg-white/60"
+                className={`h-1 md:h-1.5 rounded-full transition-all duration-500 ${
+                  index === currentIndex ? "w-8 md:w-10 bg-[#EAB308]" : "w-3 md:w-4 bg-white/25 hover:bg-white/50"
                 }`}
               />
             ))}
           </div>
 
         </div>
-      </section>
 
+      </section>
 {/* ========================================================= */}
       {/* SECTION: INSTITUTION (Gen-Z Premium Background)           */}
       {/* ========================================================= */}
