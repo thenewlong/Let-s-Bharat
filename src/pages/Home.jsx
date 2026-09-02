@@ -43,13 +43,11 @@ import mobileVeo from '../assets/videos/learn002.mp4';
 // Inko file ke sabse upar import karna (apne actual folder path ke hisaab se adjust kar lena)
 import letsBharatLogo from '../assets/images/logos3.jpeg'; 
 import founderProfile from '../assets/images/profile1.jpg';
-
-// 📂 DYNAMIC SLIDES DATA (With Category Badges)
+// 📂 Dynamic Slides Data
 const heroSlides = [
   {
     id: 1,
-    videoSrc: video1, // Place 'video1' here
-    badge: "✦ INSTITUTIONS & HACKATHONS",
+    videoSrc: video1, // Video path yahan rakhein
     title1: "INDIA'S STUDENTS",
     titleHighlight: "LEARNING & OPPORTUNITY",
     title2: "PLATFORM",
@@ -59,8 +57,7 @@ const heroSlides = [
   },
   {
     id: 2,
-    videoSrc: video2, // Place 'video2' here
-    badge: "✦ CAREER & INTERNSHIPS",
+    videoSrc: video2,
     title1: "KICKSTART YOUR CAREER WITH",
     titleHighlight: "TOP INTERNSHIPS",
     title2: "& OPEN ROLES",
@@ -70,8 +67,7 @@ const heroSlides = [
   },
   {
     id: 3,
-    videoSrc: video3, // Place 'video3' here
-    badge: "✦ INNOVATION & COMPETITIONS",
+    videoSrc: video3,
     title1: "BUILD INNOVATIVE SOLUTIONS",
     titleHighlight: "MEGA HACKATHONS",
     title2: "AROUND THE REGION",
@@ -81,8 +77,7 @@ const heroSlides = [
   },
   {
     id: 4,
-    videoSrc: video4, // Place 'video4' here
-    badge: "✦ LEARNING HUB & COURSES",
+    videoSrc: video4,
     title1: "LEARN. CREATE. SHARE.",
     titleHighlight: "BUILD YOUR OWN COURSE",
     title2: "& GROW TOGETHER",
@@ -92,7 +87,7 @@ const heroSlides = [
   }
 ];
 
-// 🗂️ GLOBAL SEARCH DATA
+// 🗂️ Global Search Data
 const globalSearchData = [
   { id: 1, title: "Nomeo AI 2.0 API Integration", category: "Institution", link: "/institutions/nomeo" },
   { id: 2, title: "Tipra Social Platform Showcase", category: "Institution", link: "/institutions/tipra" },
@@ -113,7 +108,6 @@ const Home = ({ isMobileMenuOpen = false }) => {
 
   const currentSlide = heroSlides[currentIndex];
 
-  // 🔄 Trigger Motion Graphic Animation on Slide Change
   useEffect(() => {
     setIsAnimating(false);
     const timer = setTimeout(() => {
@@ -122,7 +116,6 @@ const Home = ({ isMobileMenuOpen = false }) => {
     return () => clearTimeout(timer);
   }, [currentIndex]);
 
-  // 🎥 Smooth Video End & Auto Loop Logic
   const handleVideoEnd = () => {
     setIsAnimating(false); 
     setTimeout(() => {
@@ -130,7 +123,6 @@ const Home = ({ isMobileMenuOpen = false }) => {
     }, 300);
   };
 
-  // 🔍 Filtered Search Results
   const filteredResults = globalSearchData.filter((item) =>
     item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     item.category.toLowerCase().includes(searchQuery.toLowerCase())
@@ -146,7 +138,6 @@ const Home = ({ isMobileMenuOpen = false }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // ✨ MOTION GRAPHIC TYPOGRAPHY ANIMATION (Video Intro Style)
   const renderAnimatedLetters = (text, isActive, baseDelay = 0) => {
     if (!text) return null; 
     return text.split("").map((char, index) => (
@@ -457,36 +448,35 @@ const Home = ({ isMobileMenuOpen = false }) => {
           }
         }
       `}</style>
-
-    {/* ========================================================= */}
-      {/* SECTION: HERO SECTION (Mobile Optimized & Desktop Fixed)   */}
+{/* ========================================================= */}
+      {/* SECTION: HERO SECTION (50% Next Section Peek & Responsive) */}
       {/* ========================================================= */}
-      <section className="relative w-full h-[88vh] md:h-screen min-h-[580px] md:min-h-[680px] flex flex-col justify-center items-center bg-[#0a0a0a] overflow-hidden">
+      <section className="relative w-full min-h-[78vh] sm:min-h-[82vh] md:min-h-[85vh] flex flex-col justify-between items-center bg-[#0a0a0a] overflow-hidden pt-6 pb-12">
         
-        {/* 🎥 BACKGROUND CONTINUOUS RUNNING VIDEO */}
+        {/* 🎥 BACKGROUND VIDEO */}
         <video 
           key={currentSlide?.id}
           autoPlay 
           muted 
           playsInline
           onEnded={handleVideoEnd}
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 transition-opacity duration-1000 scale-105"
+          className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 scale-105"
         >
           {currentSlide?.videoSrc && <source src={currentSlide?.videoSrc} type="video/mp4" />}
         </video>
 
-        {/* CINEMATIC OVERLAYS */}
-        <div className="absolute inset-0 bg-black/55 mix-blend-multiply z-0"></div>
+        {/* OVERLAYS */}
+        <div className="absolute inset-0 bg-black/60 mix-blend-multiply z-0"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-[#0a0a0a] z-0"></div>
 
-        {/* 🔍 INTERNATIONAL SEARCH BAR (MOBILE ONLY - Hides when menu drawer is active) */}
+        {/* 🔍 SEARCH BAR (MOBILE ONLY - Hidden when Drawer Menu is open) */}
         {!isMobileMenuOpen && (
           <div 
-            className="md:hidden absolute top-12 left-1/2 transform -translate-x-1/2 w-[90%] z-50 transition-all duration-300" 
+            className="md:hidden relative w-[92%] max-w-md z-20 transition-all duration-300 mt-2" 
             ref={searchRef}
           >
             <div className={`relative transition-all duration-700 ${isAnimating ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}>
-              <svg className="w-4 h-4 text-gray-300 absolute left-4 top-1/2 transform -translate-y-1/2 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
               <input
@@ -495,12 +485,12 @@ const Home = ({ isMobileMenuOpen = false }) => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setIsSearchFocused(true)}
                 placeholder="Search hackathons, institutions..."
-                className="w-full bg-[#1e1e1e]/80 backdrop-blur-xl border border-white/20 text-white text-[13px] font-medium rounded-full py-3 pl-11 pr-4 focus:outline-none focus:border-[#EAB308] focus:ring-1 focus:ring-[#EAB308] transition-all placeholder-gray-400 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]"
+                className="w-full bg-[#1e1e1e]/80 backdrop-blur-xl border border-white/20 text-white text-[14px] font-medium rounded-full py-2.5 pl-11 pr-4 focus:outline-none focus:border-[#EAB308] focus:ring-1 focus:ring-[#EAB308] transition-all placeholder-gray-400 shadow-lg"
               />
 
               {/* Mobile Search Dropdown */}
               {isSearchFocused && searchQuery && (
-                <div className="absolute top-14 left-0 w-full bg-[#121212]/95 backdrop-blur-2xl border border-white/15 rounded-2xl overflow-hidden shadow-2xl z-50 max-h-[220px] overflow-y-auto">
+                <div className="absolute top-12 left-0 w-full bg-[#121212]/95 backdrop-blur-2xl border border-white/15 rounded-2xl overflow-hidden shadow-2xl z-30 max-h-[200px] overflow-y-auto">
                   {filteredResults.length > 0 ? (
                     filteredResults.map((item) => (
                       <div 
@@ -511,7 +501,7 @@ const Home = ({ isMobileMenuOpen = false }) => {
                         }} 
                         className="px-4 py-3 hover:bg-white/10 border-b border-white/5 last:border-0 cursor-pointer text-white flex justify-between items-center transition-colors"
                       >
-                        <span className="text-[12px] font-medium truncate pr-2">{item.title}</span>
+                        <span className="text-[13px] font-medium truncate pr-2">{item.title}</span>
                         <span className="text-[10px] bg-white/10 text-[#EAB308] px-2 py-0.5 rounded-full uppercase tracking-wider">{item.category}</span>
                       </div>
                     ))
@@ -524,60 +514,53 @@ const Home = ({ isMobileMenuOpen = false }) => {
           </div>
         )}
 
-        {/* 📝 HERO CONTENT CONTAINER */}
-        <div className="relative z-10 w-full flex-grow flex flex-col items-center justify-center text-center px-4 mt-12 md:mt-0">
+        {/* 📝 MAIN HERO CONTENT */}
+        <div className="relative z-10 w-full flex-grow flex flex-col items-center justify-center text-center px-4 my-auto">
           
-          {/* 🏷️ MOTION BADGE / SECTION CATEGORY (Replaces Old Stats Cards) */}
-          <div className={`mb-3 md:mb-5 transition-all duration-700 ease-out ${
-            isAnimating ? "opacity-100 translate-y-0 scale-100" : "opacity-0 -translate-y-4 scale-90"
-          }`}>
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 md:px-5 md:py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#EAB308] text-[10px] md:text-xs font-extrabold tracking-widest uppercase shadow-lg">
-              {currentSlide?.badge}
-            </span>
-          </div>
+         
 
-          {/* 🔤 MOTION GRAPHIC MAIN TITLE (Italic Bold Typography) */}
-          <h1 className="text-[23px] sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black italic uppercase tracking-tight flex flex-col items-center gap-0.5 md:gap-1.5 w-full leading-[1.08] text-white drop-shadow-2xl">
+          {/* 🔤 HERO TITLE (Increased Mobile & PC Font Sizes) */}
+          <h1 className="text-[28px] sm:text-4xl md:text-6xl lg:text-7xl font-black italic uppercase tracking-tight flex flex-col items-center gap-1 w-full leading-[1.1] text-white drop-shadow-2xl">
             
             <div className="flex flex-wrap justify-center overflow-hidden">
               {renderAnimatedLetters(currentSlide?.title1 || "", isAnimating, 0)}
             </div>
             
-            {/* 🟡 HIGHLIGHTED TEXT */}
-            <div className="flex flex-wrap justify-center overflow-hidden text-[#EAB308] drop-shadow-[0_0_15px_rgba(234,179,8,0.35)]">
-              {renderAnimatedLetters(currentSlide?.titleHighlight || "", isAnimating, 200)}
+            {/* HIGHLIGHTED YELLOW TEXT */}
+            <div className="flex flex-wrap justify-center overflow-hidden text-[#EAB308] drop-shadow-[0_0_20px_rgba(234,179,8,0.4)]">
+              {renderAnimatedLetters(currentSlide?.titleHighlight || "", isAnimating, 180)}
             </div>
 
             <div className="flex flex-wrap justify-center overflow-hidden">
-              {renderAnimatedLetters(currentSlide?.title2 || "", isAnimating, 400)}
+              {renderAnimatedLetters(currentSlide?.title2 || "", isAnimating, 360)}
             </div>
           </h1>
 
           {/* 📄 SUBTITLE / DESCRIPTION */}
-          <p className={`text-neutral-300 font-sans text-[11px] sm:text-xs md:text-base max-w-[92%] sm:max-w-xl lg:max-w-2xl mt-3 md:mt-6 font-normal leading-relaxed transition-all duration-700 ease-out px-2 ${
+          <p className={`text-gray-200 text-[13px] sm:text-sm md:text-lg max-w-[95%] sm:max-w-xl lg:max-w-3xl mt-4 font-normal leading-relaxed transition-all duration-700 ease-out px-2 ${
             isAnimating ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
-          }`} style={{ transitionDelay: '550ms' }}>
+          }`} style={{ transitionDelay: '500ms' }}>
             {currentSlide?.desc}
           </p>
           
-          {/* 🎯 BUTTONS GROUP (Exact Design Match) */}
-          <div className={`flex flex-row justify-center items-center w-full gap-3 md:gap-4 mt-6 md:mt-8 transition-all duration-700 ease-out ${
+          {/* 🎯 BUTTONS GROUP (Exact Pill Shapes matching Image 1) */}
+          <div className={`flex flex-row justify-center items-center w-full gap-3 sm:gap-4 mt-6 md:mt-8 transition-all duration-700 ease-out ${
             isAnimating ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-6 scale-95"
-          }`} style={{ transitionDelay: '700ms' }}>
+          }`} style={{ transitionDelay: '650ms' }}>
             
-            {/* 🟡 PRIMARY BUTTON */}
+            {/* YELLOW PRIMARY BUTTON */}
             <button 
               onClick={() => navigate(currentSlide?.btn1Link)} 
-              className="bg-[#EAB308] hover:bg-[#ca9a07] text-black w-[140px] sm:w-[160px] md:w-[190px] py-3 md:py-3.5 rounded-full font-black tracking-wider transition-all active:scale-95 uppercase text-[11px] md:text-xs shadow-[0_4px_20px_rgba(234,179,8,0.4)]"
+              className="bg-[#EAB308] hover:bg-[#ca9a07] text-black px-6 sm:px-8 py-3 rounded-full font-black tracking-wider transition-all active:scale-95 uppercase text-xs sm:text-sm shadow-[0_4px_20px_rgba(234,179,8,0.4)] min-w-[140px] sm:min-w-[170px]"
             >
               {currentSlide?.btn1Text}
             </button>
 
-            {/* ⚪ SECONDARY BUTTON */}
+            {/* DARK SECONDARY BUTTON */}
             {currentSlide?.btn2Text && (
               <button 
                 onClick={() => navigate(currentSlide?.btn2Link)} 
-                className="bg-black/80 hover:bg-white/10 backdrop-blur-md border border-white text-white w-[140px] sm:w-[160px] md:w-[190px] py-3 md:py-3.5 rounded-full font-black tracking-wider transition-all active:scale-95 uppercase text-[11px] md:text-xs shadow-xl"
+                className="bg-black/70 hover:bg-white/10 backdrop-blur-md border border-white/40 text-white px-6 sm:px-8 py-3 rounded-full font-black tracking-wider transition-all active:scale-95 uppercase text-xs sm:text-sm shadow-xl min-w-[140px] sm:min-w-[170px]"
               >
                 {currentSlide?.btn2Text}
               </button>
@@ -585,22 +568,22 @@ const Home = ({ isMobileMenuOpen = false }) => {
             
           </div>
 
-          {/* ⏸️ SLIDE INDICATORS (Sleek Bottom Dots/Lines) */}
-          <div className="flex justify-center gap-1.5 md:gap-2 absolute bottom-6 md:bottom-8 z-20">
-            {heroSlides.map((_, index) => (
-              <button 
-                key={index} 
-                onClick={() => {
-                  setIsAnimating(false);
-                  setTimeout(() => setCurrentIndex(index), 150);
-                }}
-                className={`h-1 md:h-1.5 rounded-full transition-all duration-500 ${
-                  index === currentIndex ? "w-8 md:w-10 bg-[#EAB308]" : "w-3 md:w-4 bg-white/25 hover:bg-white/50"
-                }`}
-              />
-            ))}
-          </div>
+        </div>
 
+        {/* ⏸️ SLIDE INDICATORS (Matching Dash Style) */}
+        <div className="relative z-10 flex justify-center gap-2 mt-4">
+          {heroSlides.map((_, index) => (
+            <button 
+              key={index} 
+              onClick={() => {
+                setIsAnimating(false);
+                setTimeout(() => setCurrentIndex(index), 150);
+              }}
+              className={`h-1.5 rounded-full transition-all duration-500 ${
+                index === currentIndex ? "w-10 bg-[#EAB308]" : "w-4 bg-white/30 hover:bg-white/60"
+              }`}
+            />
+          ))}
         </div>
 
       </section>
@@ -838,39 +821,39 @@ const Home = ({ isMobileMenuOpen = false }) => {
 {/* ========================================================= */}
       {/* SECTION 6: FOOTER (Dark Theme, Let's Bharat Layout)       */}
       {/* ========================================================= */}
-      <footer className="w-full bg-[#0a0f1c] pt-16 pb-6 px-6 border-t border-gray-800 text-white font-sans">
-        <div className="max-w-7xl mx-auto">
+      <footer className="w-full bg-[#0a0f1c] pt-16 pb-8 px-4 sm:px-8 lg:px-12 border-t border-gray-800 text-white font-sans">
+        <div className="max-w-[1400px] mx-auto">
           
-          {/* Main 4-Column Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+          {/* Main Grid: 1 col (Mobile) -> 2 cols (Tablet) -> 4 cols (PC) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 xl:gap-12 mb-16">
             
             {/* COLUMN 1: Brand & Newsletter */}
             <div className="space-y-6">
-              {/* Website Logo Implemented via Import Logic */}
+              {/* Website Logo */}
               <img 
                 src={letsBharatLogo} 
                 alt="Let's Bharat Logo" 
-                className="h-18 object-contain"
+                className="h-14 sm:h-16 object-contain"
               />
-              <p className="text-gray-400 text-xs leading-relaxed uppercase tracking-wide">
-                Your gateway to hackathons, internships, startup communities and resources. Let's build the <span className="text-[#ffcc00]">future</span> together.
+              <p className="text-gray-400 text-[11px] sm:text-xs leading-relaxed uppercase tracking-wider pr-4">
+                Your gateway to hackathons, internships, startup communities and resources. Let's build the <span className="text-[#ffcc00] font-bold">future</span> together.
               </p>
               
-              <div className="pt-4">
-                <h4 className="text-white text-xs font-bold uppercase tracking-wider mb-3">
+              <div className="pt-2">
+                <h4 className="text-white text-xs font-bold uppercase tracking-wider mb-2">
                   Subscribe to our newsletter
                 </h4>
-                <p className="text-gray-500 text-xs mb-3">Get the latest updates and opportunities.</p>
-                <div className="flex">
+                <p className="text-gray-500 text-[11px] mb-4 uppercase tracking-wide">Get the latest updates and opportunities.</p>
+                <div className="flex w-full max-w-sm">
                   <div className="relative flex-grow">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">✉</span>
                     <input 
                       type="email" 
                       placeholder="ENTER YOUR EMAIL" 
-                      className="w-full bg-transparent border border-gray-700 text-white pl-8 pr-3 py-2.5 rounded-l-md outline-none focus:border-[#ffcc00] transition-colors text-xs placeholder-gray-600"
+                      className="w-full h-11 bg-transparent border border-gray-700 text-white pl-9 pr-3 rounded-l-md outline-none focus:border-[#ffcc00] transition-colors text-[11px] placeholder-gray-600 tracking-wide"
                     />
                   </div>
-                  <button className="bg-[#ffcc00] hover:bg-yellow-500 text-black px-4 py-2.5 rounded-r-md font-bold transition-colors text-xs whitespace-nowrap">
+                  <button className="bg-[#ffcc00] hover:bg-yellow-500 text-black px-5 h-11 rounded-r-md font-extrabold transition-colors text-[11px] tracking-wider whitespace-nowrap">
                     SUBSCRIBE
                   </button>
                 </div>
@@ -878,33 +861,33 @@ const Home = ({ isMobileMenuOpen = false }) => {
             </div>
 
             {/* COLUMN 2: About & Founder */}
-            <div className="space-y-8">
+            <div className="space-y-10">
               <div>
-                <h3 className="text-white text-sm font-bold tracking-widest uppercase mb-4 flex flex-col">
+                <h3 className="text-white text-xs sm:text-sm font-bold tracking-widest uppercase mb-4 block">
                   About Let's <span className="text-[#ffcc00]">Bharat</span>
-                  <span className="w-8 h-0.5 bg-[#ffcc00] mt-1"></span>
+                  <span className="block w-10 h-0.5 bg-[#ffcc00] mt-2"></span>
                 </h3>
-                <p className="text-gray-400 text-xs leading-relaxed uppercase">
-                  Letsbharat is a platform dedicated to empowering students and innovators by connecting them with opportunities, communities and resources.
+                <p className="text-gray-400 text-[11px] sm:text-xs leading-relaxed uppercase tracking-wider pr-4">
+                  Letsbharat is a platform dedicated to empowering students and innovators by connecting them with institutions, opportunities and resources.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-white text-sm font-bold tracking-widest uppercase mb-4 flex flex-col">
+                <h3 className="text-white text-xs sm:text-sm font-bold tracking-widest uppercase mb-4 block">
                   Founder of Lets <span className="text-[#ffcc00]">bharat</span>
-                  <span className="w-8 h-0.5 bg-[#ffcc00] mt-1"></span>
+                  <span className="block w-10 h-0.5 bg-[#ffcc00] mt-2"></span>
                 </h3>
                 <div className="flex items-center gap-4">
-                  {/* Founder Profile Implemented via Import Logic */}
+                  {/* Founder Profile */}
                   <img 
                     src={founderProfile} 
                     alt="Newlong Debbarma" 
-                    className="w-16 h-16 rounded-full object-cover border-2 border-[#ffcc00]"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-[#ffcc00] shadow-[0_0_10px_rgba(255,204,0,0.2)]"
                   />
-                  <div>
-                    <h4 className="text-white text-xs font-bold uppercase tracking-wider">NEWLONG DEBBARMA</h4>
-                    <p className="text-[#ffcc00] text-[10px] font-bold tracking-widest uppercase mt-0.5">Founder & Creator</p>
-                    <p className="text-gray-400 text-[10px] mt-1.5 leading-tight pr-4">
+                  <div className="flex-1">
+                    <h4 className="text-white text-[11px] sm:text-xs font-bold uppercase tracking-wider">NEWLONG DEBBARMA</h4>
+                    <p className="text-[#ffcc00] text-[9px] sm:text-[10px] font-bold tracking-widest uppercase mt-0.5">Founder & Creator</p>
+                    <p className="text-gray-400 text-[9px] sm:text-[10px] mt-1.5 leading-relaxed pr-2 uppercase">
                       Passionate about technology, communities and creating impact through innovation.
                     </p>
                   </div>
@@ -914,36 +897,46 @@ const Home = ({ isMobileMenuOpen = false }) => {
 
             {/* COLUMN 3: Quick Links */}
             <div>
-              <h3 className="text-white text-sm font-bold tracking-widest uppercase mb-4 flex flex-col">
+              <h3 className="text-white text-xs sm:text-sm font-bold tracking-widest uppercase mb-4 block">
                 Quick Links
-                <span className="w-8 h-0.5 bg-[#ffcc00] mt-1"></span>
+                <span className="block w-10 h-0.5 bg-[#ffcc00] mt-2"></span>
               </h3>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-y-3 text-gray-400 text-xs font-medium uppercase tracking-wider">
-                <li><button onClick={() => navigate('/')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">⌂ Home</button></li>
-                <li><button onClick={() => navigate('/about')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">👤 About Us</button></li>
-                <li><button onClick={() => navigate('/institutions')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">👥 Institutions</button></li>
-                <li><button onClick={() => navigate('/hackathons')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">🏆 Hackathons</button></li>
-                <li><button onClick={() => navigate('/internships')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">💼 Internships</button></li>
-                <li><button onClick={() => navigate('/learninghub')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">🎮 Learning Hub</button></li>
-                <li><button onClick={() => navigate('/resources')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">📚 Free Resources</button></li>
-                <li><button onClick={() => navigate('/about')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">📢About Us </button></li>
-                <li><button onClick={() => navigate('/contact')} className="hover:text-[#ffcc00] flex items-center gap-2 transition-colors">✉ Contact Us</button></li>
-                
+              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-y-3 text-gray-400 text-[11px] sm:text-xs font-medium uppercase tracking-wider">
+                {[
+                  { icon: '⌂', text: 'Home', path: '/' },
+                  { icon: '👤', text: 'About Us', path: '/about' },
+                  { icon: '👥', text: 'Institutions', path: '/institutions' },
+                  { icon: '🏆', text: 'Hackathons', path: '/hackathons' },
+                  { icon: '💼', text: 'Internships', path: '/internships' },
+                  { icon: '🎮', text: 'Learning Hub', path: '/learninghub' },
+                  { icon: '📚', text: 'Free Resources', path: '/resources' },
+                  { icon: '✉', text: 'Contact Us', path: '/contact' }
+                ].map((item, idx) => (
+                  <li key={idx}>
+                    <button 
+                      onClick={() => navigate(item.path)} 
+                      className="hover:text-[#ffcc00] flex items-center gap-3 transition-all hover:translate-x-1"
+                    >
+                      <span className="text-[#ffcc00] text-sm w-4 text-center">{item.icon}</span> 
+                      {item.text}
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
 
             {/* COLUMN 4: Contact Us & Socials */}
             <div>
-              <h3 className="text-white text-sm font-bold tracking-widest uppercase mb-4 flex flex-col">
+              <h3 className="text-white text-xs sm:text-sm font-bold tracking-widest uppercase mb-4 block">
                 Contact Us
-                <span className="w-8 h-0.5 bg-[#ffcc00] mt-1"></span>
+                <span className="block w-10 h-0.5 bg-[#ffcc00] mt-2"></span>
               </h3>
-              <p className="text-gray-400 text-xs uppercase mb-5 tracking-wide">
+              <p className="text-gray-400 text-[11px] sm:text-xs uppercase mb-6 tracking-wider pr-4">
                 Connect with us on our platforms or reach out directly.
               </p>
               
-              {/* Clickable Social Icons (No Text) */}
-              <div className="grid grid-cols-4 gap-3 mb-6 max-w-[200px]">
+              {/* Clickable Social Icons (Flex Wrap for better mobile fit) */}
+              <div className="flex flex-wrap gap-3 mb-8 max-w-[220px]">
                 {/* Instagram */}
                 <a href="https://www.instagram.com/newlong.ai?igsh=MXVxNXNxenJueWFqaA==" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-500 hover:border-transparent transition-all group">
                   <svg className="w-4 h-4 fill-gray-400 group-hover:fill-white transition-colors" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
@@ -970,16 +963,16 @@ const Home = ({ isMobileMenuOpen = false }) => {
                 </a>
               </div>
 
-              {/* Direct Contact Details */}
-              <div className="space-y-3 bg-[#121826] p-4 rounded-xl border border-gray-800">
-                <a href="mailto:HELLO@LETSBHARAT.COM" className="flex items-center gap-3 text-gray-400 hover:text-[#ffcc00] transition-colors text-xs font-medium tracking-wide">
-                  <span>✉</span> letsbharatofficial@gmail.com
+              {/* Direct Contact Details Box */}
+              <div className="space-y-4 bg-[#121826] p-5 rounded-xl border border-gray-800 shadow-md">
+                <a href="mailto:HELLO@LETSBHARAT.COM" className="flex items-center gap-3 text-gray-400 hover:text-[#ffcc00] transition-colors text-[11px] sm:text-xs font-medium tracking-wide">
+                  <span className="text-sm">✉</span> letsbharatofficial@gmail.com
                 </a>
-                <a href="tel:+919876543210" className="flex items-center gap-3 text-gray-400 hover:text-[#ffcc00] transition-colors text-xs font-medium tracking-wide">
-                  <span>📞</span> +91 XXXX203
+                <a href="tel:+919876543210" className="flex items-center gap-3 text-gray-400 hover:text-[#ffcc00] transition-colors text-[11px] sm:text-xs font-medium tracking-wide">
+                  <span className="text-sm">📞</span> +91 XXXX203
                 </a>
-                <div className="flex items-center gap-3 text-gray-400 text-xs font-medium tracking-wide uppercase">
-                  <span>📍</span>India
+                <div className="flex items-center gap-3 text-gray-400 text-[11px] sm:text-xs font-medium tracking-wide uppercase">
+                  <span className="text-sm">📍</span> India
                 </div>
               </div>
             </div>
@@ -987,21 +980,24 @@ const Home = ({ isMobileMenuOpen = false }) => {
           </div>
 
           {/* Bottom Copyright Section */}
-<div className="pt-6 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 font-medium tracking-wide uppercase">
-  <p>© 2026 LET'S BHARAT. ALL RIGHTS RESERVED.</p>
-  <p className="flex items-center gap-1">
-    <span className="text-[#ffcc00] text-sm">💛</span> MADE WITH PASSION FOR INNOVATORS
-  </p>
-  <div className="flex gap-6">
-    {/* a tag ko Link tag se replace kar diya aur correct path de diya */}
-    <Link to="/privacypolicy" className="hover:text-white transition-colors">PRIVACY POLICY</Link>
-    <Link to="/termsofservice" className="hover:text-white transition-colors">TERMS OF SERVICE</Link>
-  </div>
-</div>
+          <div className="pt-8 border-t border-gray-800/80 flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-6 text-[10px] sm:text-[11px] text-gray-500 font-bold tracking-widest uppercase">
+            
+            {/* Mobile pe copyright top pe rahe isliye order change kiya gaya hai */}
+            <p className="order-2 md:order-1">© 2026 LET'S BHARAT. ALL RIGHTS RESERVED.</p>
+            
+            <p className="order-1 md:order-2 flex items-center gap-2 text-gray-400">
+              <span className="text-[#ffcc00] text-[14px]">💛</span> MADE WITH PASSION FOR INNOVATORS
+            </p>
+            
+            <div className="order-3 flex gap-6">
+              {/* Note: React Router ke <Link> ko chalne ke liye top par import jaruri hai */}
+              <Link to="/privacypolicy" className="hover:text-[#ffcc00] transition-colors">PRIVACY POLICY</Link>
+              <Link to="/termsofservice" className="hover:text-[#ffcc00] transition-colors">TERMS OF SERVICE</Link>
+            </div>
+          </div>
           
         </div>
       </footer>
-
     </div>
   );
 };
