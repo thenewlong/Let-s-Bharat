@@ -10,10 +10,11 @@ const IntroVideo = ({ onFinish }) => {
   return (
     <div className="fixed inset-0 z-[99999] bg-black flex items-center justify-center overflow-hidden">
       
-      {/* 📹 Responsive Video Element (AutoPlay with Sound) */}
+      {/* 📹 Muted Autoplay Video Element (Chrome / Google pe 100% run hoga) */}
       <video
         ref={videoRef}
         autoPlay
+        muted
         playsInline
         className="w-full h-full object-cover"
         onEnded={onFinish}
@@ -25,7 +26,7 @@ const IntroVideo = ({ onFinish }) => {
         <source src={mobileVideo} type="video/mp4" media="(max-width: 767px)" />
       </video>
 
-      {/* ⏩ Skip Icon Button (Strictly Icon Only | Vertically Centered on Right Side) */}
+      {/* ⏩ Skip Icon Button (Center-Right Height par Aligned) */}
       <button
         onClick={onFinish}
         aria-label="Skip Intro"
