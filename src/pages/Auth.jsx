@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase'; // Apne firebase setup file path ke hisaab se adjust karein
 
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  // authMode states: 'login' | 'signup' | 'admin'
+  const [authMode, setAuthMode] = useState('login'); 
   const [currentSlide, setCurrentSlide] = useState(0);
   const { signInWithGoogle, login, signup, user } = useAuth();
   const navigate = useNavigate();
@@ -16,10 +19,10 @@ const Auth = () => {
 
   // Premium platform automatic user checking
   useEffect(() => {
-    if (user) {
+    if (user && authMode !== 'admin') {
       navigate('/profile');
     }
-  }, [user, navigate]);
+  }, [user, navigate, authMode]);
 
   // Carousel Slides matching the provided image concept
   const slides = [
@@ -75,7 +78,25 @@ const Auth = () => {
     setError('');
 
     try {
-      if (isLogin) {
+      if (authMode === 'admin') {
+        // --- ADMIN LOGIN LOGIC ---
+        const cleanEmail = email.trim().toLowerCase();
+        if (!cleanEmail) {
+          setError('Please enter Admin Email');
+          return;
+        }
+
+        const adminDocRef = doc(db, 'allowed_admins', cleanEmail);
+        const adminDocSnap = await getDoc(adminDocRef);
+
+        if (adminDocSnap.exists()) {
+          localStorage.setItem('isAdminLoggedIn', 'true');
+          localStorage.setItem('adminEmail', cleanEmail);
+          navigate('/admin/dashboard'); // Ya '/adminportal'
+        } else {
+          setError('Unauthorized Access: Ye Email whitelisted admin list mein nahi hai.');
+        }
+      } else if (authMode === 'login') {
         await login(email, password);
         navigate('/profile');
       } else {
@@ -88,7 +109,7 @@ const Auth = () => {
   };
 
   // Fixed Spacing for Mobile Responsiveness
-  const headline = "Learn Connect   Grow Won!";
+  const headline = "Learn Connect  Grow Won!";
   const titleLetters = headline.split("");
 
   return (
@@ -179,7 +200,7 @@ const Auth = () => {
                   }`}
                   style={{
                     animationDelay: `${index * 0.03}s`,
-                    marginRight: char === " " ? "0.3em" : "0" // Proper space sizing
+                    marginRight: char === " " ? "0.3em" : "0"
                   }}
                 >
                   {char}
@@ -230,26 +251,36 @@ const Auth = () => {
         <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-center relative" 
              style={{ background: "linear-gradient(135deg, #eeeeee 0%, #bcc59d 40%, #dcc82e 100%)" }}>
           
-          {/* Sleeker max-w-sm for form compactness */}
           <div className="max-w-sm w-full mx-auto bg-white/60 backdrop-blur-xl p-6 sm:p-8 rounded-3xl shadow-xl border border-white/50 slide-up-fade" style={{animationDelay: "0.4s"}}>
             
-            {/* Custom Tab Switcher */}
+            {/* Custom 3-Tab Switcher (Login | Sign Up | Admin) */}
             <div className="flex relative border-b border-gray-300 mb-6">
               <button
-                onClick={() => { setIsLogin(true); setError(''); }}
+                type="button"
+                onClick={() => { setAuthMode('login'); setError(''); }}
                 className={`flex-1 pb-3 text-xs sm:text-sm font-bold transition-colors ${
-                  isLogin ? "text-[#f5a623] border-b-2 border-[#f5a623]" : "text-gray-500 hover:text-gray-700"
+                  authMode === 'login' ? "text-[#f5a623] border-b-2 border-[#f5a623]" : "text-gray-500 hover:text-gray-700"
                 }`}
               >
                 Login
               </button>
               <button
-                onClick={() => { setIsLogin(false); setError(''); }}
+                type="button"
+                onClick={() => { setAuthMode('signup'); setError(''); }}
                 className={`flex-1 pb-3 text-xs sm:text-sm font-bold transition-colors ${
-                  !isLogin ? "text-[#f5a623] border-b-2 border-[#f5a623]" : "text-gray-500 hover:text-gray-700"
+                  authMode === 'signup' ? "text-[#f5a623] border-b-2 border-[#f5a623]" : "text-gray-500 hover:text-gray-700"
                 }`}
               >
-                Create Account
+                Sign Up
+              </button>
+              <button
+                type="button"
+                onClick={() => { setAuthMode('admin'); setError(''); }}
+                className={`flex-1 pb-3 text-xs sm:text-sm font-bold transition-colors ${
+                  authMode === 'admin' ? "text-[#f5a623] border-b-2 border-[#f5a623]" : "text-gray-500 hover:text-gray-700"
+                }`}
+              >
+                Admin
               </button>
             </div>
 
@@ -259,10 +290,10 @@ const Auth = () => {
               </div>
             )}
 
-            {/* Reduced space-y-3 for compactness */}
             <form onSubmit={handleSubmit} className="space-y-3.5">
               
-              {!isLogin && (
+              {/* Full Name input only for Sign Up */}
+              {authMode === 'signup' && (
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                     <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
@@ -278,6 +309,7 @@ const Auth = () => {
                 </div>
               )}
 
+              {/* Email Input (Always Visible) */}
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                   <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
@@ -287,59 +319,95 @@ const Auth = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email Address"
+                  placeholder={authMode === 'admin' ? "Admin Email Address" : "Email Address"}
                   className="w-full bg-white/80 border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#f5a623] transition-all font-medium shadow-sm"
                 />
               </div>
 
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+              {/* Password Input (Hidden for Admin Mode) */}
+              {authMode !== 'admin' && (
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                  </div>
+                  <input
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                    className="w-full bg-white/80 border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#f5a623] transition-all font-medium shadow-sm"
+                  />
                 </div>
-                <input
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Password"
-                  className="w-full bg-white/80 border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#f5a623] transition-all font-medium shadow-sm"
-                />
-              </div>
+              )}
 
               <button
                 type="submit"
                 className="w-full bg-[#f5a623] hover:bg-[#e0961b] text-white py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-[0_4px_14px_0_rgba(245,166,35,0.39)] active:scale-[0.98] mt-4"
               >
-                {isLogin ? 'Login' : 'Create Account'}
+                {authMode === 'login' && 'Login'}
+                {authMode === 'signup' && 'Create Account'}
+                {authMode === 'admin' && 'Continue as Admin'}
               </button>
             </form>
 
-            <div className="relative flex py-5 items-center">
-              <div className="flex-grow border-t border-gray-300"></div>
-              <span className="flex-shrink mx-3 text-gray-400 text-[10px] font-bold uppercase tracking-wider">OR</span>
-              <div className="flex-grow border-t border-gray-300"></div>
-            </div>
+            {/* Google Sign-in only shown for normal Login / Signup */}
+            {authMode !== 'admin' && (
+              <>
+                <div className="relative flex py-5 items-center">
+                  <div className="flex-grow border-t border-gray-300"></div>
+                  <span className="flex-shrink mx-3 text-gray-400 text-[10px] font-bold uppercase tracking-wider">OR</span>
+                  <div className="flex-grow border-t border-gray-300"></div>
+                </div>
 
-            <button
-              onClick={handleGoogleSignIn}
-              type="button"
-              className="w-full bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98] shadow-sm"
-            >
-              <svg className="w-4 h-4" viewBox="0 0 24 24">
-                <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.866-3.577-7.866-8s3.536-8 7.866-8c2.46 0 4.105 1.025 5.047 1.926l3.327-3.204C18.416 1.872 15.626.985 12.24.985A10.985 10.985 0 0 0 1.255 11.97a10.985 10.985 0 0 0 10.985 10.985c5.73 0 9.535-3.996 9.535-9.62c0-.65-.07-1.14-.155-1.636l-9.38-.415Z"/>
-              </svg>
-              Continue with Google
-            </button>
+                <button
+                  onClick={handleGoogleSignIn}
+                  type="button"
+                  className="w-full bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98] shadow-sm"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 24 24">
+                    <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.866-3.577-7.866-8s3.536-8 7.866-8c2.46 0 4.105 1.025 5.047 1.926l3.327-3.204C18.416 1.872 15.626.985 12.24.985A10.985 10.985 0 0 0 1.255 11.97a10.985 10.985 0 0 0 10.985 10.985c5.73 0 9.535-3.996 9.535-9.62c0-.65-.07-1.14-.155-1.636l-9.38-.415Z"/>
+                  </svg>
+                  Continue with Google
+                </button>
+              </>
+            )}
 
             <p className="text-center text-xs sm:text-sm text-gray-600 mt-5 font-medium">
-              {isLogin ? "Don't have an account? " : "Already have an account? "}
-              <button
-                type="button"
-                onClick={() => { setIsLogin(!isLogin); setError(''); }}
-                className="text-[#f5a623] font-bold hover:underline ml-1"
-              >
-                {isLogin ? 'Sign up' : 'Login'}
-              </button>
+              {authMode === 'admin' ? (
+                <>
+                  Student / User Login?{' '}
+                  <button
+                    type="button"
+                    onClick={() => { setAuthMode('login'); setError(''); }}
+                    className="text-[#f5a623] font-bold hover:underline ml-1"
+                  >
+                    Go to Login
+                  </button>
+                </>
+              ) : authMode === 'login' ? (
+                <>
+                  Don't have an account?{' '}
+                  <button
+                    type="button"
+                    onClick={() => { setAuthMode('signup'); setError(''); }}
+                    className="text-[#f5a623] font-bold hover:underline ml-1"
+                  >
+                    Sign up
+                  </button>
+                </>
+              ) : (
+                <>
+                  Already have an account?{' '}
+                  <button
+                    type="button"
+                    onClick={() => { setAuthMode('login'); setError(''); }}
+                    className="text-[#f5a623] font-bold hover:underline ml-1"
+                  >
+                    Login
+                  </button>
+                </>
+              )}
             </p>
 
           </div>

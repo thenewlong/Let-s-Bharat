@@ -23,6 +23,7 @@ const Navbar = () => {
     { name: "Internships", path: "/internships", type: "Page" },
     { name: "Jobs", path: "/jobs", type: "Page" },
     { name: "Learning Hub", path: "/learninghub", type: "Page" },
+  
     { name: "Resources", path: "/resources", type: "Page" },
     { name: "About Us", path: "/about", type: "Page" },
   ];

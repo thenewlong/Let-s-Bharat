@@ -42,7 +42,7 @@ import mobileVeo from '../assets/videos/learn002.mp4';
 
 // Inko file ke sabse upar import karna (apne actual folder path ke hisaab se adjust kar lena)
 import letsBharatLogo from '../assets/images/logos3.jpeg'; 
-import founderProfile from '../assets/images/profile1.jpg';
+import founderProfile from '../assets/images/profile2.jpeg';
 // 📂 Dynamic Slides Data
 const heroSlides = [
   {

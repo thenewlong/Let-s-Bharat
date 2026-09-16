@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const Jobs = () => {
-  // Target Date Set: 15 September 2026
-  const TARGET_DATE = new Date('2026-09-17T00:00:00').getTime();
+  // Target Date Set: 30 September 2026
+  const TARGET_DATE = new Date('2026-09-30T00:00:00').getTime();
 
   // Timer State
   const [timeLeft, setTimeLeft] = useState({
@@ -102,7 +102,7 @@ const Jobs = () => {
         </motion.p>
 
         <motion.p variants={fadeUp} className="text-sm md:text-base text-slate-500 mb-8 font-medium">
-          Launching on <span className="font-bold text-slate-900">17 September 2026</span>
+          Launching on <span className="font-bold text-slate-900">30 September 2026</span>
         </motion.p>
 
         {/* 3. Countdown Timer Card */}

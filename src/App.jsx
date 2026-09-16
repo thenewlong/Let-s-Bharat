@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext'; 
+
+// Intro Video Import
+import IntroVideo from './components/IntroVideo';
+
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Auth from './pages/Auth'; 
@@ -14,13 +18,18 @@ import Jobs from './pages/Jobs';
 import About from './pages/About';
 import Profile from './pages/Profile'; 
 
-// Naye Pages ke Imports
+// Policy Pages
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 
 function App() {
+  const [showIntro, setShowIntro] = useState(true);
+
   return (
     <AuthProvider>
+      {/* Intro Video Screen Overlay */}
+      {showIntro && <IntroVideo onFinish={() => setShowIntro(false)} />}
+
       <Router>
         {/* Navbar hamesha top par rahega */}
         <Navbar />
@@ -33,7 +42,6 @@ function App() {
           <Route path="/internships" element={<Internships />} /> 
           <Route path="/learninghub" element={<Learninghub />} /> 
           
-          {/* 👇 Yahan lowercase aur exact match kar diya hai */}
           <Route path="/institutions" element={<Institutions />} />
           <Route path="/institution/:id" element={<InstitutionsPages />} />
           
