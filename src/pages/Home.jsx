@@ -870,7 +870,7 @@ const Home = ({ isMobileMenuOpen = false }) => {
                 <p className="text-gray-400 text-[11px] sm:text-xs leading-relaxed uppercase tracking-wider pr-4">
                   Letsbharat is a platform dedicated to empowering students and innovators by connecting them with institutions, opportunities and resources.
                 </p>
-              </div>
+              </div> 
 
               <div>
                 <h3 className="text-white text-xs sm:text-sm font-bold tracking-widest uppercase mb-4 block">
