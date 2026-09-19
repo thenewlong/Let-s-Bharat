@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 
 // 📁 src/assets/videos/ folder se PC aur Mobile ki video files
 import desktopVideo from '../assets/videos/intropc.mp4';
-import mobileVideo from '../assets/videos/introm.mp4';
+import mobileVideo from '../assets/videos/intromo.mp4';
 
 const IntroVideo = ({ onFinish }) => {
   const videoRef = useRef(null);

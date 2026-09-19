@@ -11,7 +11,7 @@ import banner3 from '../assets/images/banner3.png';
 import hack1 from '../assets/images/hack1.png';
 import hack2 from '../assets/images/hack2.png';
 import hack3 from '../assets/images/hack3.png';
-import hack4 from '../assets/images/hack4.png';
+import hack4 from '../assets/images/hack04.jpeg';
 
 const Hackathons = () => {
   const { user } = useAuth();
@@ -64,8 +64,96 @@ const Hackathons = () => {
   // 2. MOCK DATA 
   // ---------------------------------------------------------
   const hackathonsData = [
-    {
+   
+     {
       id: 1,
+      title: " NORTHEAST YOUTH HACKATHON CHALLENGE 2026",
+      description:"Welcome to the NORTHEAST YOUTH HACKATHON CHALLENGE 2026, an innovation challenge for students, developers, and aspiring entrepreneurs across Northeast India. This hackathon encourages participants to build innovative AI-powered solutions that solve real-world problems using modern technologies and AI APIs.\n\n" +
+               "Participants can join individually or in teams of up to four members. All registrations must be completed with accurate information. Selected participants will receive further updates, announcements, and event instructions via Email and WhatsApp.\n\n" +
+               "Teams can choose from 12 exciting problem statements, including Tribal Handicraft Marketplace, Tribal Fashion & Handloom Marketplace, Transport Rental System, Hospital Appointment Booking, Tutor Booking System, Local Service Booking, Jobs & Internship Portal, Home Service Booking, Home Rental Booking, Local Language Chatbot System, Smart Grocery Management, and Food Donation Platform.\n\n" +
+               "Projects should demonstrate creativity, technical excellence, practical implementation, and real-world impact. Participants are encouraged to develop scalable, user-friendly, and AI-powered solutions that address community and business challenges across the region.\n\n" +
+                "The total prize pool includes ₹700 for 1st Place, ₹300 for 2nd Place, and ₹200 for 3rd Place. All eligible participants will receive an official E-Certificate, while winning teams will gain recognition, exciting rewards, and the opportunity to showcase their innovative projects.",
+      prizePool: "₹1,200",
+      prizeValue: 700,
+      date: "21 Sep - 08 Oct 2026",
+      mode: "Online",
+      teamSize: "1 - 2 Members",
+      tags: ["MARKETPLACE", "AI API", "PROBLEM SLOVING"],
+      status: "UPCOMING",
+      statusColor: "bg-purple-500",
+      category: "UPCOMING",
+      addedOn: "2026-06-14",
+      image: hack4,
+      link: "https://forms.gle/YqRNWbDc4vagh3qEA",
+    },
+
+   
+    {
+      id: 2,
+      title: "INTERNATIONAL YOUTH AI COMPETITION 2026",
+      description:
+                  "About the Challenge\n\n" +
+
+                   "The International Youth AI Competition is a global event that encourages young innovators to explore the power of artificial intelligence through creativity, technology, and problem-solving. Students from different countries and educational backgrounds are invited to develop AI-driven projects that demonstrate innovation, practical application, and positive social impact.\n\n" +
+
+                   "The competition welcomes both individual participants and teams, providing a platform to showcase ideas, learn emerging AI technologies, and collaborate with like-minded innovators. Participants can create projects across multiple categories, including AI applications, innovative AI concepts, AI-generated visual storytelling, and AI-powered video creation.\n\n" +
+
+                  "Competition Tracks\n\n" +
+
+                  "Track 1 – AI Application Development\nBuild intelligent web, mobile, or desktop applications that solve real-world challenges using artificial intelligence and modern technologies.\n\n" +
+
+                  "Track 2 – AI Innovation Proposal\nPresent a unique AI-powered concept with clear objectives, technical feasibility, expected impact, and future implementation strategy.\n\n" +
+
+                  "Track 3 – AI Image Storytelling\nCreate a compelling visual story using AI-generated images with a structured narrative and creative presentation.\n\n" +
+
+                  "Track 4 – AI Video Creation\nProduce an original AI-assisted video using modern generative AI tools, combining storytelling, visuals, voice, and editing techniques.\n\n" +
+
+                "Submission Requirements\n\n" +
+                "Participants should submit their project presentation, demonstration video, source code or deployment link (where applicable), and supporting documentation explaining the project's concept, development process, AI technologies used, and overall impact.\n\n" +
+
+                "Awards & Recognition\n\n" +
+
+                    "Outstanding submissions will receive Gold, Silver, Bronze, and Honorable Mention Awards. Winners will be recognized for innovation, creativity, technical excellence, and the responsible application of artificial intelligence.",
+      prizePool: "3 Non-Cash Prize",
+      prizeValue: 10000,
+      date: "18 July - 01 Sep 2026",
+      mode: "Online",
+      teamSize: "1 - 4 Members",
+      tags: ["MACHINE LEARNING / AI", "EDUCATION", "BEGINNER FRIENDLY"],
+      status: "FEATURED",
+      statusColor: "bg-yellow-500",
+      category: "ONGOING",
+      addedOn: "2026-06-18",
+      image: hack2,
+      link: "https://ai-yes-competition-30441.devpost.com/?ref_feature=challenge&ref_medium=discover&_gl=1*lw0sy9*_gcl_au*MTY4MjE5NDAxNi4xNzgyMjk4NzIw*_ga*NDM0Njk0NDUwLjE3ODIyOTg3MjA.*_ga_0YHJK3Y10M*czE3ODQ2OTkzODQkbzEwJGcxJHQxNzg0Njk5NDEyJGozMiRsMCRoMA.."
+    },
+    {
+      id: 3,
+      title: "THE BUILD WITH GEMINI-XPRIZE",
+      description: "Turn your AI idea into a real startup in just 60 days. Build an AI-powered product, launch it to real users, generate revenue, and compete for $2 million in global prizes. Participants must create solutions that solve real-world problems, attract real users, and generate real revenue using Google Cloud and AI technologies. Compete for a share of the $2 million prize pool while building products that create meaningful impact.\n\nSubmission Requirements:\nSubmit your GitHub repository, a 3-minute demo video, project documentation, revenue and expense proof, AI usage evidence, and real customer evidence to demonstrate your project's functionality, business viability, and real-world impact.\n\nJudging Criteria:\n1. Innovation & Creativity\n2. Real-world Impact\n3. Technical Execution\n4. Business Viability\n\n" +
+                     "Compete for a share of the $2M prize pool :\n" +
+                      "Grand Prize: $500K for 1st Place.\n"+
+                       "Top 5 teams receive major cash awards.\n"+
+                       "15 runner-up teams earn $50K each.\n"+
+                        "Category awards recognize outstanding AI innovation.\n"+
+                       "Special prizes for Education, Entrepreneurship, Finance, Small Business, and Professional Services.",
+      prizePool: "$2,000,000",
+      prizeValue: 1000000,
+      date: "16 June - 17 Aug 2026",
+      mode: "Online",
+      teamSize: "2 - 5 Members",
+      tags: ["Productivity", "Education", "Machine Langauage"],
+      status: "FEATURED",
+      statusColor: "bg-yellow-500",
+      category: "FEATURED",
+      addedOn: "2026-07-22",
+      image: hack3,
+      link: "https://xprize.devpost.com/?ref_feature=challenge&ref_medium=homepage-recommended-hackathons",
+    },
+  
+
+    {
+      id: 4,
       title: "THE 3D WEBSITE DESIGN HACKATHON",
       description:
   "About the Challenge\n\n" +
@@ -111,89 +199,6 @@ const Hackathons = () => {
       addedOn: "2026-06-21",
       image: hack1,
       link: "https://3d-websites-hackathon.devpost.com/?ref_feature=challenge&ref_medium=discover&_gl=1*1i4f97h*_gcl_au*MTY4MjE5NDAxNi4xNzgyMjk4NzIw*_ga*NDM0Njk0NDUwLjE3ODIyOTg3MjA.*_ga_0YHJK3Y10M*czE3ODQ3MDc3MTIkbzExJGcxJHQxNzg0NzA3NzEyJGo2MCRsMCRoMA..",
-    },
-    {
-      id: 2,
-      title: "INTERNATIONAL YOUTH AI COMPETITION 2026",
-      description:
-                  "About the Challenge\n\n" +
-
-                   "The International Youth AI Competition is a global event that encourages young innovators to explore the power of artificial intelligence through creativity, technology, and problem-solving. Students from different countries and educational backgrounds are invited to develop AI-driven projects that demonstrate innovation, practical application, and positive social impact.\n\n" +
-
-                   "The competition welcomes both individual participants and teams, providing a platform to showcase ideas, learn emerging AI technologies, and collaborate with like-minded innovators. Participants can create projects across multiple categories, including AI applications, innovative AI concepts, AI-generated visual storytelling, and AI-powered video creation.\n\n" +
-
-                  "Competition Tracks\n\n" +
-
-                  "Track 1 – AI Application Development\nBuild intelligent web, mobile, or desktop applications that solve real-world challenges using artificial intelligence and modern technologies.\n\n" +
-
-                  "Track 2 – AI Innovation Proposal\nPresent a unique AI-powered concept with clear objectives, technical feasibility, expected impact, and future implementation strategy.\n\n" +
-
-                  "Track 3 – AI Image Storytelling\nCreate a compelling visual story using AI-generated images with a structured narrative and creative presentation.\n\n" +
-
-                  "Track 4 – AI Video Creation\nProduce an original AI-assisted video using modern generative AI tools, combining storytelling, visuals, voice, and editing techniques.\n\n" +
-
-                "Submission Requirements\n\n" +
-                "Participants should submit their project presentation, demonstration video, source code or deployment link (where applicable), and supporting documentation explaining the project's concept, development process, AI technologies used, and overall impact.\n\n" +
-
-                "Awards & Recognition\n\n" +
-
-                    "Outstanding submissions will receive Gold, Silver, Bronze, and Honorable Mention Awards. Winners will be recognized for innovation, creativity, technical excellence, and the responsible application of artificial intelligence.",
-      prizePool: "3 Non-Cash Prize",
-      prizeValue: 10000,
-      date: "18 July - 01 Sep 2026",
-      mode: "Online",
-      teamSize: "1 - 4 Members",
-      tags: ["MACHINE LEARNING / AI", "EDUCATION", "BEGINNER FRIENDLY"],
-      status: "ONGOING",
-      statusColor: "bg-emerald-500",
-      category: "ONGOING",
-      addedOn: "2026-06-18",
-      image: hack2,
-      link: "https://ai-yes-competition-30441.devpost.com/?ref_feature=challenge&ref_medium=discover&_gl=1*lw0sy9*_gcl_au*MTY4MjE5NDAxNi4xNzgyMjk4NzIw*_ga*NDM0Njk0NDUwLjE3ODIyOTg3MjA.*_ga_0YHJK3Y10M*czE3ODQ2OTkzODQkbzEwJGcxJHQxNzg0Njk5NDEyJGozMiRsMCRoMA..",
-    },
-    {
-      id: 3,
-      title: "THE BUILD WITH GEMINI-XPRIZE",
-      description: "Turn your AI idea into a real startup in just 60 days. Build an AI-powered product, launch it to real users, generate revenue, and compete for $2 million in global prizes. Participants must create solutions that solve real-world problems, attract real users, and generate real revenue using Google Cloud and AI technologies. Compete for a share of the $2 million prize pool while building products that create meaningful impact.\n\nSubmission Requirements:\nSubmit your GitHub repository, a 3-minute demo video, project documentation, revenue and expense proof, AI usage evidence, and real customer evidence to demonstrate your project's functionality, business viability, and real-world impact.\n\nJudging Criteria:\n1. Innovation & Creativity\n2. Real-world Impact\n3. Technical Execution\n4. Business Viability\n\n" +
-                     "Compete for a share of the $2M prize pool :\n" +
-                      "Grand Prize: $500K for 1st Place.\n"+
-                       "Top 5 teams receive major cash awards.\n"+
-                       "15 runner-up teams earn $50K each.\n"+
-                        "Category awards recognize outstanding AI innovation.\n"+
-                       "Special prizes for Education, Entrepreneurship, Finance, Small Business, and Professional Services.",
-      prizePool: "$2,000,000",
-      prizeValue: 1000000,
-      date: "16 June - 17 Aug 2026",
-      mode: "Online",
-      teamSize: "2 - 5 Members",
-      tags: ["Productivity", "Education", "Machine Langauage"],
-      status: "FEATURED",
-      statusColor: "bg-yellow-500",
-      category: "FEATURED",
-      addedOn: "2026-07-22",
-      image: hack3,
-      link: "https://xprize.devpost.com/?ref_feature=challenge&ref_medium=homepage-recommended-hackathons",
-    },
-    {
-      id: 4,
-      title: "NEW-LONG NORTHEAST YOUTH HACKATHON 2026",
-      description:"Welcome to the NEW-LONG Hackathon 2026, an innovation challenge for students, developers, and aspiring entrepreneurs across Northeast India. This hackathon encourages participants to build innovative AI-powered solutions that solve real-world problems using modern technologies and AI APIs.\n\n" +
-               "Participants can join individually or in teams of up to four members. All registrations must be completed with accurate information. Selected participants will receive further updates, announcements, and event instructions via Email and WhatsApp.\n\n" +
-               "Teams can choose from 12 exciting problem statements, including Tribal Handicraft Marketplace, Tribal Fashion & Handloom Marketplace, Transport Rental System, Hospital Appointment Booking, Tutor Booking System, Local Service Booking, Jobs & Internship Portal, Home Service Booking, Home Rental Booking, Local Language Chatbot System, Smart Grocery Management, and Food Donation Platform.\n\n" +
-               "Projects should demonstrate creativity, technical excellence, practical implementation, and real-world impact. Participants are encouraged to develop scalable, user-friendly, and AI-powered solutions that address community and business challenges across the region.\n\n" +
-                "The total prize pool includes ₹12,000 for 1st Place, ₹7,500 for 2nd Place, and ₹3,000 for 3rd Place. All eligible participants will receive an official E-Certificate, while winning teams will gain recognition, exciting rewards, and the opportunity to showcase their innovative projects.",
-      prizePool: "₹22,500",
-      prizeValue: 75000,
-      date: "16 Aug - 25 Sep 2026",
-      mode: "Online",
-      teamSize: "1 - 4 Members",
-      tags: ["MARKETPLACE", "AI API", "PROBLEM SLOVING"],
-      status: "UPCOMING",
-      statusColor: "bg-purple-500",
-      category: "UPCOMING",
-      addedOn: "2026-06-14",
-      image: hack4,
-      link: "https://forms.gle/YqRNWbDc4vagh3qEA",
     },
   ];
 

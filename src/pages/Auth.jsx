@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase'; // Apne firebase setup file path ke hisaab se adjust karein
 
 const Auth = () => {
-  // authMode states: 'login' | 'signup' | 'admin'
+  // authMode states: 'login' | 'signup'
   const [authMode, setAuthMode] = useState('login'); 
   const [currentSlide, setCurrentSlide] = useState(0);
   const { signInWithGoogle, login, signup, user } = useAuth();
@@ -17,14 +15,14 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  // Premium platform automatic user checking
+  // Automatic user checking (Redirect to profile if logged in)
   useEffect(() => {
-    if (user && authMode !== 'admin') {
+    if (user) {
       navigate('/profile');
     }
-  }, [user, navigate, authMode]);
+  }, [user, navigate]);
 
-  // Carousel Slides matching the provided image concept
+  // Carousel Slides
   const slides = [
     {
       title: "Institutions",
@@ -78,25 +76,7 @@ const Auth = () => {
     setError('');
 
     try {
-      if (authMode === 'admin') {
-        // --- ADMIN LOGIN LOGIC ---
-        const cleanEmail = email.trim().toLowerCase();
-        if (!cleanEmail) {
-          setError('Please enter Admin Email');
-          return;
-        }
-
-        const adminDocRef = doc(db, 'allowed_admins', cleanEmail);
-        const adminDocSnap = await getDoc(adminDocRef);
-
-        if (adminDocSnap.exists()) {
-          localStorage.setItem('isAdminLoggedIn', 'true');
-          localStorage.setItem('adminEmail', cleanEmail);
-          navigate('/admin/dashboard'); // Ya '/adminportal'
-        } else {
-          setError('Unauthorized Access: Ye Email whitelisted admin list mein nahi hai.');
-        }
-      } else if (authMode === 'login') {
+      if (authMode === 'login') {
         await login(email, password);
         navigate('/profile');
       } else {
@@ -108,12 +88,11 @@ const Auth = () => {
     }
   };
 
-  // Fixed Spacing for Mobile Responsiveness
-  const headline = "Learn Connect  Grow Won!";
+  const headline = "Learn Connect   Grow Won!";
   const titleLetters = headline.split("");
 
   return (
-    <div className="w-full min-h-screen bg-[#02040a] flex items-center justify-center p-4 md:p-8 font-sans overflow-hidden perspective-container">
+    <div className="w-full min-h-screen bg-[#02040a] flex items-center justify-center p-3 sm:p-4 md:p-8 font-sans overflow-y-auto md:overflow-hidden perspective-container">
       
       {/* 🌟 CSS FOR 3D ANIMATION & STYLING */}
       <style>{`
@@ -177,21 +156,17 @@ const Auth = () => {
         }
       `}</style>
 
-      {/* 🚀 MAIN WRAPPER (Compact & 3D) */}
-      <div className="w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-auto md:min-h-[550px] border border-gray-800/50 bg-[#0a0a0a] card-3d-entrance">
+      {/* 🚀 MAIN WRAPPER (Compact, Responsive & 3D) */}
+      <div className="w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-auto md:min-h-[550px] border border-gray-800/50 bg-[#0a0a0a] card-3d-entrance my-auto">
         
         {/* ================= LEFT SIDE (DARK THEME + CAROUSEL) ================= */}
-        <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-between relative overflow-hidden">
+        <div className="w-full md:w-1/2 p-5 sm:p-6 md:p-10 flex flex-col justify-between relative overflow-hidden border-b md:border-b-0 md:border-r border-gray-800/40">
           
           {/* 3D Animated Headline */}
-          <div className="z-10 mt-4 md:mt-8 mb-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-[10px] sm:text-xs font-semibold mb-4">
-              <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.381z" /></svg>
-              Empowering Ideas. Building Bharat.
-            </div>
+          <div className="z-10 mt-2 sm:mt-4 md:mt-8 mb-4 sm:mb-6">
+           
             
-            {/* Fixed Phone typography (text-3xl for mobile) */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-tight flex flex-wrap gap-[2px]">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold leading-tight tracking-tight flex flex-wrap gap-[2px]">
               {titleLetters.map((char, index) => (
                 <span
                   key={index}
@@ -207,34 +182,35 @@ const Auth = () => {
                 </span>
               ))}
             </h1>
-            <p className="text-gray-400 mt-4 text-xs sm:text-sm max-w-sm leading-relaxed slide-up-fade" style={{animationDelay: "0.8s"}}>
+            <p className="text-gray-400 mt-3 sm:mt-4 text-xs sm:text-sm max-w-sm leading-relaxed slide-up-fade" style={{animationDelay: "0.8s"}}>
               India's most vibrant platform for AI startups, hackathons, internships, and startup communities.
             </p>
           </div>
 
-          {/* Premium Glassmorphism Carousel (Compact height) */}
-          <div className="relative h-32 md:h-36 z-10 slide-up-fade" style={{animationDelay: "1s"}}>
+          {/* Premium Glassmorphism Carousel */}
+          <div className="relative h-28 sm:h-32 md:h-36 z-10 slide-up-fade mb-6 md:mb-0" style={{animationDelay: "1s"}}>
             <div className="flex transition-transform duration-700 ease-in-out h-full" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
               {slides.map((slide, index) => (
                 <div key={index} className="w-full flex-shrink-0 px-1 h-full">
-                  <div className={`h-full p-4 md:p-5 rounded-2xl border transition-all duration-500 flex flex-col justify-center ${
+                  <div className={`h-full p-3 sm:p-4 md:p-5 rounded-2xl border transition-all duration-500 flex flex-col justify-center ${
                     index === currentSlide 
                       ? "bg-gray-800/40 border-gray-600/50 scale-100 opacity-100" 
                       : "bg-gray-900/20 border-gray-800/30 scale-95 opacity-50"
                   }`}>
-                    <div className="mb-2">{slide.icon}</div>
-                    <h3 className="text-white font-semibold text-sm md:text-base mb-1">{slide.title}</h3>
-                    <p className="text-gray-400 text-xs line-clamp-2">{slide.desc}</p>
+                    <div className="mb-1 sm:mb-2">{slide.icon}</div>
+                    <h3 className="text-white font-semibold text-xs sm:text-sm md:text-base mb-0.5 sm:mb-1">{slide.title}</h3>
+                    <p className="text-gray-400 text-[11px] sm:text-xs line-clamp-2">{slide.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
             
             {/* Carousel Dots */}
-            <div className="absolute -bottom-5 left-1/2 transform -translate-x-1/2 flex gap-1.5">
+            <div className="absolute -bottom-4 sm:-bottom-5 left-1/2 transform -translate-x-1/2 flex gap-1.5">
               {slides.map((_, i) => (
                 <button
                   key={i}
+                  type="button"
                   onClick={() => setCurrentSlide(i)}
                   className={`h-1 rounded-full transition-all duration-300 ${
                     i === currentSlide ? "w-5 bg-[#f5a623]" : "w-1.5 bg-gray-700"
@@ -248,13 +224,13 @@ const Auth = () => {
         </div>
 
         {/* ================= RIGHT SIDE (SKY-YELLOW FORM) ================= */}
-        <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-center relative" 
+        <div className="w-full md:w-1/2 p-5 sm:p-6 md:p-10 flex flex-col justify-center relative" 
              style={{ background: "linear-gradient(135deg, #eeeeee 0%, #bcc59d 40%, #dcc82e 100%)" }}>
           
-          <div className="max-w-sm w-full mx-auto bg-white/60 backdrop-blur-xl p-6 sm:p-8 rounded-3xl shadow-xl border border-white/50 slide-up-fade" style={{animationDelay: "0.4s"}}>
+          <div className="max-w-sm w-full mx-auto bg-white/60 backdrop-blur-xl p-5 sm:p-8 rounded-3xl shadow-xl border border-white/50 slide-up-fade" style={{animationDelay: "0.4s"}}>
             
-            {/* Custom 3-Tab Switcher (Login | Sign Up | Admin) */}
-            <div className="flex relative border-b border-gray-300 mb-6">
+            {/* 2-Tab Switcher (Login | Sign Up) */}
+            <div className="flex relative border-b border-gray-300/80 mb-5 sm:mb-6">
               <button
                 type="button"
                 onClick={() => { setAuthMode('login'); setError(''); }}
@@ -273,15 +249,6 @@ const Auth = () => {
               >
                 Sign Up
               </button>
-              <button
-                type="button"
-                onClick={() => { setAuthMode('admin'); setError(''); }}
-                className={`flex-1 pb-3 text-xs sm:text-sm font-bold transition-colors ${
-                  authMode === 'admin' ? "text-[#f5a623] border-b-2 border-[#f5a623]" : "text-gray-500 hover:text-gray-700"
-                }`}
-              >
-                Admin
-              </button>
             </div>
 
             {error && (
@@ -290,7 +257,7 @@ const Auth = () => {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-3.5">
+            <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-3.5">
               
               {/* Full Name input only for Sign Up */}
               {authMode === 'signup' && (
@@ -309,7 +276,7 @@ const Auth = () => {
                 </div>
               )}
 
-              {/* Email Input (Always Visible) */}
+              {/* Email Input */}
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                   <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
@@ -319,73 +286,54 @@ const Auth = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder={authMode === 'admin' ? "Admin Email Address" : "Email Address"}
+                  placeholder="Email Address"
                   className="w-full bg-white/80 border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#f5a623] transition-all font-medium shadow-sm"
                 />
               </div>
 
-              {/* Password Input (Hidden for Admin Mode) */}
-              {authMode !== 'admin' && (
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                  </div>
-                  <input
-                    type="password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                    className="w-full bg-white/80 border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#f5a623] transition-all font-medium shadow-sm"
-                  />
+              {/* Password Input */}
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                 </div>
-              )}
+                <input
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                  className="w-full bg-white/80 border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#f5a623] transition-all font-medium shadow-sm"
+                />
+              </div>
 
               <button
                 type="submit"
-                className="w-full bg-[#f5a623] hover:bg-[#e0961b] text-white py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-[0_4px_14px_0_rgba(245,166,35,0.39)] active:scale-[0.98] mt-4"
+                className="w-full bg-[#f5a623] hover:bg-[#e0961b] text-white py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-[0_4px_14px_0_rgba(245,166,35,0.39)] active:scale-[0.98] mt-3 sm:mt-4"
               >
-                {authMode === 'login' && 'Login'}
-                {authMode === 'signup' && 'Create Account'}
-                {authMode === 'admin' && 'Continue as Admin'}
+                {authMode === 'login' ? 'Login' : 'Create Account'}
               </button>
             </form>
 
-            {/* Google Sign-in only shown for normal Login / Signup */}
-            {authMode !== 'admin' && (
-              <>
-                <div className="relative flex py-5 items-center">
-                  <div className="flex-grow border-t border-gray-300"></div>
-                  <span className="flex-shrink mx-3 text-gray-400 text-[10px] font-bold uppercase tracking-wider">OR</span>
-                  <div className="flex-grow border-t border-gray-300"></div>
-                </div>
+            {/* Google Sign-in */}
+            <div className="relative flex py-4 sm:py-5 items-center">
+              <div className="flex-grow border-t border-gray-300"></div>
+              <span className="flex-shrink mx-3 text-gray-400 text-[10px] font-bold uppercase tracking-wider">OR</span>
+              <div className="flex-grow border-t border-gray-300"></div>
+            </div>
 
-                <button
-                  onClick={handleGoogleSignIn}
-                  type="button"
-                  className="w-full bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98] shadow-sm"
-                >
-                  <svg className="w-4 h-4" viewBox="0 0 24 24">
-                    <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.866-3.577-7.866-8s3.536-8 7.866-8c2.46 0 4.105 1.025 5.047 1.926l3.327-3.204C18.416 1.872 15.626.985 12.24.985A10.985 10.985 0 0 0 1.255 11.97a10.985 10.985 0 0 0 10.985 10.985c5.73 0 9.535-3.996 9.535-9.62c0-.65-.07-1.14-.155-1.636l-9.38-.415Z"/>
-                  </svg>
-                  Continue with Google
-                </button>
-              </>
-            )}
+            <button
+              onClick={handleGoogleSignIn}
+              type="button"
+              className="w-full bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98] shadow-sm"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24">
+                <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.866-3.577-7.866-8s3.536-8 7.866-8c2.46 0 4.105 1.025 5.047 1.926l3.327-3.204C18.416 1.872 15.626.985 12.24.985A10.985 10.985 0 0 0 1.255 11.97a10.985 10.985 0 0 0 10.985 10.985c5.73 0 9.535-3.996 9.535-9.62c0-.65-.07-1.14-.155-1.636l-9.38-.415Z"/>
+              </svg>
+              Continue with Google
+            </button>
 
-            <p className="text-center text-xs sm:text-sm text-gray-600 mt-5 font-medium">
-              {authMode === 'admin' ? (
-                <>
-                  Student / User Login?{' '}
-                  <button
-                    type="button"
-                    onClick={() => { setAuthMode('login'); setError(''); }}
-                    className="text-[#f5a623] font-bold hover:underline ml-1"
-                  >
-                    Go to Login
-                  </button>
-                </>
-              ) : authMode === 'login' ? (
+            <p className="text-center text-xs sm:text-sm text-gray-600 mt-4 sm:mt-5 font-medium">
+              {authMode === 'login' ? (
                 <>
                   Don't have an account?{' '}
                   <button

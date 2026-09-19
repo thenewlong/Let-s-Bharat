@@ -47,7 +47,7 @@ import founderProfile from '../assets/images/profile2.jpeg';
 const heroSlides = [
   {
     id: 1,
-    videoSrc: video1, // Video path yahan rakhein
+    videoSrc: video1, 
     title1: "INDIA'S STUDENTS",
     titleHighlight: "LEARNING & OPPORTUNITY",
     title2: "PLATFORM",
@@ -138,18 +138,19 @@ const Home = ({ isMobileMenuOpen = false }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // 🎬 Motion Graphic Typography Function
   const renderAnimatedLetters = (text, isActive, baseDelay = 0) => {
     if (!text) return null; 
     return text.split("").map((char, index) => (
       <span
         key={index}
-        className={`inline-block transition-all duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`inline-block transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isActive 
             ? 'opacity-100 translate-y-0 scale-100 blur-0' 
-            : 'opacity-0 translate-y-8 scale-125 blur-[10px]'
+            : 'opacity-0 translate-y-8 scale-110 blur-[8px]'
         }`}
         style={{ 
-          transitionDelay: `${baseDelay + index * 14}ms`, 
+          transitionDelay: `${baseDelay + index * 18}ms`, 
           marginRight: char === " " ? "0.28em" : "0"
         }}
       >
@@ -157,7 +158,6 @@ const Home = ({ isMobileMenuOpen = false }) => {
       </span>
     ));
   };
-
 // ==========================================
   // SECTION: INSTITUTION VIDEO & INTERACTIVE BUTTON
   // ==========================================
@@ -449,34 +449,33 @@ const Home = ({ isMobileMenuOpen = false }) => {
         }
       `}</style>
 {/* ========================================================= */}
-      {/* SECTION: HERO SECTION (50% Next Section Peek & Responsive) */}
+      {/* SECTION: HERO SECTION (UI/UX Optimized & Error-Free) */}
       {/* ========================================================= */}
       <section className="relative w-full min-h-[78vh] sm:min-h-[82vh] md:min-h-[85vh] flex flex-col justify-between items-center bg-[#0a0a0a] overflow-hidden pt-6 pb-12">
         
-        {/* 🎥 BACKGROUND VIDEO */}
+        {/* 🎥 BACKGROUND VIDEO (Fixed: Directly using src inside video tag) */}
         <video 
           key={currentSlide?.id}
           autoPlay 
           muted 
           playsInline
           onEnded={handleVideoEnd}
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 scale-105"
-        >
-          {currentSlide?.videoSrc && <source src={currentSlide?.videoSrc} type="video/mp4" />}
-        </video>
+          src={currentSlide?.videoSrc ? currentSlide.videoSrc : undefined}
+          className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 scale-105 transition-opacity duration-700 ease-in-out"
+        />
 
-        {/* OVERLAYS */}
-        <div className="absolute inset-0 bg-black/60 mix-blend-multiply z-0"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-[#0a0a0a] z-0"></div>
+        {/* 🌑 OVERLAYS (Added pointer-events-none for better UX & Clickability) */}
+        <div className="absolute inset-0 bg-black/60 mix-blend-multiply z-0 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/30 to-[#0a0a0a] z-0 pointer-events-none"></div>
 
-        {/* 🔍 SEARCH BAR (MOBILE ONLY - Hidden when Drawer Menu is open) */}
+        {/* 🔍 SEARCH BAR (MOBILE ONLY) */}
         {!isMobileMenuOpen && (
           <div 
             className="md:hidden relative w-[92%] max-w-md z-20 transition-all duration-300 mt-2" 
             ref={searchRef}
           >
             <div className={`relative transition-all duration-700 ${isAnimating ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}>
-              <svg className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 z-10 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
               <input
@@ -517,9 +516,7 @@ const Home = ({ isMobileMenuOpen = false }) => {
         {/* 📝 MAIN HERO CONTENT */}
         <div className="relative z-10 w-full flex-grow flex flex-col items-center justify-center text-center px-4 my-auto">
           
-         
-
-          {/* 🔤 HERO TITLE (Increased Mobile & PC Font Sizes) */}
+          {/* 🔤 HERO TITLE */}
           <h1 className="text-[28px] sm:text-4xl md:text-6xl lg:text-7xl font-black italic uppercase tracking-tight flex flex-col items-center gap-1 w-full leading-[1.1] text-white drop-shadow-2xl">
             
             <div className="flex flex-wrap justify-center overflow-hidden">
@@ -543,7 +540,7 @@ const Home = ({ isMobileMenuOpen = false }) => {
             {currentSlide?.desc}
           </p>
           
-          {/* 🎯 BUTTONS GROUP (Exact Pill Shapes matching Image 1) */}
+          {/* 🎯 BUTTONS GROUP */}
           <div className={`flex flex-row justify-center items-center w-full gap-3 sm:gap-4 mt-6 md:mt-8 transition-all duration-700 ease-out ${
             isAnimating ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-6 scale-95"
           }`} style={{ transitionDelay: '650ms' }}>
@@ -570,11 +567,12 @@ const Home = ({ isMobileMenuOpen = false }) => {
 
         </div>
 
-        {/* ⏸️ SLIDE INDICATORS (Matching Dash Style) */}
-        <div className="relative z-10 flex justify-center gap-2 mt-4">
+        {/* ⏸️ SLIDE INDICATORS */}
+        <div className="relative z-10 flex justify-center gap-2 mt-4 cursor-pointer">
           {heroSlides.map((_, index) => (
             <button 
               key={index} 
+              aria-label={`Go to slide ${index + 1}`}
               onClick={() => {
                 setIsAnimating(false);
                 setTimeout(() => setCurrentIndex(index), 150);
