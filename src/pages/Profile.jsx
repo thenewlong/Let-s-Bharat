@@ -4,62 +4,52 @@ import { updateProfile } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 
-// High quality Avatar SVGs
+// 1. High Quality 5 Avatar Options
 const AVATARS = {
-  male: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alexander&backgroundColor=b6e3f4',
-  female: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sophia&backgroundColor=ffdfbf'
+  male: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4',
+  female: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sophia&backgroundColor=ffdfbf',
+  boy: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jack&backgroundColor=c0aede',
+  girl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Lily&backgroundColor=ffdfbf',
+  old: 'https://api.dicebear.com/7.x/avataaars/svg?seed=George&backgroundColor=d1d4f9'
 };
 
 const Profile = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  // 1. DRAFT STATE (Sirf type karte waqt change hoga)
+  // State Management
   const [name, setName] = useState('');
-  const [nickName, setNickName] = useState('');
   const [bio, setBio] = useState('');
   const [genderAvatar, setGenderAvatar] = useState('male');
-
-  // 2. ORIGINAL SAVED STATE (Cancel karne par purana data wapas laane ke liye)
+  
   const [originalData, setOriginalData] = useState(null);
-
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
-  const [successMsg, setSuccessMsg] = useState('');
+  const [showAvatarSelect, setShowAvatarSelect] = useState(false);
   
-  // 3. EDIT MODE STATE (Default false rakha hai taaki shuru mein locked rahe)
+  // Naya State: Edit Mode ke liye
   const [isEditing, setIsEditing] = useState(false);
 
   // Fetch Data on Load
   useEffect(() => {
     if (user) {
       let fetchedName = user.displayName || '';
-      let fetchedNick = '';
-      let fetchedBio = 'Passionate about building innovative solutions and exploring new technologies.';
+      let fetchedBio = '';
       let fetchedGender = 'male';
 
       const savedLocalData = localStorage.getItem(`profileData_${user.uid}`);
       if (savedLocalData) {
         const parsedData = JSON.parse(savedLocalData);
-        if (parsedData.nickName) fetchedNick = parsedData.nickName;
         if (parsedData.bio) fetchedBio = parsedData.bio;
         if (parsedData.genderAvatar) fetchedGender = parsedData.genderAvatar;
-        
-        setIsEditing(false); // Data mil gaya toh Edit Mode OFF (Lock kar do)
-      } else {
-        setIsEditing(true); // Agar koi data nahi hai (Naya user), toh Edit Mode ON rakho
       }
 
-      // States update karna
       setName(fetchedName);
-      setNickName(fetchedNick);
       setBio(fetchedBio);
       setGenderAvatar(fetchedGender);
 
-      // Backup save kar lena taaki Cancel hone pe restore ho sake
       setOriginalData({
         name: fetchedName,
-        nickName: fetchedNick,
         bio: fetchedBio,
         genderAvatar: fetchedGender
       });
@@ -68,11 +58,10 @@ const Profile = () => {
     }
   }, [user]);
 
-  // Save Data & Lock Form (Sirf click hone par chalega)
-  const handleUpdate = async (e) => {
+  // Save Data
+  const handleSave = async (e) => {
     if (e) e.preventDefault();
     setLoading(true);
-    setSuccessMsg('');
 
     try {
       if (auth.currentUser) {
@@ -82,16 +71,12 @@ const Profile = () => {
         });
       }
 
-      const localDataToSave = { nickName, bio, genderAvatar };
+      const localDataToSave = { bio, genderAvatar };
       localStorage.setItem(`profileData_${user.uid}`, JSON.stringify(localDataToSave));
 
-      // Save hone ke baad original data ko naye data se update kar do
-      setOriginalData({ name, nickName, bio, genderAvatar });
-
-      setSuccessMsg('Profile saved successfully!');
-      setIsEditing(false); // Save hone ke baad form lock kar do
-      
-      setTimeout(() => setSuccessMsg(''), 3500);
+      setOriginalData({ name, bio, genderAvatar });
+      setIsEditing(false); // Save ke baad edit mode off
+      alert("Profile Saved Successfully!");
     } catch (error) {
       console.error(error);
       alert('Failed to update profile: ' + error.message);
@@ -100,27 +85,25 @@ const Profile = () => {
     }
   };
 
-  // Cancel Edit (Purana Data wapas le aao bina save kiye)
+  // Cancel Changes
   const handleCancel = () => {
     if (originalData) {
       setName(originalData.name);
-      setNickName(originalData.nickName);
       setBio(originalData.bio);
       setGenderAvatar(originalData.genderAvatar);
     }
-    setIsEditing(false); // Lock the form again
+    setShowAvatarSelect(false);
+    setIsEditing(false);
   };
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
-
+  // Logout Functionality
   const handleLogout = async () => {
     try {
       await logout();
       navigate('/auth');
     } catch (error) {
-      alert('Logout failed');
+      console.error("Logout failed", error);
+      alert("Failed to logout. Please try again.");
     }
   };
 
@@ -128,10 +111,7 @@ const Profile = () => {
     return (
       <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white p-4">
         <h2 className="text-2xl font-bold mb-4">Access Denied</h2>
-        <button
-          onClick={() => navigate('/auth')}
-          className="bg-white text-black px-6 py-2.5 rounded-xl font-bold transition-all hover:bg-gray-200"
-        >
+        <button onClick={() => navigate('/auth')} className="bg-yellow-400 text-black px-6 py-2.5 rounded-xl font-bold">
           Go to Login
         </button>
       </div>
@@ -139,176 +119,187 @@ const Profile = () => {
   }
 
   return (
-    // Clean, Real & Professional Black Background
-    <div className="w-full min-h-screen bg-black flex items-center justify-center p-4 sm:p-6 md:p-8 font-sans selection:bg-neutral-800">
+    // Mobile screen par fit karne ke liye h-[100dvh] aur overflow-hidden lagaya hai
+    <div className="w-full h-[100dvh] overflow-hidden bg-black text-white font-sans flex flex-col items-center selection:bg-yellow-500/30">
       
-      <div className="w-full max-w-2xl">
-        {/* HEADER SECTION */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-              My Profile
-            </h1>
-            <p className="text-xs sm:text-sm text-neutral-500 mt-1">Manage your personal details</p>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm transition-all"
-          >
-            Log Out
-          </button>
+      {/* Custom CSS for Letter Animation */}
+      <style>{`
+        @keyframes popIn {
+          0% { opacity: 0; transform: scale(0.5) translateY(5px); }
+          50% { transform: scale(1.1) translateY(-2px); }
+          100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-letter {
+          display: inline-block;
+          animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+      `}</style>
+
+      <div className="w-full max-w-md flex flex-col h-full p-4 sm:p-6 relative">
+        
+        {/* HEADER */}
+        <div className="flex justify-between items-center mb-8 mt-2 relative shrink-0">
+          {isEditing ? (
+            <button onClick={handleCancel} className="text-gray-400 text-sm font-medium hover:text-white transition-colors">
+              Cancel
+            </button>
+          ) : (
+            <button onClick={handleLogout} className="text-red-400 text-sm font-medium hover:text-red-300 transition-colors flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+              Logout
+            </button>
+          )}
+          
+          <h1 className="text-lg font-semibold absolute left-1/2 -translate-x-1/2">
+            My Profile
+          </h1>
+
+          {!isEditing && (
+            <button onClick={() => setIsEditing(true)} className="text-[#F5CE45] text-sm font-medium hover:text-yellow-300 transition-colors">
+              Edit
+            </button>
+          )}
         </div>
 
-        {successMsg && (
-          <div className="mb-6 p-3 bg-green-500/10 border border-green-500/20 text-green-400 text-sm font-medium rounded-xl text-center">
-            {successMsg}
-          </div>
-        )}
-
-        {/* PROFILE CARD (Dark Mode UI) */}
-        <div className="bg-[#111111] p-6 sm:p-8 rounded-2xl border border-[#222222] shadow-2xl">
-          
-          {fetching ? (
-             <div className="py-12 text-center text-neutral-500 font-medium text-sm">Loading profile...</div>
-          ) : (
-            <form onSubmit={handleUpdate} className="space-y-6">
-              
-              {/* AVATAR DP SECTION */}
-              <div className="flex flex-col items-center justify-center pb-6 border-b border-[#222222]">
-                <div className="relative">
-                  <img 
-                    src={AVATARS[genderAvatar]} 
-                    alt="Profile Avatar" 
-                    className="w-24 h-24 rounded-full border-2 border-neutral-700 bg-neutral-900 p-1 object-cover"
-                  />
-                </div>
-
-                {isEditing ? (
-                  <div className="mt-5 flex items-center gap-3">
-                    <span className="text-xs font-semibold text-neutral-500">Choose Avatar:</span>
-                    <div className="flex gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setGenderAvatar('male')}
-                        className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
-                          genderAvatar === 'male'
-                            ? 'bg-white text-black'
-                            : 'bg-[#1a1a1a] text-neutral-400 hover:bg-[#222222] border border-[#333]'
-                        }`}
-                      >
-                        👨 Male
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setGenderAvatar('female')}
-                        className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
-                          genderAvatar === 'female'
-                            ? 'bg-white text-black'
-                            : 'bg-[#1a1a1a] text-neutral-400 hover:bg-[#222222] border border-[#333]'
-                        }`}
-                      >
-                        👩 Female
-                      </button>
-                    </div>
+        {fetching ? (
+          <div className="flex-grow flex items-center justify-center text-neutral-500 text-sm">Loading profile...</div>
+        ) : (
+          <div className="flex flex-col flex-grow overflow-y-auto pb-4 custom-scrollbar">
+            
+            {/* AVATAR SECTION */}
+            <div className="flex flex-col items-center mb-8 relative shrink-0">
+              <div className="relative">
+                <img 
+                  src={AVATARS[genderAvatar]} 
+                  alt="User Avatar" 
+                  className={`w-28 h-28 rounded-full bg-[#1a1a1a] object-cover border-2 ${isEditing ? 'border-[#F5CE45]' : 'border-transparent'} transition-colors`}
+                />
+                
+                {/* Camera Badge - Sirf Edit Mode mein dikhega */}
+                {isEditing && (
+                  <div 
+                    onClick={() => setShowAvatarSelect(!showAvatarSelect)}
+                    className="absolute bottom-0 right-1 bg-[#F5CE45] w-8 h-8 rounded-full flex items-center justify-center cursor-pointer shadow-lg border-2 border-black active:scale-95 transition-transform"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+                      <circle cx="12" cy="13" r="3"/>
+                    </svg>
                   </div>
-                ) : (
-                  <span className="mt-3 text-xs font-medium text-neutral-500 capitalize">
-                    {genderAvatar} Avatar
-                  </span>
                 )}
               </div>
 
-              {/* FULL NAME */}
-              <div className="space-y-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-neutral-500">Full Name</label>
-                <input
-                  type="text" 
-                  required 
-                  value={name} 
-                  onChange={(e) => setName(e.target.value)}
-                  readOnly={!isEditing}
-                  placeholder="Enter your full name"
-                  className={`w-full rounded-lg p-3 text-sm font-medium transition-all outline-none ${
-                    isEditing 
-                      ? "bg-[#1a1a1a] border border-[#333] text-white focus:bg-black focus:border-white focus:ring-1 focus:ring-white" 
-                      : "bg-transparent border-transparent text-neutral-200 cursor-not-allowed px-0 font-semibold text-base"
-                  }`}
-                />
-              </div>
+              {/* Avatar Selection Dropdown/Modal */}
+              {isEditing && showAvatarSelect && (
+                <div className="absolute top-[100%] mt-4 bg-[#1a1a1a] border border-[#333] rounded-2xl p-4 shadow-2xl z-20 w-full max-w-[300px] animate-fade-in">
+                  <p className="text-xs text-gray-400 mb-3 text-center uppercase tracking-wider">Select Avatar</p>
+                  <div className="grid grid-cols-5 gap-3">
+                    {Object.keys(AVATARS).map((key) => (
+                      <div 
+                        key={key}
+                        onClick={() => {
+                          setGenderAvatar(key);
+                          setShowAvatarSelect(false);
+                        }}
+                        className={`cursor-pointer rounded-full p-1 border-2 transition-all ${genderAvatar === key ? 'border-[#F5CE45]' : 'border-transparent hover:border-gray-500'}`}
+                      >
+                        <img src={AVATARS[key]} alt={key} className="w-full h-full rounded-full bg-black" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
 
-              {/* NICK NAME */}
+            {/* FORM INPUTS */}
+            <div className="space-y-6 flex-grow">
+              
+              {/* MYSELF (Name) */}
               <div className="space-y-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-neutral-500">Nick Name</label>
-                <div className="relative flex items-center">
+                <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+                  Myself
+                </label>
+                
+                {/* Animation Overlay Trick Container */}
+                <div className="relative w-full h-[56px] bg-[#1c1c1e] rounded-2xl overflow-hidden">
+                  
+                  {/* Visual Animated Text Layer */}
+                  <div className="absolute inset-0 p-4 text-[15px] pointer-events-none flex items-center whitespace-pre overflow-hidden">
+                    {!name && <span className="text-gray-600">Enter your name</span>}
+                    {name.split('').map((char, i) => (
+                      <span key={i} className="animate-letter">
+                        {char === ' ' ? '\u00A0' : char}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Real Input Layer (Transparent text, visible caret) */}
                   <input
                     type="text" 
-                    value={nickName} 
-                    onChange={(e) => setNickName(e.target.value)}
-                    readOnly={!isEditing}
-                    placeholder="e.g. alex_dev"
-                    className={`w-full rounded-lg py-3 text-sm font-medium transition-all outline-none ${
-                      isEditing 
-                        ? "bg-[#1a1a1a] border border-[#333] text-white focus:bg-black focus:border-white focus:ring-1 focus:ring-white px-3" 
-                        : "bg-transparent border-transparent text-neutral-200 cursor-not-allowed px-0 font-semibold"
-                    }`}
+                    value={name} 
+                    onChange={(e) => setName(e.target.value)}
+                    disabled={!isEditing}
+                    className="absolute inset-0 w-full h-full bg-transparent p-4 text-[15px] text-transparent caret-white outline-none focus:ring-1 focus:ring-gray-600 transition-all z-10 disabled:cursor-not-allowed"
+                    spellCheck={false}
                   />
                 </div>
               </div>
 
-              {/* BIO */}
-              <div className="space-y-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-neutral-500">Myself ( Bio )</label>
-                <textarea
-                  rows={3} 
-                  value={bio} 
-                  onChange={(e) => setBio(e.target.value)}
-                  readOnly={!isEditing}
-                  placeholder="Tell us a little bit about yourself..."
-                  className={`w-full rounded-lg p-3 text-sm font-medium transition-all outline-none resize-none ${
-                    isEditing 
-                      ? "bg-[#1a1a1a] border border-[#333] text-white focus:bg-black focus:border-white focus:ring-1 focus:ring-white" 
-                      : "bg-transparent border-transparent text-neutral-400 cursor-not-allowed px-0"
-                  }`}
-                />
-              </div>
-
-              {/* DYNAMIC BUTTONS (Save vs Cancel vs Edit) */}
-              <div className="pt-6 flex justify-end">
-                {isEditing ? (
-                  <div className="flex gap-3 w-full sm:w-auto">
-                    {/* CANCEL BUTTON */}
-                    <button
-                      type="button"
-                      onClick={handleCancel}
-                      className="w-full sm:w-auto bg-transparent hover:bg-[#1a1a1a] text-neutral-400 hover:text-white px-6 py-2.5 rounded-lg font-bold text-sm transition-all"
-                    >
-                      Cancel
-                    </button>
-                    {/* SAVE BUTTON */}
-                    <button
-                      type="submit" 
-                      disabled={loading}
-                      className="w-full sm:w-auto bg-white hover:bg-gray-200 text-black px-8 py-2.5 rounded-lg font-bold text-sm transition-all shadow-sm active:scale-95"
-                    >
-                      {loading ? "Saving..." : "Save Profile"}
-                    </button>
+              {/* ABOUT YOURSELF (Bio) */}
+              <div className="space-y-2 relative">
+                <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+                  About Yourself
+                </label>
+                
+                {/* Animation Overlay Trick Container for Textarea */}
+                <div className="relative w-full h-[120px] bg-[#1c1c1e] rounded-2xl overflow-hidden">
+                  
+                  {/* Visual Animated Text Layer */}
+                  <div className="absolute inset-0 p-4 text-[15px] pointer-events-none whitespace-pre-wrap break-words leading-relaxed">
+                    {!bio && <span className="text-gray-600">Tell us a little bit about yourself...</span>}
+                    {bio.split('').map((char, i) => (
+                      <span key={i} className="animate-letter">
+                        {char === ' ' ? '\u00A0' : char}
+                      </span>
+                    ))}
                   </div>
-                ) : (
-                  // EDIT BUTTON
-                  <button
-                    type="button" 
-                    onClick={handleEditClick}
-                    className="w-full sm:w-auto bg-white hover:bg-gray-200 text-black px-8 py-2.5 rounded-lg font-bold text-sm transition-all shadow-sm active:scale-95"
-                  >
-                    Edit Profile
-                  </button>
+
+                  {/* Real Textarea Layer */}
+                  <textarea
+                    maxLength={150}
+                    value={bio} 
+                    onChange={(e) => setBio(e.target.value)}
+                    disabled={!isEditing}
+                    className="absolute inset-0 w-full h-full bg-transparent p-4 text-[15px] text-transparent caret-white outline-none focus:ring-1 focus:ring-gray-600 transition-all resize-none leading-relaxed z-10 disabled:cursor-not-allowed custom-scrollbar"
+                    spellCheck={false}
+                  />
+                </div>
+                
+                {/* Character Count */}
+                {isEditing && (
+                  <div className="absolute -bottom-6 right-2 text-[11px] font-medium text-gray-500">
+                    {bio.length}/150
+                  </div>
                 )}
               </div>
 
-            </form>
-          )}
+            </div>
 
-        </div>
+            {/* SAVE BUTTON (Fixed at bottom aur sirf edit mode me dikhega) */}
+            {isEditing && (
+              <div className="mt-auto pt-8 shrink-0">
+                <button
+                  onClick={handleSave}
+                  disabled={loading}
+                  className="w-full bg-[#F5CE45] hover:bg-[#e3be38] text-black py-4 rounded-[20px] font-bold text-[16px] transition-all active:scale-95 disabled:opacity-70 disabled:active:scale-100 shadow-[0_4px_14px_rgba(245,206,69,0.2)]"
+                >
+                  {loading ? "Saving..." : "Save Profile"}
+                </button>
+              </div>
+            )}
+            
+          </div>
+        )}
       </div>
     </div>
   );

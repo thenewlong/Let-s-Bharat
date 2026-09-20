@@ -451,8 +451,7 @@ const Home = ({ isMobileMenuOpen = false }) => {
 {/* ========================================================= */}
       {/* SECTION: HERO SECTION (UI/UX Optimized & Error-Free) */}
       {/* ========================================================= */}
-      <section className="relative w-full min-h-[78vh] sm:min-h-[82vh] md:min-h-[85vh] flex flex-col justify-between items-center bg-[#0a0a0a] overflow-hidden pt-6 pb-12">
-        
+     <section className="relative w-full min-h-[50dvh] sm:min-h-[60vh] md:min-h-[75vh] lg:min-h-[85vh] flex flex-col justify-between items-center bg-[#0a0a0a] overflow-hidden pt-6 pb-10">
         {/* 🎥 BACKGROUND VIDEO (Fixed: Directly using src inside video tag) */}
         <video 
           key={currentSlide?.id}
@@ -461,7 +460,7 @@ const Home = ({ isMobileMenuOpen = false }) => {
           playsInline
           onEnded={handleVideoEnd}
           src={currentSlide?.videoSrc ? currentSlide.videoSrc : undefined}
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 scale-105 transition-opacity duration-700 ease-in-out"
+          className="absolute inset-0 w-full h-full object-cover z-0 opacity-99 scale-105 transition-opacity duration-700 ease-in-out"
         />
 
         {/* 🌑 OVERLAYS (Added pointer-events-none for better UX & Clickability) */}
