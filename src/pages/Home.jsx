@@ -17,8 +17,8 @@ import video4 from '../assets/videos/learn-banner.mp4';
 
 
 // Institution ke liye videos (Apne folde-bannerr ke hisaab se path aur naam theek kar lena)
-import desktopInstitutionVideo from '../assets/videos/inst4.mp4';
-import mobileInstitutionVideo from '../assets/videos/inst001.mp4';
+import desktopInstitutionVideo from '../assets/videos/inst01.mp4';
+import mobileInstitutionVideo from '../assets/videos/inst002.mp4';
 
 
 //hackathons
