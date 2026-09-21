@@ -160,7 +160,8 @@ const Auth = () => {
       <div className="w-full max-w-5xl rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-auto md:min-h-[550px] border border-gray-800/50 bg-[#0a0a0a] card-3d-entrance my-auto">
         
         {/* ================= LEFT SIDE (DARK THEME + CAROUSEL) ================= */}
-        <div className="w-full md:w-1/2 p-6 sm:p-8 md:p-10 flex flex-col justify-center md:justify-between relative overflow-hidden border-b md:border-b-0 md:border-r border-gray-800/40">
+        {/* Yahan mobile ke liye "hidden md:flex" lagaya gaya hai */}
+        <div className="hidden md:flex w-full md:w-1/2 p-6 sm:p-8 md:p-10 flex-col justify-center md:justify-between relative overflow-hidden border-r border-gray-800/40">
           
           {/* 3D Animated Headline */}
           <div className="z-10 mt-2 mb-4 md:mt-8 md:mb-6">
@@ -185,7 +186,7 @@ const Auth = () => {
             </p>
           </div>
 
-          {/* Premium Glassmorphism Carousel - HIDDEN ON MOBILE (added hidden md:block) */}
+          {/* Premium Glassmorphism Carousel */}
           <div className="hidden md:block relative h-28 sm:h-32 md:h-36 z-10 slide-up-fade mb-6 md:mb-0" style={{animationDelay: "1s"}}>
             <div className="flex transition-transform duration-700 ease-in-out h-full" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
               {slides.map((slide, index) => (
