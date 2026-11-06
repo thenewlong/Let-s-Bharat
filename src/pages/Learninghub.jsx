@@ -217,7 +217,7 @@ const LearningHub = () => {
           <div className="relative z-20 px-6 md:px-12 max-w-2xl">
             <div className={`transition-all duration-700 transform ${animateText ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'}`}>
               <span className="bg-white/10 text-white border border-white/20 text-[10px] md:text-xs font-semibold px-3 py-1 rounded-full tracking-wide mb-4 inline-block backdrop-blur-md">
-                LEARNING HUB
+               Coming Soon - LEARNING HUB
               </span>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-[1.15] mb-4 tracking-tight">
                 Master New Skills.<br/>Build Your <span className="text-[#ffcc00]">Future.</span>

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const Resources = () => {
   // Target Date Set: 15 September 2026
-  const TARGET_DATE = new Date('2026-10-08T00:00:00').getTime();
+  const TARGET_DATE = new Date('2026-12-08T00:00:00').getTime();
 
   // Timer State
   const [timeLeft, setTimeLeft] = useState({
@@ -102,7 +102,7 @@ const Resources = () => {
         </motion.p>
 
         <motion.p variants={fadeUp} className="text-sm md:text-base text-slate-500 mb-8 font-medium">
-          Launching on <span className="font-bold text-slate-900">08 October 2026</span>
+          Launching on <span className="font-bold text-slate-900">08 December 2026</span>
         </motion.p>
 
         {/* 3. Countdown Timer Card */}

@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext'; 
 
-// Intro Video Import
-import IntroVideo from './components/IntroVideo';
+
 
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -27,8 +26,8 @@ function App() {
 
   return (
     <AuthProvider>
-      {/* Intro Video Screen Overlay */}
-      {showIntro && <IntroVideo onFinish={() => setShowIntro(false)} />}
+    
+     
 
       <Router>
         {/* Navbar hamesha top par rahega */}
