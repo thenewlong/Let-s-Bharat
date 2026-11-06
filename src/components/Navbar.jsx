@@ -10,7 +10,16 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false); 
   const [searchQuery, setSearchQuery] = useState(""); 
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [isAnimated, setIsAnimated] = useState(false);
   const searchRef = useRef(null);
+
+  // Trigger entrance animation on mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsAnimated(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   // 🚀 FUTURE SCALE: Yahan naye sections/institutions add karo, search mein automatic aa jayenge
   const searchableItems = [
@@ -23,7 +32,6 @@ const Navbar = () => {
     { name: "Internships", path: "/internships", type: "Page" },
     { name: "Jobs", path: "/jobs", type: "Page" },
     { name: "Learning Hub", path: "/learninghub", type: "Page" },
-  
     { name: "Resources", path: "/resources", type: "Page" },
     { name: "About Us", path: "/about", type: "Page" },
   ];
@@ -60,8 +68,32 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="w-full relative z-50 shadow-sm flex flex-col">
+    <nav className="w-full relative z-50 shadow-sm flex flex-col overflow-x-hidden">
       
+      {/* ========================================================= */}
+      {/* 🌟 INTERNATIONAL PORTFOLIO TICKER BANNER (WITH ANIMATION) */}
+      {/* ========================================================= */}
+      <div className={`w-full bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-600 text-black py-2 px-2 sm:px-4 text-[11px] sm:text-xs md:text-sm font-bold tracking-wide flex items-center justify-between shadow-md relative z-50 overflow-hidden transition-all duration-700 ease-out ${isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
+        
+       
+
+        {/* Center Link Content (Eye-catching Animation & Styling) */}
+        <div className="flex items-center justify-center gap-1.5 sm:gap-2 mx-auto text-center px-1">
+          <span className="whitespace-nowrap text-[10px] sm:text-xs font-extrabold animate-bounce"></span>
+          <span className="whitespace-nowrap text-[10px] sm:text-xs tracking-tight">Explore the Founder's Official Portfolio & Vision:</span>
+          <a 
+            href="https://newlongdebbarma.letsbharat.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="underline hover:text-white transition-colors decoration-2 underline-offset-2 sm:underline-offset-4 font-black truncate max-w-[170px] xs:max-w-xs sm:max-w-none text-[10px] sm:text-xs bg-black/10 px-2 py-0.5 rounded-md hover:bg-black/20"
+          >
+            newlongdebbarma.letsbharat.com
+          </a>
+        </div>
+
+      
+      </div>
+
       {/* 🟢 TOP TIER (White Bar) */}
       <div className="bg-white border-b border-gray-100 relative z-50">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -69,7 +101,7 @@ const Navbar = () => {
             
             <div className="flex-shrink-0 flex items-center">
               <Link to="/" className="flex items-center">
-                <img src={logo} alt="Let's Bharat Logo" className="h-10 lg:h-14 w-auto object-contain transition-transform hover:scale-105" />
+                <img src={logo} alt="Let's Bharat Logo" className="h-9 sm:h-10 lg:h-14 w-auto object-contain transition-transform hover:scale-105" />
               </Link>
             </div>
 
@@ -159,7 +191,7 @@ const Navbar = () => {
       </div>
 
       {/* ========================================================= */}
-      {/* 📱 MOBILE DRAWER (With Integrated Search Logic)             */}
+      {/* 📱 MOBILE DRAWER (With Integrated Search Logic)            */}
       {/* ========================================================= */}
       
       {/* Background Overlay */}
