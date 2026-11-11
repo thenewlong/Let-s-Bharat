@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext'; 
 
-
-
 import Navbar from './components/Navbar';
+import GameAdModal from './components/GameAdModal'; // 🎮 Auto-triggering Mini Game Ad Banner component
+import FloatingSocialWidget from './components/FloatingSocialWidget'; // 🌟 Floating Social Links Widget (Bottom-Right Corner)
+
 import Home from './pages/Home';
 import Auth from './pages/Auth'; 
 import Hackathons from './pages/Hackathons'; 
@@ -26,10 +27,13 @@ function App() {
 
   return (
     <AuthProvider>
-    
-     
-
       <Router>
+        {/* 🎮 Auto-Trigger Mini Game Ad Modal */}
+        <GameAdModal />
+
+        {/* 🌟 Floating Social Links Widget (Fixed on all pages at bottom-right) */}
+        <FloatingSocialWidget />
+
         {/* Navbar hamesha top par rahega */}
         <Navbar />
         
