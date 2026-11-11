@@ -8,7 +8,7 @@ const GameAdModal = () => {
 
     // Timings in milliseconds (10s, 30s, 2m, 10m, 45m, 1hr)
     const delays = [
-      70000,     // 1st Ad: 10 seconds
+      7000,     // 1st Ad: 10 seconds
       30000,     // 2nd Ad: 30 seconds after 1st
       120000,    // 3rd Ad: 2 minutes after 2nd
       600000,    // 4th Ad: 10 minutes after 3rd
