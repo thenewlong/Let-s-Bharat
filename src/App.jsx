@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext'; 
 
 import Navbar from './components/Navbar';
-import GameAdModal from './components/GameAdModal'; // 🎮 Auto-triggering Mini Game Ad Banner component
+// 🎮 Auto-triggering Mini Game Ad Banner component
 import FloatingSocialWidget from './components/FloatingSocialWidget'; // 🌟 Floating Social Links Widget (Bottom-Right Corner)
 
 import Home from './pages/Home';
@@ -21,6 +21,8 @@ import Profile from './pages/Profile';
 // Policy Pages
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import Disclaimer from './pages/Disclaimer';
+import Contact from './pages/Contact'; // New Contact Page
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -28,8 +30,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        {/* 🎮 Auto-Trigger Mini Game Ad Modal */}
-        <GameAdModal />
+       
 
         {/* 🌟 Floating Social Links Widget (Fixed on all pages at bottom-right) */}
         <FloatingSocialWidget />
@@ -56,6 +57,8 @@ function App() {
           {/* Naye Privacy Policy aur Terms of Service ke routes */}
           <Route path="/privacypolicy" element={<PrivacyPolicy />} />
           <Route path="/termsofservice" element={<TermsOfService />} />
+          <Route path="/disclaimer" element={<Disclaimer />} />
+          <Route path="/contact" element={<Contact />} /> {/* New Contact Page Route */}
         </Routes>
       </Router>
     </AuthProvider>

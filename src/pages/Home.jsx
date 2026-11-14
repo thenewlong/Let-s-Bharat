@@ -924,10 +924,8 @@ const Home = ({ isMobileMenuOpen = false }) => {
 
             {/* COLUMN 4: Contact Us & Socials */}
             <div>
-              <h3 className="text-white text-xs sm:text-sm font-bold tracking-widest uppercase mb-4 block">
-                Contact Us
-                <span className="block w-10 h-0.5 bg-[#ffcc00] mt-2"></span>
-              </h3>
+              
+                
               <p className="text-gray-400 text-[11px] sm:text-xs uppercase mb-6 tracking-wider pr-4">
                 Connect with us on our platforms or reach out directly.
               </p>
@@ -966,7 +964,7 @@ const Home = ({ isMobileMenuOpen = false }) => {
                   <span className="text-sm">✉</span> letsbharatofficial@gmail.com
                 </a>
                 <a href="tel:+919876543210" className="flex items-center gap-3 text-gray-400 hover:text-[#ffcc00] transition-colors text-[11px] sm:text-xs font-medium tracking-wide">
-                  <span className="text-sm">📞</span> +91 XXXX203
+                  <span className="text-sm">📞</span> +91 7630808203
                 </a>
                 <div className="flex items-center gap-3 text-gray-400 text-[11px] sm:text-xs font-medium tracking-wide uppercase">
                   <span className="text-sm">📍</span> India
@@ -988,8 +986,11 @@ const Home = ({ isMobileMenuOpen = false }) => {
             
             <div className="order-3 flex gap-6">
               {/* Note: React Router ke <Link> ko chalne ke liye top par import jaruri hai */}
+              
               <Link to="/privacypolicy" className="hover:text-[#ffcc00] transition-colors">PRIVACY POLICY</Link>
               <Link to="/termsofservice" className="hover:text-[#ffcc00] transition-colors">TERMS OF SERVICE</Link>
+              <Link to="/disclaimer" className="hover:text-[#ffcc00] transition-colors">DISCLAIMER</Link>
+              <Link to="contact" className="hover:text-[#ffcc00] transition-colors">CONTACT</Link>
             </div>
           </div>
           
