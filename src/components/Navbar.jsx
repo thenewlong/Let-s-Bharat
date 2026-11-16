@@ -15,7 +15,6 @@ const banners = [
     href: "https://newlongdebbarma.letsbharat.com",
     external: true,
     bg: "bg-yellow-400",
-    
   },
   {
     label: "Opportunities",
@@ -23,7 +22,6 @@ const banners = [
     href: "/internships",
     external: false,
     bg: "bg-pink-400",
-   
   },
   {
     label: "Institutional Partnership",
@@ -31,7 +29,6 @@ const banners = [
     href: "/institutions",
     external: false,
     bg: "bg-cyan-300",
-    
   },
   {
     label: "Community",
@@ -39,7 +36,6 @@ const banners = [
     href: "/about",
     external: false,
     bg: "bg-lime-300",
-   
   },
   {
     label: "Platform Updates",
@@ -47,7 +43,6 @@ const banners = [
     href: "/resources",
     external: false,
     bg: "bg-orange-400",
-   
   },
 ];
 
@@ -62,6 +57,9 @@ const Navbar = () => {
   const [activeBanner, setActiveBanner] = useState(0);
   const [isBannerPaused, setIsBannerPaused] = useState(false);
   const searchRef = useRef(null);
+
+  // Pichhle banner ka background yaad rakhta hai (top-down color wipe ke liye)
+  const prevBgRef = useRef(banners[0].bg);
 
   // Trigger entrance animation on mount
   useEffect(() => {
@@ -80,6 +78,11 @@ const Navbar = () => {
     }, BANNER_DURATION);
     return () => clearTimeout(timeout);
   }, [activeBanner, isBannerPaused]);
+
+  // Banner change ke baad current bg ko "previous" bana do
+  useEffect(() => {
+    prevBgRef.current = banners[activeBanner].bg;
+  }, [activeBanner]);
 
   // 🚀 FUTURE SCALE: Yahan naye sections/institutions add karo, search mein automatic aa jayenge
   const searchableItems = [
@@ -130,15 +133,16 @@ const Navbar = () => {
   const current = banners[activeBanner];
   const words = current.text.split(" ");
 
-  // Poora banner clickable hai (Explore button hata diya gaya hai)
+  // Poora banner clickable hai. Mobile aur PC dono pe ek hi row (chip + text + arrow)
   const bannerLinkClass =
-    "group flex flex-col sm:flex-row items-center justify-center gap-x-3 gap-y-1.5 text-center max-w-5xl cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-black/40 rounded-md banner-slide-in";
+    "group flex flex-row items-center justify-center gap-2 sm:gap-3 max-w-5xl cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-black/40 rounded-md banner-slide-in";
 
   const bannerInner = (
     <>
-      {/* Label chip with live dot */}
-      <span className={`banner-chip-pop inline-flex items-center gap-1.5 whitespace-nowrap text-[9px] sm:text-[11px] md:text-xs font-black uppercase tracking-[0.14em] border-2 border-black px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md shadow-[3px_3px_0px_0px_#000] ${current.chip}`}>
-        <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
+      {/* Label chip (left side) */}
+      <span className="banner-chip-pop shrink-0 max-w-[40%] sm:max-w-none inline-flex items-center gap-1.5 text-[8px] sm:text-[11px] md:text-xs font-black uppercase tracking-[0.08em] sm:tracking-[0.14em] leading-tight text-left sm:whitespace-nowrap border-2 border-black px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-md shadow-[2px_2px_0px_0px_#000] sm:shadow-[3px_3px_0px_0px_#000] bg-white">
+        {/* Live dot (mobile pe hidden, jagah bachane ke liye) */}
+        <span className="relative hidden sm:flex h-2 w-2 shrink-0">
           <span className="absolute inline-flex h-full w-full rounded-full bg-black opacity-60 animate-ping"></span>
           <span className="relative inline-flex h-full w-full rounded-full bg-black"></span>
         </span>
@@ -148,12 +152,12 @@ const Navbar = () => {
       {/* Divider (sirf tablet/desktop par) */}
       <span className="hidden sm:block h-5 w-[2px] bg-black/80" aria-hidden="true"></span>
 
-      {/* Text - word by word animation + arrow */}
-      <span className="text-[11px] sm:text-sm md:text-base font-extrabold tracking-tight leading-tight">
+      {/* Text - word by word (top se neeche) + arrow */}
+      <span className="min-w-0 text-left sm:text-center text-[10px] sm:text-sm md:text-base font-extrabold tracking-tight leading-[1.15]">
         {words.map((word, i) => (
           <span
             key={`${activeBanner}-${i}`}
-            className="banner-word mr-[0.28em] decoration-2 underline-offset-4 group-hover:underline"
+            className="banner-word mr-[0.25em] decoration-2 underline-offset-4 group-hover:underline"
             style={{ animationDelay: `${0.25 + i * 0.08}s` }}
           >
             {word}
@@ -162,11 +166,11 @@ const Navbar = () => {
 
         {/* Arrow (button nahi, sirf direction indicator) */}
         <span
-          className="banner-arrow inline-block align-middle ml-1"
+          className="banner-arrow inline-block align-middle ml-0.5"
           style={{ animationDelay: `${0.35 + words.length * 0.08}s` }}
         >
-          <span className="inline-flex items-center justify-center h-5 w-5 sm:h-6 sm:w-6 bg-black text-white rounded-full transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:rotate-12">
-            <svg className="h-3 w-3 sm:h-3.5 sm:w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3">
+          <span className="inline-flex items-center justify-center h-4 w-4 sm:h-6 sm:w-6 bg-black text-white rounded-full transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:rotate-12">
+            <svg className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3">
               <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M9 7h8v8" />
             </svg>
           </span>
@@ -180,33 +184,35 @@ const Navbar = () => {
 
       {/* Banner animation keyframes */}
       <style>{`
+        /* Banner content upar se neeche aata hai */
         @keyframes bannerSlideIn {
-          0%   { opacity: 0; transform: translateY(100%) rotate(-2deg); }
-          60%  { opacity: 1; transform: translateY(-8%) rotate(0.5deg); }
+          0%   { opacity: 0; transform: translateY(-100%) rotate(2deg); }
+          60%  { opacity: 1; transform: translateY(8%) rotate(-0.5deg); }
           100% { opacity: 1; transform: translateY(0) rotate(0deg); }
         }
+        /* Naya background color upar se neeche wipe hota hai */
+        @keyframes bannerBgDrop {
+          0%   { transform: translateY(-100%); }
+          100% { transform: translateY(0); }
+        }
         @keyframes bannerWordPop {
-          0%   { opacity: 0; transform: translateY(14px) scale(0.85) rotate(-3deg); }
-          70%  { opacity: 1; transform: translateY(-2px) scale(1.05) rotate(0.5deg); }
+          0%   { opacity: 0; transform: translateY(-14px) scale(0.85) rotate(3deg); }
+          70%  { opacity: 1; transform: translateY(2px) scale(1.05) rotate(-0.5deg); }
           100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
         }
         @keyframes bannerChipPop {
-          0%   { opacity: 0; transform: scale(0.4) rotate(-8deg); }
-          70%  { opacity: 1; transform: scale(1.1) rotate(2deg); }
-          100% { opacity: 1; transform: scale(1) rotate(0deg); }
+          0%   { opacity: 0; transform: translateY(-12px) scale(0.5) rotate(-8deg); }
+          70%  { opacity: 1; transform: translateY(1px) scale(1.1) rotate(2deg); }
+          100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
         }
-        @keyframes bannerProgress {
-          from { width: 0%; }
-          to   { width: 100%; }
-        }
-        .banner-slide-in { animation: bannerSlideIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        .banner-slide-in { animation: bannerSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        .banner-bg-drop  { animation: bannerBgDrop 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
         .banner-chip-pop { animation: bannerChipPop 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both; }
         .banner-word { display: inline-block; animation: bannerWordPop 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
         .banner-arrow { animation: bannerChipPop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
-        .banner-progress { animation: bannerProgress ${BANNER_DURATION}ms linear both; }
 
         @media (prefers-reduced-motion: reduce) {
-          .banner-slide-in, .banner-chip-pop, .banner-word, .banner-arrow, .banner-progress {
+          .banner-slide-in, .banner-bg-drop, .banner-chip-pop, .banner-word, .banner-arrow {
             animation: none !important;
           }
         }
@@ -218,10 +224,17 @@ const Navbar = () => {
       <div
         onMouseEnter={() => setIsBannerPaused(true)}
         onMouseLeave={() => setIsBannerPaused(false)}
-        className={`w-full relative z-50 overflow-hidden text-black border-b-4 border-black transition-[background-color,opacity,transform] duration-500 ease-out ${current.bg} ${isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
+        className={`w-full relative z-50 overflow-hidden text-black border-b-[3px] sm:border-b-4 border-black transition-[opacity,transform] duration-500 ease-out ${prevBgRef.current} ${isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
       >
-        {/* Fixed height: mobile pe 2 line ke liye jagah, PC pe single line */}
-        <div className="flex items-center justify-center min-h-[72px] sm:min-h-[52px] lg:min-h-[56px] px-3 sm:px-6 md:px-16 py-2 overflow-hidden">
+        {/* Naya color upar se neeche girta hai (key change par dobara chalta hai) */}
+        <div
+          key={`bg-${activeBanner}`}
+          className={`banner-bg-drop absolute inset-0 ${current.bg}`}
+          aria-hidden="true"
+        />
+
+        {/* Compact height: mobile pe bhi chhota, PC jaisa single row */}
+        <div className="relative z-10 flex items-center justify-center min-h-[48px] sm:min-h-[52px] lg:min-h-[56px] px-3 sm:px-6 md:px-16 py-1.5 sm:py-2 overflow-hidden">
 
           {/* key change hone par saari animations dobara chalti hain */}
           {current.external ? (
@@ -254,14 +267,6 @@ const Navbar = () => {
             ))}
           </div>
         </div>
-
-        {/* 5 second progress bar */}
-        {!isBannerPaused && (
-          <div
-            key={`progress-${activeBanner}`}
-            className="banner-progress absolute bottom-0 left-0 h-[4px] bg-black"
-          />
-        )}
       </div>
 
       {/* 🟢 TOP TIER (White Bar) */}

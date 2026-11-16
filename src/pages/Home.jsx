@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 import { Helmet } from "react-helmet-async";
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+ 
+// 📖 Import Flipbook Banner Component
+import FlipbookBanner from '../components/FlipbookBanner';
 
 // Register GSAP Plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -584,6 +587,8 @@ const Home = ({ isMobileMenuOpen = false }) => {
         </div>
 
       </section>
+   
+  
 {/* ========================================================= */}
       {/* SECTION: INSTITUTION (Gen-Z Premium Background)           */}
       {/* ========================================================= */}
@@ -636,7 +641,8 @@ const Home = ({ isMobileMenuOpen = false }) => {
         </div>
       </section>
 
-
+{/* 👇 Niche scroll karne par yeh Book Flipper Banner dikhega */}
+      <FlipbookBanner />
 {/* ========================================================= */}
       {/* SECTION 2: HACKATHONS (Gen-Z Premium Background)          */}
       {/* ========================================================= */}
