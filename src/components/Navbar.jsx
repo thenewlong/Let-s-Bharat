@@ -3,6 +3,54 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import logo from '../assets/images/logos2.jpeg'; 
 
+// ⏱️ Har banner kitni der dikhega (milliseconds) - 5 second
+const BANNER_DURATION = 5000;
+
+// 🎨 NEO-BRUTALISM ROTATING BANNERS
+// Naya banner add/change karna ho toh bas yahan edit karo
+const banners = [
+  {
+    label: "Founder Spotlight",
+    text: "EXPLORE THE FOUNDER'S VISION & JOURNEY",
+    href: "https://newlongdebbarma.letsbharat.com",
+    external: true,
+    bg: "bg-yellow-400",
+    
+  },
+  {
+    label: "Opportunities",
+    text: "DISCOVER INTERNSHIPS, JOBS & HACKATHONS",
+    href: "/internships",
+    external: false,
+    bg: "bg-pink-400",
+   
+  },
+  {
+    label: "Institutional Partnership",
+    text: "BRING YOUR INSTITUTION TO LETSBHARAT",
+    href: "/institutions",
+    external: false,
+    bg: "bg-cyan-300",
+    
+  },
+  {
+    label: "Community",
+    text: "CONNECT, COLLABORATE & GROW TOGETHER",
+    href: "/about",
+    external: false,
+    bg: "bg-lime-300",
+   
+  },
+  {
+    label: "Platform Updates",
+    text: "EXPLORE WHAT'S NEW ON LETSBHARAT",
+    href: "/resources",
+    external: false,
+    bg: "bg-orange-400",
+   
+  },
+];
+
 const Navbar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -11,6 +59,8 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState(""); 
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isAnimated, setIsAnimated] = useState(false);
+  const [activeBanner, setActiveBanner] = useState(0);
+  const [isBannerPaused, setIsBannerPaused] = useState(false);
   const searchRef = useRef(null);
 
   // Trigger entrance animation on mount
@@ -20,6 +70,16 @@ const Navbar = () => {
     }, 100);
     return () => clearTimeout(timer);
   }, []);
+
+  // 🔁 Banner auto-rotate: har 5 second mein next banner (hover par pause)
+  // activeBanner dependency mein hai taaki dot click karne par timer reset ho jaye
+  useEffect(() => {
+    if (isBannerPaused) return;
+    const timeout = setTimeout(() => {
+      setActiveBanner((prev) => (prev + 1) % banners.length);
+    }, BANNER_DURATION);
+    return () => clearTimeout(timeout);
+  }, [activeBanner, isBannerPaused]);
 
   // 🚀 FUTURE SCALE: Yahan naye sections/institutions add karo, search mein automatic aa jayenge
   const searchableItems = [
@@ -67,31 +127,141 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const current = banners[activeBanner];
+  const words = current.text.split(" ");
+
+  // Poora banner clickable hai (Explore button hata diya gaya hai)
+  const bannerLinkClass =
+    "group flex flex-col sm:flex-row items-center justify-center gap-x-3 gap-y-1.5 text-center max-w-5xl cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-black/40 rounded-md banner-slide-in";
+
+  const bannerInner = (
+    <>
+      {/* Label chip with live dot */}
+      <span className={`banner-chip-pop inline-flex items-center gap-1.5 whitespace-nowrap text-[9px] sm:text-[11px] md:text-xs font-black uppercase tracking-[0.14em] border-2 border-black px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md shadow-[3px_3px_0px_0px_#000] ${current.chip}`}>
+        <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
+          <span className="absolute inline-flex h-full w-full rounded-full bg-black opacity-60 animate-ping"></span>
+          <span className="relative inline-flex h-full w-full rounded-full bg-black"></span>
+        </span>
+        {current.label}
+      </span>
+
+      {/* Divider (sirf tablet/desktop par) */}
+      <span className="hidden sm:block h-5 w-[2px] bg-black/80" aria-hidden="true"></span>
+
+      {/* Text - word by word animation + arrow */}
+      <span className="text-[11px] sm:text-sm md:text-base font-extrabold tracking-tight leading-tight">
+        {words.map((word, i) => (
+          <span
+            key={`${activeBanner}-${i}`}
+            className="banner-word mr-[0.28em] decoration-2 underline-offset-4 group-hover:underline"
+            style={{ animationDelay: `${0.25 + i * 0.08}s` }}
+          >
+            {word}
+          </span>
+        ))}
+
+        {/* Arrow (button nahi, sirf direction indicator) */}
+        <span
+          className="banner-arrow inline-block align-middle ml-1"
+          style={{ animationDelay: `${0.35 + words.length * 0.08}s` }}
+        >
+          <span className="inline-flex items-center justify-center h-5 w-5 sm:h-6 sm:w-6 bg-black text-white rounded-full transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:rotate-12">
+            <svg className="h-3 w-3 sm:h-3.5 sm:w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M9 7h8v8" />
+            </svg>
+          </span>
+        </span>
+      </span>
+    </>
+  );
+
   return (
     <nav className="w-full relative z-50 shadow-sm flex flex-col overflow-x-hidden">
+
+      {/* Banner animation keyframes */}
+      <style>{`
+        @keyframes bannerSlideIn {
+          0%   { opacity: 0; transform: translateY(100%) rotate(-2deg); }
+          60%  { opacity: 1; transform: translateY(-8%) rotate(0.5deg); }
+          100% { opacity: 1; transform: translateY(0) rotate(0deg); }
+        }
+        @keyframes bannerWordPop {
+          0%   { opacity: 0; transform: translateY(14px) scale(0.85) rotate(-3deg); }
+          70%  { opacity: 1; transform: translateY(-2px) scale(1.05) rotate(0.5deg); }
+          100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+        }
+        @keyframes bannerChipPop {
+          0%   { opacity: 0; transform: scale(0.4) rotate(-8deg); }
+          70%  { opacity: 1; transform: scale(1.1) rotate(2deg); }
+          100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+        @keyframes bannerProgress {
+          from { width: 0%; }
+          to   { width: 100%; }
+        }
+        .banner-slide-in { animation: bannerSlideIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        .banner-chip-pop { animation: bannerChipPop 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both; }
+        .banner-word { display: inline-block; animation: bannerWordPop 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        .banner-arrow { animation: bannerChipPop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        .banner-progress { animation: bannerProgress ${BANNER_DURATION}ms linear both; }
+
+        @media (prefers-reduced-motion: reduce) {
+          .banner-slide-in, .banner-chip-pop, .banner-word, .banner-arrow, .banner-progress {
+            animation: none !important;
+          }
+        }
+      `}</style>
       
       {/* ========================================================= */}
-      {/* 🌟 INTERNATIONAL PORTFOLIO TICKER BANNER (WITH ANIMATION) */}
+      {/* 🌟 NEO-BRUTALISM ROTATING BANNER (5 BANNERS x 5 SECONDS)   */}
       {/* ========================================================= */}
-      <div className={`w-full bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-600 text-black py-2 px-2 sm:px-4 text-[11px] sm:text-xs md:text-sm font-bold tracking-wide flex items-center justify-between shadow-md relative z-50 overflow-hidden transition-all duration-700 ease-out ${isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-        
-       
+      <div
+        onMouseEnter={() => setIsBannerPaused(true)}
+        onMouseLeave={() => setIsBannerPaused(false)}
+        className={`w-full relative z-50 overflow-hidden text-black border-b-4 border-black transition-[background-color,opacity,transform] duration-500 ease-out ${current.bg} ${isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
+      >
+        {/* Fixed height: mobile pe 2 line ke liye jagah, PC pe single line */}
+        <div className="flex items-center justify-center min-h-[72px] sm:min-h-[52px] lg:min-h-[56px] px-3 sm:px-6 md:px-16 py-2 overflow-hidden">
 
-        {/* Center Link Content (Eye-catching Animation & Styling) */}
-        <div className="flex items-center justify-center gap-1.5 sm:gap-2 mx-auto text-center px-1">
-          <span className="whitespace-nowrap text-[10px] sm:text-xs font-extrabold animate-bounce"></span>
-          <span className="whitespace-nowrap text-[10px] sm:text-xs tracking-tight">Explore the Founder's Official Portfolio & Vision:</span>
-          <a 
-            href="https://newlongdebbarma.letsbharat.com" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="underline hover:text-white transition-colors decoration-2 underline-offset-2 sm:underline-offset-4 font-black truncate max-w-[170px] xs:max-w-xs sm:max-w-none text-[10px] sm:text-xs bg-black/10 px-2 py-0.5 rounded-md hover:bg-black/20"
-          >
-            newlongdebbarma.letsbharat.com
-          </a>
+          {/* key change hone par saari animations dobara chalti hain */}
+          {current.external ? (
+            <a
+              key={activeBanner}
+              href={current.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={bannerLinkClass}
+            >
+              {bannerInner}
+            </a>
+          ) : (
+            <Link key={activeBanner} to={current.href} className={bannerLinkClass}>
+              {bannerInner}
+            </Link>
+          )}
+
+          {/* Dots indicator (tablet/desktop par) */}
+          <div className="hidden md:flex items-center gap-1.5 absolute right-4 top-1/2 -translate-y-1/2">
+            {banners.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveBanner(i)}
+                aria-label={`Go to banner ${i + 1}`}
+                className={`h-3 border-2 border-black transition-all duration-300 focus:outline-none ${
+                  i === activeBanner ? 'w-6 bg-black' : 'w-3 bg-white hover:bg-black/30'
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
-      
+        {/* 5 second progress bar */}
+        {!isBannerPaused && (
+          <div
+            key={`progress-${activeBanner}`}
+            className="banner-progress absolute bottom-0 left-0 h-[4px] bg-black"
+          />
+        )}
       </div>
 
       {/* 🟢 TOP TIER (White Bar) */}
