@@ -11,14 +11,17 @@
     "tailwind": "tailwindcss init -p"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.2",
     "firebase": "^12.15.0",
     "framer-motion": "^12.42.2",
-    "gsap": "^3.15.0",
+    "gsap": "^3.15.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-helmet-async": "^3.0.0",
     "react-pageflip": "^2.0.3",
-    "react-router-dom": "^7.18.1"
+    "react-router-dom": "^7.18.1",
+    "three": "^0.187.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
