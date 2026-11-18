@@ -9,7 +9,7 @@ import Navbar from './components/Navbar';
 import FloatingSocialWidget from './components/FloatingSocialWidget';
 
 // 📖 LetsBharat Interactive Vision Book
-import FlipbookBanner from './components/FlipbookBanner';
+
 
 import Home from './pages/Home';
 import Auth from './pages/Auth';
@@ -39,9 +39,7 @@ function App() {
         {/* 🌟 Floating Social Links Widget */}
         <FloatingSocialWidget />
 
-        {/* 📖 LetsBharat Vision Book — Scroll Triggered */}
-        <FlipbookBanner />
-
+       
         {/* Navbar hamesha top par rahega */}
         <Navbar />
 

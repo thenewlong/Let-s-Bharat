@@ -7,7 +7,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
  
 // 📖 Import Flipbook Banner Component
-import FlipbookBanner from '../components/FlipbookBanner';
+
 
 // Register GSAP Plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -641,8 +641,7 @@ const Home = ({ isMobileMenuOpen = false }) => {
         </div>
       </section>
 
-{/* 👇 Niche scroll karne par yeh Book Flipper Banner dikhega */}
-      <FlipbookBanner />
+
 {/* ========================================================= */}
       {/* SECTION 2: HACKATHONS (Gen-Z Premium Background)          */}
       {/* ========================================================= */}
